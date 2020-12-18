@@ -1,5 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
-cloudfunctions-aliyun/
-!/.idea/
-!/unpackage/
-!/static/
+/.idea/
+/cloudfunctions-aliyun/
+/static/
+/unpackage/
+/manifest.json/
