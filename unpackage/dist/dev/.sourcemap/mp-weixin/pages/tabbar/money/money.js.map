@@ -1,1 +1,0 @@
-{"version":3,"sources":["uni-app:///main.js"],"names":["createPage","Page"],"mappings":";;;;;;;;;;kDAAA;AACA;AACA,mG;AACAA,UAAU,CAACC,cAAD,CAAV,C","file":"pages/tabbar/money/money.js","sourcesContent":["import 'uni-pages';\nimport Vue from 'vue'\nimport Page from './pages/tabbar/money/money.vue'\ncreatePage(Page)"],"sourceRoot":""}
