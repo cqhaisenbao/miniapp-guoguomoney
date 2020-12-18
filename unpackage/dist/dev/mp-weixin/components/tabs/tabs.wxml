@@ -1,0 +1,1 @@
+<view class="tabsWrapper"><view class="tabs _ul"><block wx:for="{{data_source}}" wx:for-item="item" wx:for-index="__i0__" wx:key="value"><view data-event-opts="{{[['tap',[['select',['$0'],[[['data_source','value',item.value]]]]]]]}}" class="{{['tabs-item _li',(item.value===value)?'selected':'']}}" bindtap="__e">{{''+item.text+''}}</view></block></view></view>

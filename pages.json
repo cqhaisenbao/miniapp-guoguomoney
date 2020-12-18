@@ -6,20 +6,11 @@
 				"navigationBarTitleText": "果果记账"
 			}
 		}
-	    ,{
-            "path" : "pages/tabbar/money/money",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
         ,{
             "path" : "pages/tabbar/my/my",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "果果记账",
                 "enablePullDownRefresh": false
             }
             

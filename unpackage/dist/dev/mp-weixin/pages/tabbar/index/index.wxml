@@ -1,0 +1,1 @@
+<view class="content"><tabs vue-id="f8c7e56e-1" data_source="{{recordTypeList}}" value="{{record.type}}" data-event-opts="{{[['^updateValue',[['__set_sync',['$0','type','$event'],['record']]]]]}}" bind:updateValue="__e" bind:__l="__l"></tabs></view>
