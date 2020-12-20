@@ -1,11 +1,11 @@
 <template>
 	<view class="tabsWrapper">
-		<ul class="tabs">
-			<li v-for="item in data_source " :key="item.value" class="tabs-item" :class="{selected: item.value=== value}"
-			 @click="select(item)">
-				{{ item.text }}
-			</li>
-		</ul>
+			<ul class="tabs">
+				<li v-for="item in data_source " :key="item.value" class="tabs-item" :class="{selected: item.value=== value}"
+				 @click="select(item)">
+					{{ item.text }}
+				</li>
+			</ul>
 	</view>
 </template>
 

@@ -1,56 +1,58 @@
 {
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+
 			"path": "pages/tabbar/index/index",
 			"style": {
-				"navigationBarTitleText": "果果记账"
+				"navigationBarTitleText": "果果记账",
+				"disableScroll": true
 			}
+		}, {
+			"path": "pages/tabbar/my/my",
+			"style": {
+				"navigationBarTitleText": "果果记账",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/tabbar/static/static",
+			"style": {
+				"navigationBarTitleText": "果果记账",
+				"enablePullDownRefresh": false
+			}
+
 		}
-        ,{
-            "path" : "pages/tabbar/my/my",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "果果记账",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/tabbar/static/static",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "果果记账",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "果果记账",
 		"navigationBarBackgroundColor": "#3EB575",
 		"backgroundColor": "#F8F8F8"
 	},
-	"tabBar":{
-		"color":"#666",
-		"selectedColor":"#3EB575",
-		"backgroundColor":"#fff",
-		"list":[{
-			"pagePath":"pages/tabbar/index/index",
-			"iconPath":"static/money.png",
-			"selectedIconPath":"static/money_selected.png",
-			"text":"记账"
-		},
-		{
-			"pagePath":"pages/tabbar/static/static",
-			"iconPath":"static/static.png",
-			"selectedIconPath":"static/static_selected.png",
-			"text":"统计"
-		},{
-			"pagePath":"pages/tabbar/my/my",
-			"iconPath":"static/my.png",
-			"selectedIconPath":"static/my_selected.png",
-			"text":"我的"
-		}]
+	"tabBar": {
+		"color": "#666",
+		"selectedColor": "#3EB575",
+		"backgroundColor": "#fff",
+		"list": [{
+				"pagePath": "pages/tabbar/index/index",
+				"iconPath": "static/money.png",
+				"selectedIconPath": "static/money_selected.png",
+				"text": "记账"
+			},
+			{
+				"pagePath": "pages/tabbar/static/static",
+				"iconPath": "static/static.png",
+				"selectedIconPath": "static/static_selected.png",
+				"text": "统计"
+			}, {
+				"pagePath": "pages/tabbar/my/my",
+				"iconPath": "static/my.png",
+				"selectedIconPath": "static/my_selected.png",
+				"text": "我的"
+			}
+		]
 	}
 }
