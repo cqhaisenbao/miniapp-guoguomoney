@@ -49,7 +49,7 @@
 			border-collapse: collapse;
 
 			li:first-of-type {
-				width: 50vw;
+				width: 50%;
 				height: 32px;
 				display: flex;
 				justify-content: center;
@@ -59,7 +59,7 @@
 			}
 
 			li:last-of-type {
-				width: 50vw;
+				width: 50%;
 				height: 32px;
 				display: flex;
 				justify-content: center;
