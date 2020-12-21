@@ -1,7 +1,8 @@
 <template>
 	<view class="content">
 		<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
-		<view class="iconfont icon-icon8" :class="{selected:selected}"></view>
+		<tags :iconName='iconName' :selectedTag.sync="selectedTag"></tags>
+		爸爸的tag{{selectedTag}}
 	</view>
 </template>
 
@@ -10,6 +11,8 @@
 		data() {
 			return {
 				selected: false,
+				iconName: [],
+				selectedTag:"交通",
 				title: '果果记账',
 				recordTypeList: [{
 						text: '支出',
@@ -27,24 +30,29 @@
 				},
 			};
 		},
-		onLoad() {},
-		methods: {},
+		created() {
+			this.getIcon()
+		},
+		methods: {
+			getIcon() {
+				uniCloud.callFunction({
+					name: 'get-income-icon'
+				}).then((res) => {
+					const { result } = res
+					this.iconName = result.data
+					console.log(this.iconName)
+				})
+			}
+		},
 	};
 </script>
 
 <style lang="scss">
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+	// .content {
+	// 	display: flex;
+	// 	flex-direction: column;
+	// 	align-items: center;
+	// 	justify-content: center;
+	// }
 
-	.iconfont {
-		font-size: 25px;
-
-		&.selected {
-			color: #18B566;
-		}
-	}
 </style>
