@@ -3,20 +3,20 @@
 		<view class="numberPad">
 			<view class="output">{{output}}</view>
 			<view class="buttons">
-				<button @click="inputContent">1</button>
-				<button @click="inputContent">2</button>
-				<button @click="inputContent">3</button>
-				<button>删除</button>
-				<button @click="inputContent">4</button>
-				<button @click="inputContent">5</button>
-				<button @click="inputContent">6</button>
-				<button>清空</button>
-				<button @click="inputContent">7</button>
-				<button @click="inputContent">8</button>
-				<button @click="inputContent">9</button>
-				<button class="ok">OK</button>
-				<button @click="inputContent" class="zero">0</button>
-				<button @click="inputContent">.</button>
+				<button @click="inputContent" data-text="1">1</button>
+				<button @click="inputContent" data-text="2">2</button>
+				<button @click="inputContent" data-text="3">3</button>
+				<button @click="remove">删除</button>
+				<button @click="inputContent" data-text="4">4</button>
+				<button @click="inputContent" data-text="5">5</button>
+				<button @click="inputContent" data-text="6">6</button>
+				<button @click="clear">清空</button>
+				<button @click="inputContent" data-text="7">7</button>
+				<button @click="inputContent" data-text="8">8</button>
+				<button @click="inputContent" data-text="9">9</button>
+				<button @click="ok" class="ok" :class="{numChange:x}">OK</button>
+				<button @click="inputContent" class="zero" data-text="0">0</button>
+				<button @click="inputContent" data-text=".">.</button>
 			</view>
 		</view>
 	</view>
@@ -24,16 +24,62 @@
 
 <script>
 	export default {
-		props: {},
+		props: {
+			value: {
+				type: String,
+				default: '0'
+			},
+			tag: {
+				type: String
+			}
+		},
 		data() {
 			return {
 				output: '0',
+				x: false
 			};
 		},
 		methods: {
 			inputContent(e) {
-				const input=e.currentTarget.dataset.text
-				console.log(input)
+				const input = e.target.dataset.text
+				if (this.output.length >= 16) { return; }
+				if (this.output === '0') {
+					if ('0123456789'.indexOf(input) >= 0) {
+						this.x = true;
+						this.output = input;
+					} else {
+						this.output += input;
+					}
+					return;
+				}
+				if (this.output.indexOf('.') >= 0 && input === '.') { return; }
+				this.x = true;
+				this.output += input;
+			},
+			remove() {
+				if (this.output.length === 1) {
+					this.clear();
+				} else {
+					this.output = this.output.slice(0, -1);
+				}
+			},
+			clear() {
+				this.output = '0';
+				this.x = false;
+			},
+			ok() {
+				if (this.tag.length <= 0) {
+					uni.showModal({
+						title:'错误提醒',
+						content:'请选择一个标签'
+					})
+					return
+				} else {
+					const number = parseFloat(this.output);
+					this.$emit('update:value', number);
+					this.$emit('submit', number);
+					this.output = '0';
+				}
 			}
 		}
 	}
@@ -59,7 +105,7 @@
 		}
 
 		.buttons {
-			padding: 5px;
+			padding: 6px 5px;
 			border: none;
 			background-color: #f6f7f8;
 			display: grid;
@@ -133,6 +179,12 @@
 
 				&:nth-child(12) {
 					grid-area: ok;
+					color: #fff;
+					background-color: lighten($main-color, 20%);
+
+					&.numChange {
+						background: $main-color;
+					}
 				}
 
 				&:nth-child(13) {
