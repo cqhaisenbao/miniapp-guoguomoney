@@ -23,18 +23,18 @@
 		data() {
 			return {
 				selectedTags: [],
-				condition1: true
+				condition1: true,
 			};
 		},
-		methods:{
-			 toggle(item) {
-			        const length = this.selectedTags.length;
-			        if (length > 0) {
-			            this.selectedTags.pop();
-			        }
-			        this.selectedTags.push(item.title);
-			        this.$emit('update:selectedTag', item.title);
-			    }
+		methods: {
+			toggle(item) {
+				const length = this.selectedTags.length;
+				if (length > 0) {
+					this.selectedTags.pop();
+				}
+				this.selectedTags.push(item.title);
+				this.$emit('update:selectedTag', item.title);
+			}
 		}
 	}
 </script>
@@ -62,6 +62,7 @@
 				padding-right: 20px;
 				color: #c4c4c4;
 				font-size: 30px;
+
 				&.selected {
 					color: #e84545;
 				}
@@ -74,7 +75,6 @@
 		font-size: 10px;
 		margin-top: 5px;
 		color: gray;
-		
-	}
 
+	}
 </style>

@@ -2,7 +2,8 @@
 	<view class="content">
 		<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
 		<tags :iconName='iconName' :selectedTag.sync="selectedTag"></tags>
-		爸爸的tag{{selectedTag}}
+		父组件的tag{{selectedTag}}
+		<keybord></keybord>
 	</view>
 </template>
 
@@ -12,7 +13,7 @@
 			return {
 				selected: false,
 				iconName: [],
-				selectedTag:"交通",
+				selectedTag:"",
 				title: '果果记账',
 				recordTypeList: [{
 						text: '支出',
@@ -35,12 +36,15 @@
 		},
 		methods: {
 			getIcon() {
+				uni.showLoading({
+					title:'加载中'
+				})
 				uniCloud.callFunction({
 					name: 'get-income-icon'
 				}).then((res) => {
+					uni.hideLoading()
 					const { result } = res
 					this.iconName = result.data
-					console.log(this.iconName)
 				})
 			}
 		},

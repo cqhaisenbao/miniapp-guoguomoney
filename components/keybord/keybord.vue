@@ -1,0 +1,148 @@
+<template>
+	<view>
+		<view class="numberPad">
+			<view class="output">{{output}}</view>
+			<view class="buttons">
+				<button @click="inputContent">1</button>
+				<button @click="inputContent">2</button>
+				<button @click="inputContent">3</button>
+				<button>删除</button>
+				<button @click="inputContent">4</button>
+				<button @click="inputContent">5</button>
+				<button @click="inputContent">6</button>
+				<button>清空</button>
+				<button @click="inputContent">7</button>
+				<button @click="inputContent">8</button>
+				<button @click="inputContent">9</button>
+				<button class="ok">OK</button>
+				<button @click="inputContent" class="zero">0</button>
+				<button @click="inputContent">.</button>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		props: {},
+		data() {
+			return {
+				output: '0',
+			};
+		},
+		methods: {
+			inputContent(e) {
+				const input=e.currentTarget.dataset.text
+				console.log(input)
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	$color-shadow: rgba(0, 0, 0, 0.25);
+
+	%innerShadow {
+		box-shadow: inset 0 -3px 3px -3px $color-shadow,
+			inset 0 3px 3px -3px $color-shadow;
+	}
+
+	.numberPad {
+
+		.output {
+			@extend %innerShadow;
+			font-size: 36px;
+			font-family: Consolas, monospace;
+			padding: 9px 16px;
+			text-align: right;
+			height: 60px;
+		}
+
+		.buttons {
+			padding: 5px;
+			border: none;
+			background-color: #f6f7f8;
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+			grid-template-rows: auto;
+			grid-gap: 6px;
+			grid-template-areas:
+				"one two three delete"
+				"four five six empty"
+				"seven eight nine ok"
+				"zero zero dot ok";
+
+			>button {
+				width: 100%;
+				background-color: #fff;
+				font-size: 20px;
+				box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+				border-color: #fff;
+				border-radius: 8px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				&::after {
+					border: none;
+				}
+
+				&:nth-child(1) {
+					grid-area: one;
+				}
+
+				&:nth-child(2) {
+					grid-area: two;
+				}
+
+				&:nth-child(3) {
+					grid-area: three;
+				}
+
+				&:nth-child(4) {
+					grid-area: delete;
+				}
+
+				&:nth-child(5) {
+					grid-area: four;
+				}
+
+				&:nth-child(6) {
+					grid-area: five;
+				}
+
+				&:nth-child(7) {
+					grid-area: six;
+				}
+
+				&:nth-child(8) {
+					grid-area: empty;
+				}
+
+				&:nth-child(9) {
+					grid-area: seven;
+				}
+
+				&:nth-child(10) {
+					grid-area: eight;
+				}
+
+				&:nth-child(11) {
+					grid-area: nine;
+				}
+
+				&:nth-child(12) {
+					grid-area: ok;
+				}
+
+				&:nth-child(13) {
+					grid-area: zero;
+				}
+
+				&:nth-child(14) {
+					grid-area: dot;
+				}
+			}
+		}
+	}
+</style>
