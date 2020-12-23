@@ -3,15 +3,22 @@
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
 			父组件的记录:{{record.type}}{{record.tag}}{{record.amount}}{{record.notes}}
+			<u-toast ref="uToast" />
 			<tags class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
-			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注"></notes>
-			<keybord :value.sync="record.amount" :tag.sync="record.tag"></keybord>
+			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
+				<datapick></datapick>
+			</notes>
+			<keybord :value.sync="record.amount" :tag.sync="record.tag" @submit="saveRecord"></keybord>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex';
 	export default {
+		computed: {
+			...mapState(['recordList'])
+		},
 		data() {
 			return {
 				selected: false,
@@ -30,7 +37,7 @@
 					tag: '',
 					notes: '',
 					type: '-',
-					amount:''
+					amount: ''
 				},
 			};
 		},
@@ -49,6 +56,18 @@
 					const { result } = res
 					this.iconName = result.data
 				})
+			},
+			showToast() {
+				this.$refs.uToast.show({
+					title: '已记一笔',
+					type: 'success',
+					position:'top'
+				})
+			},
+			saveRecord() {
+				this.$store.commit('createRecord', this.record);
+				this.showToast()
+				this.record.notes = '已记一笔';
 			}
 		},
 	};
