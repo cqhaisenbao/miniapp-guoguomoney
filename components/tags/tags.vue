@@ -1,6 +1,6 @@
 <template>
 	<view class="tags">
-		<scroll-view class="icon_wrapper" scroll-x>
+		<scroll-view show-scrollbar=false class="icon_wrapper" scroll-x>
 			<view class="tags_scroll__box">
 				<view v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
 					<text class="icon_font">{{item.title}}</text>
@@ -45,7 +45,6 @@
 		box-sizing: border-box;
 
 		.icon_wrapper {
-			// min-height: 80px;
 
 			.tags_scroll__box {
 				display: flex;
@@ -54,6 +53,7 @@
 				box-sizing: border-box;
 				padding-top: 20px;
 				padding-left: 20px;
+				min-height: 80px;
 
 				.icon {
 					flex-shrink: 0;

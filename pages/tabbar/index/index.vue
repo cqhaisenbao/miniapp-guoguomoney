@@ -2,7 +2,6 @@
 	<view>
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
-			父组件的记录:{{record.type}}{{record.tag}}{{record.amount}}{{record.notes}}
 			<u-toast ref="uToast" />
 			<tags class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
@@ -41,16 +40,27 @@
 				},
 			};
 		},
+		computed:{
+			selectedtype(){
+				return this.record.type
+			}
+		},
+		watch:{
+			selectedtype(nval){
+					this.getIcon(nval)
+			}
+		},
 		created() {
-			this.getIcon()
+			this.getIcon('-')
 		},
 		methods: {
-			getIcon() {
+			getIcon(type) {
 				uni.showLoading({
 					title: '加载中'
 				})
 				uniCloud.callFunction({
-					name: 'get-income-icon'
+					name: 'get-income-icon',
+					data: { type: type }
 				}).then((res) => {
 					uni.hideLoading()
 					const { result } = res
@@ -61,7 +71,7 @@
 				this.$refs.uToast.show({
 					title: '已记一笔',
 					type: 'success',
-					position:'top'
+					position: 'top'
 				})
 			},
 			saveRecord() {
