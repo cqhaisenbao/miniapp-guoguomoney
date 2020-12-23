@@ -45,7 +45,8 @@
 		box-sizing: border-box;
 
 		.icon_wrapper {
-			min-height: 80px;
+			// min-height: 80px;
+
 			.tags_scroll__box {
 				display: flex;
 				align-items: center;

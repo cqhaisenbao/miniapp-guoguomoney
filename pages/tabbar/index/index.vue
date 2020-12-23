@@ -2,8 +2,9 @@
 	<view>
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
-			父组件的记录:{{record.type}}{{record.tag}}{{record.amount}}
+			父组件的记录:{{record.type}}{{record.tag}}{{record.amount}}{{record.notes}}
 			<tags class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
+			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注"></notes>
 			<keybord :value.sync="record.amount" :tag.sync="record.tag"></keybord>
 		</view>
 	</view>

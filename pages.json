@@ -36,6 +36,7 @@
 		"color": "#666",
 		"selectedColor": "#3EB575",
 		"backgroundColor": "#fff",
+		"borderStyle":"white",
 		"list": [{
 				"pagePath": "pages/tabbar/index/index",
 				"iconPath": "static/money.png",

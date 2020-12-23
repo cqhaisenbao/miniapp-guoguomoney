@@ -79,6 +79,7 @@
 					this.$emit('update:value', number);
 					this.$emit('submit', number);
 					this.output = '0';
+					this.x = false;
 				}
 			}
 		}
