@@ -11,11 +11,15 @@
 <script>
 	import dayjs from 'dayjs'
 	export default {
+		props:{
+			now:{
+				type:String
+			}
+		},
 		data() {
 			return {
 				mode: 'date',
 				show: false,
-				now: dayjs().format('MM月DD日')
 			};
 		},
 		methods: {
@@ -23,8 +27,8 @@
 				this.show = true
 			},
 			change(value) {
-				console.log(value)
-				this.now = value.month+'月'+value.day+'日'
+				this.$emit('timeupdate', value.result);
+				this.$emit('nowchange', value.result);
 			}
 		}
 	}
