@@ -3,7 +3,8 @@
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
 			<u-toast ref="uToast" />
-			<tags class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
+			<tags v-if="record.type==='-'?true:false" class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
+			<tags v-else class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
 				<datapick></datapick>
 			</notes>
@@ -40,14 +41,14 @@
 				},
 			};
 		},
-		computed:{
-			selectedtype(){
+		computed: {
+			selectedtype() {
 				return this.record.type
 			}
 		},
-		watch:{
-			selectedtype(nval){
-					this.getIcon(nval)
+		watch: {
+			selectedtype(nval) {
+				this.$u.throttle(this.getIcon(nval), 10000)
 			}
 		},
 		created() {

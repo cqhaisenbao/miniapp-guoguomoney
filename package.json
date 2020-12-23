@@ -20,7 +20,8 @@
     "@types/uni-app": "^1.4.3"
   },
   "dependencies": {
-    "@vant/weapp": "^1.6.4"
+    "@vant/weapp": "^1.6.4",
+    "dayjs": "^1.9.7"
   },
   "description": ""
 }
