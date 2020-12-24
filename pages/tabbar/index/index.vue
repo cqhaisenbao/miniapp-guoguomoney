@@ -2,9 +2,9 @@
 	<view>
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
-			<u-toast ref="uToast" />
-			<tags v-if="record.type==='-'?true:false" class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
-			<tags v-else class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
+			<van-toast id="van-toast" />
+			<tags v-if="record.type==='-'?true:false" class="tags" :iconName='pay_iconName' :selectedTag.sync="record.tag"></tags>
+			<tags v-else class="tags" :iconName='income_iconName' :selectedTag.sync="record.tag"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
 				<datapick @timeupdate="onUpdateTime" :now='now' @nowchange='nowchange'></datapick>
 			</notes>
@@ -23,7 +23,8 @@
 		data() {
 			return {
 				selected: false,
-				iconName: [],
+				pay_iconName: [],
+				income_iconName:[],
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
 				recordTypeList: [{
@@ -44,24 +45,29 @@
 				},
 			};
 		},
-		computed: {
-			selectedtype() {
-				return this.record.type
-			}
-		},
-		watch: {
-			selectedtype(nval) {
-				this.$u.throttle(this.getIcon(nval), 10000)
-			}
-		},
+		// computed: {
+		// 	selectedtype() {
+		// 		return this.record.type
+		// 	}
+		// },
+		// watch: {
+		// 	selectedtype(nval) {
+		// 		this.$u.throttle(this.getIcon(nval), 10000)
+		// 	}
+		// },
 
 		onLoad() {
 			const db = uniCloud.database();
-			uni.showLoading({ title: '加载中' })
-			db.collection('income').get().then((res) => {
+			uni.showLoading({ title: '加载中' });
+			db.collection('income').where('type=="-"').get().then((res) => {
 				uni.hideLoading()
 				const { result } = res
-				this.iconName = result.data
+				this.pay_iconName = result.data
+			});
+			db.collection('income').where('type=="+"').get().then((res) => {
+				uni.hideLoading()
+				const { result } = res
+				this.income_iconName = result.data
 			})
 		},
 		methods: {
@@ -71,20 +77,13 @@
 			nowchange(value) {
 				this.now = dayjs(value).format('MM月DD日')
 			},
-			showToast() {
-				this.$refs.uToast.show({
-					title: '已记一笔',
-					type: 'success',
-					position: 'top'
-				})
-			},
 			saveRecord() {
 				const db = uniCloud.database();
 				if (this.record.time === 0) {
 					this.record.time = dayjs().valueOf()
 				};
 				db.collection('recordList').add(this.record).then((res) => {
-					this.showToast()
+					this.$toast.success('已记一笔')
 					this.record.notes = '';
 					this.now = dayjs().format('MM月DD日')
 				}).catch((err) => {
