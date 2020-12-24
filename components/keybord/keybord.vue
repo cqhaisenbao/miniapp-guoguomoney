@@ -3,20 +3,20 @@
 		<view class="numberPad">
 			<view class="output">{{output}}</view>
 			<view class="buttons">
-				<button @click="inputContent" data-text="1">1</button>
-				<button @click="inputContent" data-text="2">2</button>
-				<button @click="inputContent" data-text="3">3</button>
-				<button @click="remove">删除</button>
-				<button @click="inputContent" data-text="4">4</button>
-				<button @click="inputContent" data-text="5">5</button>
-				<button @click="inputContent" data-text="6">6</button>
-				<button @click="clear">清空</button>
-				<button @click="inputContent" data-text="7">7</button>
-				<button @click="inputContent" data-text="8">8</button>
-				<button @click="inputContent" data-text="9">9</button>
-				<button @click="ok" class="ok" :class="{numChange:x}">OK</button>
-				<button @click="inputContent" class="zero" data-text="0">0</button>
-				<button @click="inputContent" data-text=".">.</button>
+				<button clsaa="mybutton" @click="inputContent" data-text="1">1</button>
+				<button clsaa="mybutton" @click="inputContent" data-text="2">2</button>
+				<button clsaa="mybutton" @click="inputContent" data-text="3">3</button>
+				<button clsaa="mybutton" @click="remove">删除</button>
+				<button clsaa="mybutton" @click="inputContent" data-text="4">4</button>
+				<button clsaa="mybutton" @click="inputContent" data-text="5">5</button>
+				<button clsaa="mybutton" @click="inputContent" data-text="6">6</button>
+				<button clsaa="mybutton" @click="clear">清空</button>
+				<button clsaa="mybutton" @click="inputContent" data-text="7">7</button>
+				<button clsaa="mybutton" @click="inputContent" data-text="8">8</button>
+				<button clsaa="mybutton" @click="inputContent" data-text="9">9</button>
+				<button clsaa="mybutton" @click="ok" class="ok" :class="{numChange:x}">OK</button>
+				<button clsaa="mybutton" @click="inputContent" class="zero" data-text="0">0</button>
+				<button clsaa="mybutton" @click="inputContent" data-text=".">.</button>
 			</view>
 		</view>
 	</view>

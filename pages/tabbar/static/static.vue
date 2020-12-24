@@ -1,36 +1,52 @@
 <template>
-	<view class="home">
-			<u-popup v-model="show" mode="bottom" border-radius="20" height="60%" closeable=true>
-				<view></view>
-			</u-popup>
-			<u-button type="success" @click="showpop">打开弹出层</u-button>
+	<view>
+		<button @click="loginByWeixin">微信登录</button>
 	</view>
 </template>
 
 <script>
+	let weixinAuthService
 	export default {
-		components: {},
-		data() {
-			return {
-				show: false
-			}
-		},
-		watch: {
-			show() {
-				if (!this.show) {
-					uni.showTabBar()
-				}
-			}
-		},
 		methods: {
-			showpop() {
-				this.show = true
-				uni.hideTabBar()
+			getWeixinCode() {
+				return new Promise((resolve, reject) => {
+					uni.login({
+						provider: 'weixin',
+						success(res) {
+							resolve(res.code)
+						},
+						fail(err) {
+							reject(new Error('微信登录失败'))
+						}
+					})
+				})
+			},
+			loginByWeixin() {
+				this.getWeixinCode().then((code) => {
+					console.log(code)
+					return uniCloud.callFunction({
+						name: 'login-by-weixin',
+						data: {code}
+					})
+				}).then((res) => {
+					uni.showModal({
+						showCancel: false,
+						content: JSON.stringify(res.result)
+					})
+					if (res.result.code === 0) {
+						uni.setStorageSync('uni_id_token', res.result.token)
+					}
+				}).catch(() => {
+					uni.showModal({
+						showCancel: false,
+						content: '微信登录失败，请稍后再试'
+					})
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	
+
 </style>

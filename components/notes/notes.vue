@@ -2,9 +2,9 @@
 	<view>
 		<view class="formWrapper">
 			<view class="formItem">
-				<label>
+				<label class="label_">
 					<text class="name">{{ fieldName }}</text>
-					<input type="text" :value="value" @change="onValueChanged($event.target.value)" :placeholder="placeholder">
+					<input class="input_content" type="text" :value="value" @change="onValueChanged($event.target.value)" :placeholder="placeholder">
 				</label>
 				<slot></slot>
 			</view>
@@ -46,20 +46,20 @@
 		display: flex;
 		align-items: center;
 
-		label {
+		.label_ {
 			flex-grow: 1;
 			display: flex;
 			align-items: center;
 			padding: 10px 0;
 		}
 
-		>view {
-			flex-shrink: 0;
-		}
+		// >view {
+		// 	flex-shrink: 0;
+		// }
 
 		.name {}
 
-		input {
+		.input_content {
 			height: 40px;
 			flex-grow: 1;
 			background: transparent;

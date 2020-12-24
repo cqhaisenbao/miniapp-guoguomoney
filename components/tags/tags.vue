@@ -52,7 +52,7 @@
 				flex-wrap: nowrap;
 				box-sizing: border-box;
 				padding-top: 20px;
-				padding-left: 20px;
+				padding-left: 16px;
 				min-height: 80px;
 
 				.icon {
@@ -62,12 +62,18 @@
 					justify-content: center;
 					box-sizing: border-box;
 					align-items: center;
-					padding-right: 20px;
+					margin-right: 23px;
 					color: #c4c4c4;
-					font-size: 30px;
+					font-size: 32px;
+					&:last-child{
+						padding-right: 23px;
+					}
 
 					&.selected {
 						color: #e84545;
+						.icon_font{
+							color: #484848;
+						}
 					}
 				}
 			}

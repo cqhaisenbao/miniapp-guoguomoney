@@ -2,7 +2,7 @@
 	<view>
 		<view @click="showdata" class="dateWrapper">
 			{{ now }}
-			<text>▼</text>
+			<text class="text_">▼</text>
 		</view>
 		<u-calendar v-model="show" @change="change" :mode="mode" btn-type='success' active-bg-color='#3EB575'></u-calendar>
 	</view>
@@ -44,7 +44,7 @@
 		font-weight: 600;
 		margin-right: 10px;
 
-		text {
+		.text_ {
 			margin-left: 3px;
 			color: #bfbdbd;
 		}
