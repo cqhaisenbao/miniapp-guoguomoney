@@ -6,7 +6,7 @@
 			<tags v-if="record.type==='-'?true:false" class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
 			<tags v-else class="tags" :iconName='iconName' :selectedTag.sync="record.tag"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
-				<datapick></datapick>
+				<datapick @timeupdate="onUpdateTime" :now='now' @nowchange='nowchange'></datapick>
 			</notes>
 			<keybord :value.sync="record.amount" :tag.sync="record.tag" @submit="saveRecord"></keybord>
 		</view>
@@ -15,6 +15,7 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import dayjs from 'dayjs'
 	export default {
 		computed: {
 			...mapState(['recordList'])
@@ -23,6 +24,7 @@
 			return {
 				selected: false,
 				iconName: [],
+				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
 				recordTypeList: [{
 						text: '支出',
@@ -37,7 +39,8 @@
 					tag: '',
 					notes: '',
 					type: '-',
-					amount: ''
+					amount: '',
+					time: 0
 				},
 			};
 		},
@@ -51,22 +54,22 @@
 				this.$u.throttle(this.getIcon(nval), 10000)
 			}
 		},
-		created() {
-			this.getIcon('-')
+
+		onLoad() {
+			const db = uniCloud.database();
+			uni.showLoading({ title: '加载中' })
+			db.collection('income').get().then((res) => {
+				uni.hideLoading()
+				const { result } = res
+				this.iconName = result.data
+			})
 		},
 		methods: {
-			getIcon(type) {
-				uni.showLoading({
-					title: '加载中'
-				})
-				uniCloud.callFunction({
-					name: 'get-income-icon',
-					data: { type: type }
-				}).then((res) => {
-					uni.hideLoading()
-					const { result } = res
-					this.iconName = result.data
-				})
+			onUpdateTime(value) {
+				this.record.time = dayjs(value).valueOf();
+			},
+			nowchange(value) {
+				this.now = dayjs(value).format('MM月DD日')
 			},
 			showToast() {
 				this.$refs.uToast.show({
@@ -76,9 +79,19 @@
 				})
 			},
 			saveRecord() {
-				this.$store.commit('createRecord', this.record);
-				this.showToast()
-				this.record.notes = '已记一笔';
+				const db = uniCloud.database();
+				if (this.record.time === 0) {
+					this.record.time = dayjs().valueOf()
+				};
+				db.collection('recordList').add(this.record).then((res) => {
+					this.showToast()
+					this.record.notes = '';
+					this.now = dayjs().format('MM月DD日')
+				}).catch((err) => {
+					console.log(err)
+				})
+				// this.$store.commit('createRecord', this.record);
+
 			}
 		},
 	};
