@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<button open-type="getUserInfo">获取用户信息</button>
+		<button open-type="getUserInfo" @click="login">获取用户信息</button>
 		<view class="userinfo">
 			<view class="userinfo-avatar">
 				<open-data type="userAvatarUrl"></open-data>
@@ -11,18 +11,17 @@
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex';
+	import wxLogin from '@/lib/weixinlogin'
 	export default {
 		data() {
 			return {}
 		},
-		onLoad() {
-			const db = uniCloud.database();
-			let res=db.collection('recordList').where('uid==$env.uid').get().then(res=>console.log(res))
-		},
 		methods: {
-
+			login() {
+				wxLogin()
+			}
 		},
-
 	}
 </script>
 

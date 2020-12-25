@@ -1,5 +1,23 @@
 <script>
+	import { mapState, mapMutations } from 'vuex';
 	export default {
+		onLaunch() {
+			this.checkLogin()
+		},
+		computed: {
+			...mapState(['isLogin'])
+		},
+		methods:{
+			checkLogin(){
+				const id = uni.getStorageSync('uni_id_token');
+				if(id){
+					this.$store.commit('changeisLogin', true);
+					return id
+				}else{
+					console.log('没有登录')
+				}
+			}
+		}
 	}
 </script>
 

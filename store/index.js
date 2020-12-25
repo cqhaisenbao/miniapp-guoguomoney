@@ -8,11 +8,19 @@ const store = new Vuex.Store({
 	state: {
 		test: '123',
 		recordList: [],
+		isLogin: false,
+		recordListChanged: false
 		// tagList: [],
 		// currentTag: undefined,
 		// currentRecord: undefined,
 	},
 	mutations: {
+		changeisLogin(state, value) {
+			state.isLogin = value
+		},
+		recordListChange(state, value) {
+			state.recordListChanged = value
+		},
 		createRecord(state, record) {
 			const record2 = clone(record);
 			state.recordList.push(record2);

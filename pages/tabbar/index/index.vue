@@ -20,22 +20,20 @@
 		computed: {
 			...mapState(['recordList'])
 		},
+		computed: {
+			...mapState(['isLogin'])
+		},
+		computed: {
+			...mapState(['recordListChanged'])
+		},
 		data() {
 			return {
 				selected: false,
 				pay_iconName: [],
-				income_iconName:[],
+				income_iconName: [],
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
-				recordTypeList: [{
-						text: '支出',
-						value: '-',
-					},
-					{
-						text: '收入',
-						value: '+',
-					},
-				],
+				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
 				record: {
 					tag: '',
 					notes: '',
@@ -46,7 +44,7 @@
 			};
 		},
 
-		onLoad() {
+		created() {
 			const db = uniCloud.database();
 			uni.showLoading({ title: '加载中' });
 			db.collection('income').where('type=="-"').get().then((res) => {
@@ -74,6 +72,7 @@
 				};
 				db.collection('recordList').add(this.record).then((res) => {
 					this.$toast.success('已记一笔')
+					this.$store.commit('recordListChange', true);
 					this.record.notes = '';
 					this.now = dayjs().format('MM月DD日')
 				}).catch((err) => {
