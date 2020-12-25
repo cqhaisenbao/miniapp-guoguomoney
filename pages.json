@@ -9,7 +9,14 @@
 				"navigationBarTitleText": "果果记账",
 				"disableScroll": true
 			}
-		}, {
+		},
+		{
+			"path": "pages/editrecord/editrecord",
+			"style": {
+				"navigationBarTitleText": "编辑记录",
+				"disableScroll": true
+			}
+		},{
 			"path": "pages/tabbar/my/my",
 			"style": {
 				"navigationBarTitleText": "果果记账",

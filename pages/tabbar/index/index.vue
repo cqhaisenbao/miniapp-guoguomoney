@@ -3,7 +3,7 @@
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
 			<van-toast id="van-toast" />
-			<tags v-if="record.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="record.tag"></tags>
+			<tags v-if="record.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags>
 			<tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="record.tag"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
 				<datapick @timeupdate="onUpdateTime" :now='now' @nowchange='nowchange'></datapick>
@@ -36,6 +36,7 @@
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
 				record: {
 					tag: '',
+					tagName:'',
 					notes: '',
 					type: '-',
 					amount: '',
@@ -72,7 +73,7 @@
 				};
 				db.collection('recordList').add(this.record).then((res) => {
 					this.$toast.success('已记一笔')
-					this.$store.commit('recordListChange', true);
+					this.$store.commit('recordListChange');
 					this.record.notes = '';
 					this.now = dayjs().format('MM月DD日')
 				}).catch((err) => {

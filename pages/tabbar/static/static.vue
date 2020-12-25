@@ -5,16 +5,19 @@
 			<li class="li_" v-for="(group,index) in groupedList" :key="index">
 				<h3 class="title">{{ group.title }} <span>￥{{ group.total }}</span></h3>
 				<ol>
-					<view v-for="item in group.items" :key="item._id" class="record">
-						<!-- <Icon class="icon" :name="item.tags[0].name" /> -->
+					<view v-for="item in group.items" :key="item._id" class="record" @click="editRecord(item)">
+						<icon :class="item.tagName" class="icon_" />
 						<span>{{ item.tag }}</span>
 						<span class="note">{{ item.notes }}</span>
 						<span>￥{{ item.amount }} </span>
-						<view>
+					</view>
 				</ol>
 			</li>
 		</ol>
-		<div class="noResult" v-else>目前没有相关记录</div>
+		<view v-else class="noResult">
+			<u-empty text="目前没有相关记录"></u-empty>
+		</view>
+		<!-- <div class="noResult" v-else>目前没有相关记录</div> -->
 	</view>
 </template>
 
@@ -30,8 +33,8 @@
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
 			}
 		},
-		watch:{
-			recordListChanged(){
+		watch: {
+			recordListChanged() {
 				this.fetchRecordList()
 			}
 		},
@@ -66,6 +69,19 @@
 			this.fetchRecordList()
 		},
 		methods: {
+			editRecord(item){
+				console.log(item)
+				this.$u.route('pages/editrecord/editrecord',{
+					recordid:item._id,
+					// tag:item.tag,
+					// tagname:item.tagName,
+					// time:item.time,
+					// type:item.type
+				})
+				// uni.navigateTo({
+				// 	url:'pages/editrecord/editrecord'
+				// })
+			},
 			fetchRecordList() {
 				const db = uniCloud.database();
 				db.collection('recordList').where('uid==$env.uid').get().then(res => {
@@ -86,6 +102,11 @@
 		align-content: center;
 	}
 
+	.noResult {
+		margin-top: 30px;
+		text-align: center;
+	}
+
 	.li_ {
 		margin: 10px 5px 0;
 		background: #FBFBFB;
@@ -101,10 +122,21 @@
 		.record {
 			background: #FFFFFF;
 			@extend %item;
-			line-height: 35px;
 			border-bottom: 1px solid #e6e6e6;
 			display: flex;
 			align-items: center;
+			line-height: 35px;
+			justify-content: center;
+
+			.icon_ {
+				width: 25px;
+				color: #d68060;
+				margin-right: 5px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 20px;
+			}
 
 			.note {
 				margin-right: auto;

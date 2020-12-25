@@ -18,6 +18,9 @@
 			},
 			selectedTag: {
 				type: String
+			},
+			tagName:{
+				type:String
 			}
 		},
 		data() {
@@ -34,6 +37,7 @@
 				}
 				this.selectedTags.push(item.title);
 				this.$emit('update:selectedTag', item.title);
+				this.$emit('update:TagName', item.name);
 			}
 		}
 	}

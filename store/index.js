@@ -19,7 +19,7 @@ const store = new Vuex.Store({
 			state.isLogin = value
 		},
 		recordListChange(state, value) {
-			state.recordListChanged = value
+			state.recordListChanged = !state.recordListChanged
 		},
 		createRecord(state, record) {
 			const record2 = clone(record);

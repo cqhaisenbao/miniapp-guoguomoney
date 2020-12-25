@@ -7,6 +7,7 @@
 			</view>
 			<open-data type="userNickName"></open-data>
 		</view>
+		<button @click="remove">删除所有记录</button>
 	</view>
 </template>
 
@@ -20,6 +21,10 @@
 		methods: {
 			login() {
 				wxLogin()
+			},
+			remove(){
+				const db = uniCloud.database();
+				let collection = db.collection("recordList").remove()
 			}
 		},
 	}

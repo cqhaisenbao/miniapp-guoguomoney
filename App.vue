@@ -1,11 +1,9 @@
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import wxLogin from '@/lib/weixinlogin'
 	export default {
 		onLaunch() {
 			this.checkLogin()
-		},
-		computed: {
-			...mapState(['isLogin'])
 		},
 		methods:{
 			checkLogin(){
@@ -14,6 +12,7 @@
 					this.$store.commit('changeisLogin', true);
 					return id
 				}else{
+					wxLogin()
 					console.log('没有登录')
 				}
 			}
