@@ -32,7 +32,9 @@
 		"navigationBarBackgroundColor": "#3EB575",
 		"backgroundColor": "#F8F8F8",
 		"usingComponents":{
-			"van-toast":"/wxcomponents/vant-weapp/toast/index"
+			"van-toast":"/wxcomponents/vant-weapp/toast/index",
+			"van-popup":"/wxcomponents/vant-weapp/popup/index",
+			"van-switch":"/wxcomponents/vant-weapp/switch/index"
 		}
 	},
 	"tabBar": {
