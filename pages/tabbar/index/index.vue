@@ -34,14 +34,7 @@
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
-				record: {
-					tag: '',
-					tagName: '',
-					notes: '',
-					type: '-',
-					amount: '',
-					time: 0
-				},
+				record: { tag: '', tagName: '', notes: '', type: '-', amount: '', time: 0 },
 			};
 		},
 

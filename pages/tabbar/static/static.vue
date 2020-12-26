@@ -3,7 +3,7 @@
 		<tabs :data_source="recordTypeList" :value.sync="type"></tabs>
 		<ol v-if="groupedList.length>0">
 			<li class="li_" v-for="(group,index) in groupedList" :key="index">
-				<h3 class="title">{{ group.title }} <span>￥{{ group.total }}</span></h3>
+				<h3 class="title">{{ beautify(group.title) }} <span>￥{{ group.total }}</span></h3>
 				<ol>
 					<view v-for="item in group.items" :key="item._id" class="record" @click="editRecord(item)">
 						<icon :class="item.tagName" class="icon_" />
@@ -34,11 +34,9 @@
 		},
 		watch: {
 			recordListChanged() {
-				console.log('recordListChanged')
 				this.fetchRecordList()
 			},
 			isLogin() {
-				console.log('login')
 				this.fetchRecordList()
 			}
 		},
@@ -89,11 +87,24 @@
 			fetchRecordList() {
 				const db = uniCloud.database();
 				db.collection('recordList').where('uid==$env.uid').get().then(res => {
-					// console.log(res)
 					this.recordList = res.result.data
-					console.log(this.recordList)
 				})
-			}
+			},
+			beautify(string) {
+			        const day = dayjs(string);
+			        const now = dayjs();
+			        if (day.isSame(now, 'day')) {
+			            return '今天';
+			        } else if (day.isSame(now.subtract(1, 'day'), 'day')) {
+			            return '昨天';
+			        } else if (day.isSame(now.subtract(2, 'day'), 'day')) {
+			            return '前天';
+			        } else if (day.isSame(now, 'year')) {
+			            return day.format('M月D日');
+			        } else {
+			            return day.format('YYYY年M月D日');
+			        }
+			    }
 		}
 	}
 </script>
