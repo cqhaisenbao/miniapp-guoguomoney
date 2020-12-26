@@ -40,7 +40,7 @@
 		"usingComponents":{
 			"van-toast":"/wxcomponents/vant-weapp/toast/index",
 			"van-popup":"/wxcomponents/vant-weapp/popup/index",
-			"van-switch":"/wxcomponents/vant-weapp/switch/index"
+			"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
 		}
 	},
 	"tabBar": {

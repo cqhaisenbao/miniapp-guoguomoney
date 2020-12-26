@@ -1,5 +1,6 @@
 <template>
 	<view v-show="show">
+		<van-dialog id="van-dialog" />
 		<view class="content">
 			<view class="line-1">
 				<icon class="recordIcon" :class="currentRecord.tagName" />
@@ -27,6 +28,7 @@
 
 <script>
 	import dayjs from 'dayjs';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -49,6 +51,20 @@
 					this.currentRecord = res.result.data[0]
 					this.time = dayjs(this.currentRecord.time).format('YYYY年MM月DD日');
 					this.show = true
+				})
+			},
+			remove() {
+				this.$dialog.confirm({
+					title: '删除记录',
+					message: '请确认是否删除该条记录',
+				}).then(() => {
+					const db = uniCloud.database();
+					db.collection('recordList').doc(this.recordid).remove().then(() => {
+						this.$store.commit('recordListChange');
+						uni.navigateBack()
+					})
+				}).catch(() => {
+					return
 				})
 			}
 		}
@@ -80,11 +96,12 @@
 
 			.recordIcon {
 				font-size: 20px;
-				color:#2b2e4a ;
+				color: #2b2e4a;
 				margin-right: 5px;
 				@extend %df;
 			}
-			.text_{
+
+			.text_ {
 				font-size: 16px;
 				font-weight: 400;
 			}

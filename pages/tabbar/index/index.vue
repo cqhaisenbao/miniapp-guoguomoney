@@ -36,7 +36,7 @@
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
 				record: {
 					tag: '',
-					tagName:'',
+					tagName: '',
 					notes: '',
 					type: '-',
 					amount: '',
@@ -75,6 +75,7 @@
 					this.$toast.success('已记一笔')
 					this.$store.commit('recordListChange');
 					this.record.notes = '';
+					this.record.tag = '';
 					this.now = dayjs().format('MM月DD日')
 				}).catch((err) => {
 					console.log(err)

@@ -34,6 +34,7 @@
 		},
 		watch: {
 			recordListChanged() {
+				console.log('recordListChanged')
 				this.fetchRecordList()
 			},
 			isLogin() {
@@ -45,7 +46,7 @@
 			...mapState(['recordListChanged']),
 			groupedList() {
 				const { recordList } = this;
-				if (recordList.length === 0) { return; }
+				if (recordList.length === 0) { return[]; }
 				const newList = clone(recordList)
 					.filter(r => r.type === this.type)
 					.sort((a, b) => dayjs(b.time).valueOf() - dayjs(a.time).valueOf());
@@ -88,8 +89,9 @@
 			fetchRecordList() {
 				const db = uniCloud.database();
 				db.collection('recordList').where('uid==$env.uid').get().then(res => {
-					console.log(res)
+					// console.log(res)
 					this.recordList = res.result.data
+					console.log(this.recordList)
 				})
 			}
 		}
