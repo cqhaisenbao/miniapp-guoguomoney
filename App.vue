@@ -13,6 +13,7 @@
 					return id
 				}else{
 					wxLogin()
+					this.$store.commit('changeisLogin', true);
 					console.log('没有登录')
 				}
 			}

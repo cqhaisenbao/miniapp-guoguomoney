@@ -17,7 +17,6 @@
 		<view v-else class="noResult">
 			<u-empty text="目前没有相关记录"></u-empty>
 		</view>
-		<!-- <div class="noResult" v-else>目前没有相关记录</div> -->
 	</view>
 </template>
 
@@ -35,6 +34,10 @@
 		},
 		watch: {
 			recordListChanged() {
+				this.fetchRecordList()
+			},
+			isLogin() {
+				console.log('login')
 				this.fetchRecordList()
 			}
 		},
@@ -69,10 +72,10 @@
 			this.fetchRecordList()
 		},
 		methods: {
-			editRecord(item){
+			editRecord(item) {
 				console.log(item)
-				this.$u.route('pages/editrecord/editrecord',{
-					recordid:item._id,
+				this.$u.route('pages/editrecord/editrecord', {
+					recordid: item._id,
 					// tag:item.tag,
 					// tagname:item.tagName,
 					// time:item.time,
