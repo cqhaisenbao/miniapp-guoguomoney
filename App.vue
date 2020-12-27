@@ -2,22 +2,22 @@
 	import { mapState, mapMutations } from 'vuex';
 	import wxLogin from '@/lib/weixinlogin'
 	export default {
-		onLaunch() {
-			this.checkLogin()
+		onShow() {
+			wxLogin()
 		},
-		methods:{
-			checkLogin(){
-				const id = uni.getStorageSync('uni_id_token');
-				if(id){
-					this.$store.commit('changeisLogin', true);
-					return id
-				}else{
-					wxLogin()
-					this.$store.commit('changeisLogin', true);
-					console.log('没有登录')
-				}
-			}
-		}
+		// methods:{
+		// 	checkLogin(){
+		// 		const id = uni.getStorageSync('uni_id_token');
+		// 		if(id){
+		// 			this.$store.commit('changeisLogin', true);
+		// 			return id
+		// 		}else{
+		// 			wxLogin()
+		// 			this.$store.commit('changeisLogin', true);
+		// 			console.log('没有登录')
+		// 		}
+		// 	}
+		// }
 	}
 </script>
 

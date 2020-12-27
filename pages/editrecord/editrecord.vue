@@ -108,6 +108,7 @@
 		}
 
 		.money {
+			@extend %df;
 			font-size: 30px;
 			font-weight: 600;
 			margin-top: 10px;
