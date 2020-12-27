@@ -3,6 +3,7 @@
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
 			<van-toast id="van-toast" />
+			<u-toast ref="uToast" />
 			<tags v-if="record.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags>
 			<tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
@@ -15,6 +16,7 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import networkcheck from '@/lib/networkcheck.js'
 	import dayjs from 'dayjs'
 	export default {
 		computed: {
@@ -29,6 +31,7 @@
 		data() {
 			return {
 				selected: false,
+				networkType: true,
 				pay_iconName: [],
 				income_iconName: [],
 				now: dayjs().format('MM月DD日'),
@@ -52,7 +55,16 @@
 				this.income_iconName = result.data
 			})
 		},
+		onShow() {
+			networkcheck.call(this)
+		},
 		methods: {
+			showToast(title) {
+				this.$refs.uToast.show({
+					title: title,
+					type: 'error',
+				})
+			},
 			onUpdateTime(value) {
 				this.record.time = dayjs(value).valueOf();
 			},
@@ -72,6 +84,8 @@
 					this.now = dayjs().format('MM月DD日')
 				}).catch((err) => {
 					console.log(err)
+				}).finally(()=>{
+					console.log('finally')
 				})
 				// this.$store.commit('createRecord', this.record);
 
