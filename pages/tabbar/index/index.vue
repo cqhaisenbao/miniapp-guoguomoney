@@ -74,6 +74,7 @@
 			saveRecord() {
 				const db = uniCloud.database();
 				if (this.record.time === 0) {
+					console.log('时间为0')
 					this.record.time = dayjs().valueOf()
 				};
 				db.collection('recordList').add(this.record).then((res) => {
@@ -81,11 +82,14 @@
 					this.$store.commit('recordListChange');
 					this.record.notes = '';
 					this.record.tag = '';
+					this.record.time = 0;
 					this.now = dayjs().format('MM月DD日')
 				}).catch((err) => {
 					console.log(err)
-				}).finally(()=>{
-					console.log('finally')
+				}).finally(() => {
+					if (this.networkType === false) {
+						this.$toast.fail('网络异常')
+					}
 				})
 				// this.$store.commit('createRecord', this.record);
 
