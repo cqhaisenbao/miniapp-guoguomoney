@@ -16,7 +16,7 @@
 				"navigationBarTitleText": "编辑记录",
 				"disableScroll": true
 			}
-		},{
+		}, {
 			"path": "pages/tabbar/my/my",
 			"style": {
 				"navigationBarTitleText": "果果记账",
@@ -29,25 +29,24 @@
 				"navigationBarTitleText": "果果记账",
 				"enablePullDownRefresh": false
 			}
-
 		}
-    ],
+	],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "果果记账",
 		"navigationBarBackgroundColor": "#3EB575",
 		"backgroundColor": "#F8F8F8",
-		"usingComponents":{
-			"van-toast":"/wxcomponents/vant-weapp/toast/index",
-			"van-popup":"/wxcomponents/vant-weapp/popup/index",
-			"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+		"usingComponents": {
+			"van-toast": "/wxcomponents/vant-weapp/toast/index",
+			"van-popup": "/wxcomponents/vant-weapp/popup/index",
+			"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 		}
 	},
 	"tabBar": {
 		"color": "#666",
 		"selectedColor": "#3EB575",
 		"backgroundColor": "#fff",
-		"borderStyle":"white",
+		"borderStyle": "white",
 		"list": [{
 				"pagePath": "pages/tabbar/index/index",
 				"iconPath": "static/money.png",

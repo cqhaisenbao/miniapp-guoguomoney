@@ -1,6 +1,6 @@
 <template>
 	<view v-show="show">
-		<van-toast id="van-toast" />
+		<van-dialog id="van-dialog" />
 		<view class="content">
 			<view class="line-1">
 				<icon class="recordIcon" :class="currentRecord.tagName" />
@@ -16,12 +16,15 @@
 					<u-icon class="icon_" name="trash" color="red" size="35"></u-icon>删除
 				</span>
 				<span class="span-line">|</span>
-				<span class="footer_span">
+				<span class="footer_span" @click="popshow = true">
 					<u-icon class="icon_" name="edit-pen" color="#666666" size="35"></u-icon>编辑
 				</span>
-				<!-- <PopEditRecord :popCurrentRecord="currentRecord" /></span> -->
-				</span>
 			</view>
+		</view>
+		<view>
+			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto">
+				<popeditrecord :popCurrentRecord="currentRecord" :currentRecord='currentRecord'/>
+			</u-popup>
 		</view>
 	</view>
 </template>
@@ -35,6 +38,7 @@
 				recordid: '',
 				currentRecord: {},
 				show: false,
+				popshow: false,
 				time: '',
 			}
 		},

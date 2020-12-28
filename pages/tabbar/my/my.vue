@@ -15,7 +15,8 @@
 	import wxLogin from '@/lib/weixinlogin'
 	export default {
 		data() {
-			return {}
+			return {
+			}
 		},
 		methods: {
 			login() {
