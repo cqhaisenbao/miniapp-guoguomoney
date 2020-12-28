@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<van-toast id="van-toast" />
 		<tabs :data_source="recordTypeList" :value.sync="type"></tabs>
 		<ol v-if="groupedList.length>0">
 			<li class="li_" v-for="(group,index) in groupedList" :key="index">
@@ -22,6 +23,7 @@
 
 <script>
 	import { mapState, mapMutations } from 'vuex';
+	import networkcheck from '@/lib/networkcheck.js';
 	import clone from '@/lib/clone';
 	import dayjs from 'dayjs';
 	export default {
@@ -29,6 +31,7 @@
 			return {
 				recordList: [],
 				type: "-",
+				networkType: true,
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
 			}
 		},
@@ -39,6 +42,9 @@
 			isLogin() {
 				this.fetchRecordList()
 			}
+		},
+		onShow() {
+			networkcheck.call(this)
 		},
 		computed: {
 			...mapState(['recordListChanged']),
