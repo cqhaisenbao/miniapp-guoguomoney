@@ -31,13 +31,21 @@
 			},
 			tag: {
 				type: String
+			},
+			popoutput: {
+				type: String
 			}
 		},
 		data() {
 			return {
-				output: '0',
-				x: false
+				x: false,
+				output: this.popoutput || '0'
 			};
+		},
+		created() {
+			if (this.popoutput) {
+				this.x = true
+			}
 		},
 		methods: {
 			inputContent(e) {
@@ -70,8 +78,8 @@
 			ok() {
 				if (this.tag.length <= 0) {
 					uni.showModal({
-						title:'错误提醒',
-						content:'请选择一个标签'
+						title: '错误提醒',
+						content: '请选择一个标签'
 					})
 					return
 				} else {

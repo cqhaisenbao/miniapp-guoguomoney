@@ -19,9 +19,6 @@
 	import dayjs from 'dayjs'
 	export default {
 		computed: {
-			...mapState(['recordList'])
-		},
-		computed: {
 			...mapState(['isLogin'])
 		},
 		computed: {
@@ -84,7 +81,6 @@
 					}
 				})
 				// this.$store.commit('createRecord', this.record);
-
 			}
 		},
 	};
