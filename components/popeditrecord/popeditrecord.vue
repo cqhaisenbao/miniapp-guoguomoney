@@ -1,42 +1,46 @@
 <template>
 	<view>
-		{{mycurrentRecord.type}}
+		{{popcurrentrecord.type}}
 		<view class="topWrapper-record">
 			<ul class="record-tabs">
-				<li v-for="item in recordTypeList" :key="item.value" :class="{selected: item.value=== mycurrentRecord.type}" @click="select(item)" class="record-tabs-item">
+				<li v-for="item in recordTypeList" :key="item.value" :class="{selected: item.value=== popcurrentrecord.type}" @click="select(item)" class="record-tabs-item">
 					{{ item.text }}
 				</li>
 			</ul>
-			<datapick @timeupdate="onUpdateTime" />
+			<datapick @timeupdate="onUpdateTime" :now="popnow" />
 		</view>
 		<van-toast id="van-toast" />
-		<tags v-if="record.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags>
-		<tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags>
-		<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
-		</notes>
-		<keybord :value.sync="record.amount" :tag.sync="record.tag" @submit="saveRecord"></keybord>
+		<!-- <tags v-if="record.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags> -->
+		<!-- <tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags> -->
+		<!-- <notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注"> -->
+		<!-- </notes> -->
+		<!-- <keybord :value.sync="record.amount" :tag.sync="record.tag" @submit="saveRecord"></keybord> -->
 	</view>
 </template>
 
 <script>
+	import dayjs from 'dayjs'
 	export default {
 		data() {
 			return {
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
 			};
 		},
-		props:{
-			currentRecord:{}
+		props: {
+			currentrecord: {}
 		},
-		computed:{
-			mycurrentRecord(){
-				return this.$props.currentRecord
+		computed: {
+			popcurrentrecord() {
+				return this.currentrecord
+			},
+			popnow(){
+				return dayjs(this.popcurrentrecord.time).format('MM月DD日')
 			}
 		},
-		methods:{
+		methods: {
 			select(item) {
-			        this.mycurrentRecord.type = item.value;
-			    }
+				this.popcurrentrecord.type = item.value;
+			}
 		}
 	}
 </script>

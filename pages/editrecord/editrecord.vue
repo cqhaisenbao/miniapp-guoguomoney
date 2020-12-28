@@ -23,7 +23,7 @@
 		</view>
 		<view>
 			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto">
-				<popeditrecord :popCurrentRecord="currentRecord" :currentRecord='currentRecord'/>
+				<popeditrecord :currentrecord="currentRecord" />
 			</u-popup>
 		</view>
 	</view>
