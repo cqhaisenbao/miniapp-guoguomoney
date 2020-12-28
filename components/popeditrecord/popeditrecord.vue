@@ -1,6 +1,5 @@
 <template>
 	<view>
-		{{popcurrentrecord.type}}
 		<view class="topWrapper-record">
 			<ul class="record-tabs">
 				<li v-for="item in recordTypeList" :key="item.value" :class="{selected: item.value=== popcurrentrecord.type}" @click="select(item)" class="record-tabs-item">
@@ -10,37 +9,53 @@
 			<datapick @timeupdate="onUpdateTime" :now="popnow" />
 		</view>
 		<van-toast id="van-toast" />
-		<!-- <tags v-if="record.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags> -->
-		<!-- <tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags> -->
-		<!-- <notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注"> -->
-		<!-- </notes> -->
-		<!-- <keybord :value.sync="record.amount" :tag.sync="record.tag" @submit="saveRecord"></keybord> -->
+		<tags v-if="popcurrentrecord.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName"></tags>
+		<tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName"></tags>
+		<notes :value.sync="popcurrentrecord.notes" field-name="备注" placeholder="请在这里输入备注" />
+		<keybord v-if="popcurrentrecord.amount" :popoutput="popcurrentrecord.amount"></keybord>
 	</view>
 </template>
 
 <script>
-	import dayjs from 'dayjs'
+	import dayjs from 'dayjs';
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
+				pay_iconName: [],
+				income_iconName: [],
 			};
 		},
 		props: {
 			currentrecord: {}
 		},
 		computed: {
-			popcurrentrecord() {
+			popcurrentrecord(){
 				return this.currentrecord
 			},
-			popnow(){
+			popnow() {
 				return dayjs(this.popcurrentrecord.time).format('MM月DD日')
-			}
+			},
+		},
+		mounted() {
+			const db = uniCloud.database();
+			uni.showLoading({ title: '加载中' });
+			db.collection('income').where('type=="-"').get().then((res) => {
+				uni.hideLoading()
+				const { result } = res
+				this.pay_iconName = result.data
+			});
+			db.collection('income').where('type=="+"').get().then((res) => {
+				uni.hideLoading()
+				const { result } = res
+				this.income_iconName = result.data
+			})
 		},
 		methods: {
 			select(item) {
 				this.popcurrentrecord.type = item.value;
-			}
+			},
 		}
 	}
 </script>
@@ -49,6 +64,7 @@
 	.topWrapper-record {
 		display: flex;
 		padding: 10px 20px;
+		margin-top: 40px;
 
 		.record-tabs {
 			flex-grow: 1;

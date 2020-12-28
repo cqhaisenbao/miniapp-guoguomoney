@@ -22,7 +22,7 @@
 			</view>
 		</view>
 		<view>
-			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto">
+			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom=true closeable=true>
 				<popeditrecord :currentrecord="currentRecord" />
 			</u-popup>
 		</view>
