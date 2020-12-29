@@ -49,8 +49,9 @@
 			networkcheck.call(this)
 		},
 		methods: {
-			savetag() {
+			savetag(value) {
 				this.popshow = false
+				this.record.tag = value
 				gettags.call(this)
 			},
 			close() {

@@ -67,7 +67,7 @@
 					uni.showLoading({ title: '加载中' });
 					const db = uniCloud.database();
 					db.collection('income').add(this.userTag).then((res) => {
-						this.$emit("savetag")
+						this.$emit("savetag",currentName)
 						uni.hideLoading()
 						this.$toast.success('新建成功')
 					}).catch(err => console.log(err));
