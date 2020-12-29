@@ -1,7 +1,6 @@
 <template>
 	<view v-show="show">
 		<van-dialog id="van-dialog" />
-		<!-- <van-toast id="van-toast" /> -->
 		<view class="content">
 			<view class="line-1">
 				<icon class="recordIcon" :class="currentRecord.tagName" />

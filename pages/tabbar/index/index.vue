@@ -1,9 +1,10 @@
 <template>
 	<view>
+		<van-dialog id="van-dialog" />
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
 			<van-toast id="van-toast" />
-			<tags :type="record.type" class="tag_content" :iconName='default_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName" :popshow.sync="popshow"></tags>
+			<tags @deletetag="deletetag" :type="record.type" class="tag_content" :iconName='default_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName" :popshow.sync="popshow"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
 				<datapick @timeupdate="onUpdateTime" :now='now'></datapick>
 			</notes>
@@ -50,6 +51,10 @@
 		methods: {
 			savetag() {
 				this.popshow = false
+				gettags.call(this)
+			},
+			deletetag(){
+				gettags.call(this)
 			},
 			onUpdateTime(value) {
 				this.record.time = dayjs(value).valueOf();

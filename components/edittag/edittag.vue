@@ -16,7 +16,6 @@
 
 <script>
 	export default {
-		// TODO：获取当前用户tag检查重复
 		props: {
 			tagtype: {
 				type: String
@@ -48,7 +47,6 @@
 			},
 			savetag() {
 				this.userTag.type === this.tagtype
-				console.log(this.userTag)
 				uni.showLoading({ title: '加载中' });
 				const db = uniCloud.database();
 				db.collection('income').add(this.userTag).then((res) => {
