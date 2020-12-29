@@ -12,7 +12,7 @@
 		</view>
 		<view>
 			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">
-				<edittag :tagtype.sync="record.type"></edittag>
+				<edittag @savetag='savetag' :tagtype.sync="record.type"></edittag>
 			</u-popup>
 		</view>
 	</view>
@@ -61,6 +61,9 @@
 			networkcheck.call(this)
 		},
 		methods: {
+			savetag(){
+				this.popshow=false
+			},
 			onUpdateTime(value) {
 				this.record.time = dayjs(value).valueOf();
 				this.now = dayjs(value).format('MM月DD日')

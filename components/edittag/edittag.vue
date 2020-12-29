@@ -1,5 +1,6 @@
 <template>
 	<view class="content">
+		<van-toast id="van-toast" />
 		<view class="top">
 			<u-icon name="arrow-left" size="40" color="#bfbdbd"></u-icon>
 			<text class="text_">请填写类别名</text>
@@ -43,10 +44,12 @@
 				this.cursor = e.detail.cursor
 			},
 			savetag(){
-				console.log(this.userTag)
+				uni.showLoading({ title: '加载中' });
 				const db = uniCloud.database();
 				db.collection('income').add(this.userTag).then((res) => {
-					console.log(res)
+					this.$emit("savetag")
+					uni.hideLoading()
+					this.$toast.success('新建成功')
 				}).catch(err=>console.log(err));
 			}
 		}
