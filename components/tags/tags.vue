@@ -1,9 +1,12 @@
 <template>
-	<view class="tags">
+	<view v-if="iconName.length>0" class="tags">
 		<scroll-view show-scrollbar=false class="icon_wrapper" scroll-x>
 			<view class="tags_scroll__box">
 				<view v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
 					<text class="icon_font">{{item.title}}</text>
+				</view>
+				<view @click="addtag" class="iconfont icon-tianjiazc icon">
+					<text class="icon_font">新增分类</text>
 				</view>
 			</view>
 		</scroll-view>
@@ -16,12 +19,9 @@
 			iconName: {
 				type: Array
 			},
-			selectedTag: {
-				type: String
-			},
-			tagName:{
-				type:String
-			}
+			selectedTag: '',
+			tagName: '',
+			popshow: false,
 		},
 		data() {
 			return {
@@ -38,6 +38,9 @@
 				this.selectedTags.push(item.title);
 				this.$emit('update:selectedTag', item.title);
 				this.$emit('update:TagName', item.name);
+			},
+			addtag() {
+				this.$emit('update:popshow', true);
 			}
 		}
 	}
@@ -69,13 +72,15 @@
 					margin-right: 23px;
 					color: #c4c4c4;
 					font-size: 32px;
-					&:last-child{
+
+					&:last-child {
 						padding-right: 23px;
 					}
 
 					&.selected {
 						color: #e84545;
-						.icon_font{
+
+						.icon_font {
 							color: #484848;
 						}
 					}

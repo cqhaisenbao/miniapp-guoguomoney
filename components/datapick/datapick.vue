@@ -28,7 +28,6 @@
 			},
 			change(value) {
 				this.$emit('timeupdate', value.result);
-				this.$emit('nowchange', value.result);
 			}
 		}
 	}

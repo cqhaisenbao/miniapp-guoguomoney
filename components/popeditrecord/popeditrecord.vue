@@ -1,18 +1,18 @@
 <template>
-	<view>
+	<view v-if="popcurrentrecord.amount">
 		<view class="topWrapper-record">
 			<ul class="record-tabs">
 				<li v-for="item in recordTypeList" :key="item.value" :class="{selected: item.value=== popcurrentrecord.type}" @click="select(item)" class="record-tabs-item">
 					{{ item.text }}
 				</li>
 			</ul>
-			<datapick @timeupdate="onUpdateTime" :now="popnow" />
+			<datapick @timeupdate="onUpdateTime" :now="now(popcurrentrecord.time)" />
 		</view>
-		<van-toast id="van-toast" />
+		<van-toast id="van-toast"/>
 		<tags v-if="popcurrentrecord.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName"></tags>
 		<tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName"></tags>
 		<notes :value.sync="popcurrentrecord.notes" field-name="备注" placeholder="请在这里输入备注" />
-		<keybord v-if="popcurrentrecord.amount" :popoutput="popcurrentrecord.amount"></keybord>
+		<keybord :tag.sync="popcurrentrecord.tag" @update:value="onUpdateAmount" :popoutput="popcurrentrecord.amount" @submit="saveRecord"></keybord>
 	</view>
 </template>
 
@@ -28,14 +28,14 @@
 			};
 		},
 		props: {
-			currentrecord: {}
+			currentrecord: {},
+			popshow: {
+				type: Boolean
+			}
 		},
 		computed: {
-			popcurrentrecord(){
+			popcurrentrecord() {
 				return this.currentrecord
-			},
-			popnow() {
-				return dayjs(this.popcurrentrecord.time).format('MM月DD日')
 			},
 		},
 		mounted() {
@@ -56,6 +56,32 @@
 			select(item) {
 				this.popcurrentrecord.type = item.value;
 			},
+			onUpdateAmount(value) {
+				this.popcurrentrecord.amount = parseFloat(value);
+			},
+			onUpdateTime(value) {
+				this.popcurrentrecord.time = dayjs(value).valueOf();
+				this.now(value)
+			},
+			now(value) {
+				return dayjs(value).format('MM月DD日')
+			},
+			saveRecord() {
+				const docid = this.popcurrentrecord._id
+				delete this.popcurrentrecord._id
+				delete this.popcurrentrecord.uid
+				const db = uniCloud.database();
+				db.collection('recordList').doc(docid).update(this.popcurrentrecord).then(() => {
+					this.$emit('updated', false);
+					this.$store.commit('recordListChange');
+				}).catch((err) => {
+					console.log(err)
+				}).finally(() => {
+					if (this.networkType === false) {
+						this.$toast.fail('网络异常')
+					}
+				})
+			}
 		}
 	}
 </script>

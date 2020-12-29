@@ -1,6 +1,7 @@
 <template>
 	<view v-show="show">
 		<van-dialog id="van-dialog" />
+		<!-- <van-toast id="van-toast" /> -->
 		<view class="content">
 			<view class="line-1">
 				<icon class="recordIcon" :class="currentRecord.tagName" />
@@ -23,7 +24,8 @@
 		</view>
 		<view>
 			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom=true closeable=true>
-				<popeditrecord :currentrecord="currentRecord" />
+				<van-toast id="van-toast" />
+				<popeditrecord @updated="updated" :currentrecord="currentRecord"/>
 			</u-popup>
 		</view>
 	</view>
@@ -47,6 +49,15 @@
 			this.fetchCurrentRecord()
 		},
 		methods: {
+			updated(value) {
+				this.popshow = value
+				uni.showToast({
+					title: '修改成功',
+					icon: 'none',
+					duration: 2000
+				});
+				this.fetchCurrentRecord()
+			},
 			fetchCurrentRecord() {
 				const db = uniCloud.database();
 				db.collection('recordList').where({
