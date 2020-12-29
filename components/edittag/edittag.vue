@@ -7,10 +7,10 @@
 			<text class="text_ok" :class="{isinputed:isinputed}" @click="savetag">确定</text>
 		</view>
 		<view class="input_">
-			{{userTag.title}}
 			<input @input="taginput" v-model="userTag.title" maxlength="4" class="input_text" cursor-spacing='50px' placeholder="不能与已有类型名重复" />
 			<u-line color="#d4d3d3" hair-line="false" />
-			<view class="cursor_">{{cursor}}/4</view>
+			<view v-if="isrepeat" class="isrepeat">该分类已存在</view>
+			<view v-else class="cursor_">{{cursor}}/4</view>
 		</view>
 	</view>
 </template>
@@ -20,12 +20,16 @@
 		props: {
 			tagtype: {
 				type: String
+			},
+			iconName: {
+				type: Array
 			}
 		},
 		data() {
 			return {
 				isinputed: false,
-				cursor: 0
+				cursor: 0,
+				isrepeat: false
 			};
 		},
 		watch: {
@@ -41,20 +45,32 @@
 					type: this.tagtype
 				}
 			},
+			nameList() {
+				return this.iconName
+			}
 		},
 		methods: {
 			taginput(e) {
 				this.cursor = e.detail.cursor
 			},
 			savetag() {
-				this.userTag.type === this.tagtype
-				uni.showLoading({ title: '加载中' });
-				const db = uniCloud.database();
-				db.collection('income').add(this.userTag).then((res) => {
-					this.$emit("savetag")
-					uni.hideLoading()
-					this.$toast.success('新建成功')
-				}).catch(err => console.log(err));
+				const list = this.nameList
+				const currentName = this.userTag.title
+				const x = list.every(function(elem, index, arr) {
+					return elem.title !== currentName
+				})
+				if (x) {
+					this.userTag.type === this.tagtype
+					uni.showLoading({ title: '加载中' });
+					const db = uniCloud.database();
+					db.collection('income').add(this.userTag).then((res) => {
+						this.$emit("savetag")
+						uni.hideLoading()
+						this.$toast.success('新建成功')
+					}).catch(err => console.log(err));
+				}else{
+					this.isrepeat=true
+				}
 			}
 		}
 	}
@@ -94,6 +110,13 @@
 				margin-bottom: 10px;
 				font-size: 12px;
 				color: #d4d3d3
+			}
+
+			.isrepeat {
+				margin-top: 10px;
+				margin-bottom: 10px;
+				font-size: 12px;
+				color: #e84545;
 			}
 		}
 	}

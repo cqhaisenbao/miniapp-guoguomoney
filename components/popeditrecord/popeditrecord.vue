@@ -1,5 +1,6 @@
 <template>
 	<view v-if="popcurrentrecord.amount">
+		<van-dialog id="van-dialog" />
 		<view class="topWrapper-record">
 			<ul class="record-tabs">
 				<li v-for="item in recordTypeList" :key="item.value" :class="{selected: item.value=== popcurrentrecord.type}" @click="select(item)" class="record-tabs-item">
@@ -9,22 +10,28 @@
 			<datapick @timeupdate="onUpdateTime" :now="now(popcurrentrecord.time)" />
 		</view>
 		<van-toast id="van-toast"/>
-		<tags v-if="popcurrentrecord.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName"></tags>
-		<tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName"></tags>
+		<tags @deletetag="deletetag" :type="popcurrentrecord.type" class="tag_content" :iconName='default_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName" :popshow.sync="tagpopshow"></tags>
 		<notes :value.sync="popcurrentrecord.notes" field-name="备注" placeholder="请在这里输入备注" />
 		<keybord :tag.sync="popcurrentrecord.tag" @update:value="onUpdateAmount" :popoutput="popcurrentrecord.amount" @submit="saveRecord"></keybord>
+		<view v-if="tagpopshow">
+			<u-popup v-model="tagpopshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">
+				<edittag :iconName='default_iconName' @savetag='savetag' :tagtype.sync="record.type"></edittag>
+			</u-popup>
+		</view>
 	</view>
 </template>
 
 <script>
 	import dayjs from 'dayjs';
 	import { mapState, mapMutations } from 'vuex';
+	import gettags from '@/lib/gettags.js';
 	export default {
 		data() {
 			return {
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
-				pay_iconName: [],
+				default_iconName: [],
 				income_iconName: [],
+				tagpopshow: false,
 			};
 		},
 		props: {
@@ -39,20 +46,13 @@
 			},
 		},
 		mounted() {
-			const db = uniCloud.database();
-			uni.showLoading({ title: '加载中' });
-			db.collection('income').where('type=="-"').get().then((res) => {
-				uni.hideLoading()
-				const { result } = res
-				this.pay_iconName = result.data
-			});
-			db.collection('income').where('type=="+"').get().then((res) => {
-				uni.hideLoading()
-				const { result } = res
-				this.income_iconName = result.data
-			})
+			gettags.call(this)
 		},
 		methods: {
+			savetag() {
+				this.popshow = false
+				gettags.call(this)
+			},
 			select(item) {
 				this.popcurrentrecord.type = item.value;
 			},
