@@ -84,18 +84,19 @@
 				min-height: 80px;
 
 				.icon {
+					width: 41px;
 					flex-shrink: 0;
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
 					box-sizing: border-box;
 					align-items: center;
-					margin-right: 23px;
+					margin-right: 16px;
 					color: #c4c4c4;
 					font-size: 32px;
 
 					&:last-child {
-						padding-right: 23px;
+						margin-right: 16px;
 					}
 
 					&.selected {

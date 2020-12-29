@@ -7,6 +7,7 @@
 			<text class="text_ok" :class="{isinputed:isinputed}" @click="savetag">确定</text>
 		</view>
 		<view class="input_">
+			{{userTag.title}}
 			<input @input="taginput" v-model="userTag.title" maxlength="4" class="input_text" cursor-spacing='50px' placeholder="不能与已有类型名重复" />
 			<u-line color="#d4d3d3" hair-line="false" />
 			<view class="cursor_">{{cursor}}/4</view>
@@ -33,12 +34,12 @@
 			},
 		},
 		computed: {
-			 userTag(){
-				 return {
+			userTag() {
+				return {
 					name: 'iconfont icon-zidingyi',
 					title: '',
-					type: this.tagtype 
-				 }
+					type: this.tagtype
+				}
 			},
 		},
 		methods: {
@@ -53,7 +54,7 @@
 					this.$emit("savetag")
 					uni.hideLoading()
 					this.$toast.success('新建成功')
-				}).catch(err=>console.log(err));
+				}).catch(err => console.log(err));
 			}
 		}
 	}

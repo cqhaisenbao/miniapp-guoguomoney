@@ -10,7 +10,7 @@
 			</notes>
 			<keybord @update:value="onUpdateAmount" :tag.sync="record.tag" @submit="saveRecord"></keybord>
 		</view>
-		<view>
+		<view v-if="popshow">
 			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">
 				<edittag @savetag='savetag' :tagtype.sync="record.type"></edittag>
 			</u-popup>
