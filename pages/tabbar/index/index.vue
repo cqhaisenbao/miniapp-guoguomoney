@@ -34,7 +34,6 @@
 				selected: false,
 				networkType: true,
 				default_iconName: [],
-				user_iconName: [],
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
 				popshow: false,
@@ -42,7 +41,6 @@
 				record: { tag: '', tagName: '', notes: '', type: '-', amount: '', time: 0 },
 			};
 		},
-
 		created() {
 			gettags.call(this)
 		},
