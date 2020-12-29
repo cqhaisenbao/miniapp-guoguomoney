@@ -11,7 +11,6 @@
 			<u-line color="#d4d3d3" hair-line="false" />
 			<view class="cursor_">{{cursor}}/4</view>
 		</view>
-		{{tagtype}}
 	</view>
 </template>
 
@@ -26,11 +25,6 @@
 		data() {
 			return {
 				isinputed: false,
-				userTag: {
-					name: 'iconfont icon-zidingyi',
-					title: '',
-					type: this.tagtype
-				},
 				cursor: 0
 			};
 		},
@@ -39,11 +33,22 @@
 				this.cursor > 0 ? this.isinputed = true : this.isinputed = false
 			},
 		},
+		computed: {
+			 userTag(){
+				 return {
+					name: 'iconfont icon-zidingyi',
+					title: '',
+					type: this.tagtype 
+				 }
+			},
+		},
 		methods: {
 			taginput(e) {
 				this.cursor = e.detail.cursor
 			},
-			savetag(){
+			savetag() {
+				this.userTag.type === this.tagtype
+				console.log(this.userTag)
 				uni.showLoading({ title: '加载中' });
 				const db = uniCloud.database();
 				db.collection('income').add(this.userTag).then((res) => {
