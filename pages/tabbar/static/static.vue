@@ -78,17 +78,9 @@
 		},
 		methods: {
 			editRecord(item) {
-				console.log(item)
 				this.$u.route('pages/editrecord/editrecord', {
 					recordid: item._id,
-					// tag:item.tag,
-					// tagname:item.tagName,
-					// time:item.time,
-					// type:item.type
 				})
-				// uni.navigateTo({
-				// 	url:'pages/editrecord/editrecord'
-				// })
 			},
 			fetchRecordList() {
 				const db = uniCloud.database();

@@ -1,6 +1,7 @@
 <template>
 	<view>
 		<view class="numberPad">
+			<van-toast id="van-toast" />
 			<view class="output">{{output}}</view>
 			<view class="buttons">
 				<button clsaa="mybutton" @click="inputContent" data-text="1">1</button>
@@ -14,7 +15,7 @@
 				<button clsaa="mybutton" @click="inputContent" data-text="7">7</button>
 				<button clsaa="mybutton" @click="inputContent" data-text="8">8</button>
 				<button clsaa="mybutton" @click="inputContent" data-text="9">9</button>
-				<button clsaa="mybutton" @click="ok" class="ok" :class="{numChange:x}">OK</button>
+				<button clsaa="mybutton" @click.stop="ok" class="ok" :class="{numChange:x}">OK</button>
 				<button clsaa="mybutton" @click="inputContent" class="zero" data-text="0">0</button>
 				<button clsaa="mybutton" @click="inputContent" data-text=".">.</button>
 			</view>
@@ -27,7 +28,6 @@
 		props: {
 			value: {
 				type: String,
-				default: '0'
 			},
 			tag: {
 				type: String
@@ -76,7 +76,10 @@
 				this.x = false;
 			},
 			ok() {
-				if (this.tag.length <= 0) {
+				if(this.output === '0'){
+					this.$toast('请输入一笔具体金额')
+					return
+				}else if (this.tag.length <= 0) {
 					uni.showModal({
 						title: '错误提醒',
 						content: '请选择一个标签'

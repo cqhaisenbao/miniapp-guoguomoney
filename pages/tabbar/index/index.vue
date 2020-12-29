@@ -3,12 +3,17 @@
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
 			<van-toast id="van-toast" />
-			<tags v-if="record.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags>
-			<tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName"></tags>
+			<tags v-if="record.type==='-'?true:false" class="tag_content" :iconName='pay_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName" :popshow.sync="popshow"></tags>
+			<tags v-else class="tag_content" :iconName='income_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName" :popshow.sync="popshow"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
-				<datapick @timeupdate="onUpdateTime" :now='now' @nowchange='nowchange'></datapick>
+				<datapick @timeupdate="onUpdateTime" :now='now'></datapick>
 			</notes>
-			<keybord :value.sync="record.amount" :tag.sync="record.tag" @submit="saveRecord"></keybord>
+			<keybord @update:value="onUpdateAmount" :tag.sync="record.tag" @submit="saveRecord"></keybord>
+		</view>
+		<view>
+			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">
+				<edittag :tagtype.sync="record.type"></edittag>
+			</u-popup>
 		</view>
 	</view>
 </template>
@@ -32,6 +37,7 @@
 				income_iconName: [],
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
+				popshow: false,
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
 				record: { tag: '', tagName: '', notes: '', type: '-', amount: '', time: 0 },
 			};
@@ -57,9 +63,10 @@
 		methods: {
 			onUpdateTime(value) {
 				this.record.time = dayjs(value).valueOf();
-			},
-			nowchange(value) {
 				this.now = dayjs(value).format('MM月DD日')
+			},
+			onUpdateAmount(value) {
+				this.record.amount = parseFloat(value);
 			},
 			saveRecord() {
 				const db = uniCloud.database();
