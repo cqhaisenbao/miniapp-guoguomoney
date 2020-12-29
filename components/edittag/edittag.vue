@@ -2,7 +2,7 @@
 	<view class="content">
 		<van-toast id="van-toast" />
 		<view class="top">
-			<u-icon name="arrow-left" size="40" color="#bfbdbd"></u-icon>
+			<u-icon @click="close" name="close" size="30" color="#bfbdbd"></u-icon>
 			<text class="text_">请填写类别名</text>
 			<text class="text_ok" :class="{isinputed:isinputed}" @click="savetag">确定</text>
 		</view>
@@ -53,13 +53,16 @@
 			taginput(e) {
 				this.cursor = e.detail.cursor
 			},
+			close() {
+				this.$emit("close")
+			},
 			savetag() {
 				const list = this.nameList
 				const currentName = this.userTag.title
 				const x = list.every(function(elem, index, arr) {
 					return elem.title !== currentName
 				})
-				if (x) {
+				if (x && currentName) {
 					this.userTag.type === this.tagtype
 					uni.showLoading({ title: '加载中' });
 					const db = uniCloud.database();
@@ -68,8 +71,10 @@
 						uni.hideLoading()
 						this.$toast.success('新建成功')
 					}).catch(err => console.log(err));
-				}else{
-					this.isrepeat=true
+				} else if (currentName === '') {
+					return
+				} else {
+					this.isrepeat = true
 				}
 			}
 		}

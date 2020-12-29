@@ -12,7 +12,7 @@
 		</view>
 		<view v-if="popshow">
 			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">
-				<edittag :iconName='default_iconName' @savetag='savetag' :tagtype.sync="record.type"></edittag>
+				<edittag @close='close' :iconName='default_iconName' @savetag='savetag' :tagtype.sync="record.type"></edittag>
 			</u-popup>
 		</view>
 	</view>
@@ -53,7 +53,10 @@
 				this.popshow = false
 				gettags.call(this)
 			},
-			deletetag(){
+			close() {
+				this.popshow = false
+			},
+			deletetag() {
 				gettags.call(this)
 			},
 			onUpdateTime(value) {
