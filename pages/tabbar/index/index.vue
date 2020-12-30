@@ -35,6 +35,7 @@
 				selected: false,
 				networkType: true,
 				default_iconName: [],
+				deleteTagRecordList: [],
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
 				popshow: false,
@@ -52,14 +53,27 @@
 			savetag(value) {
 				this.popshow = false
 				this.record.tag = value
+				this.record.tagName = "iconfont icon-zidingyi"
 				gettags.call(this)
 			},
 			close() {
 				this.popshow = false
 			},
-			deletetag(tagid) {
-				console.log(tagid)
+			deletetag(item) {
 				gettags.call(this)
+				const tagtype = item.type === '-' ? 'zhichu' : 'shouru'
+				const tagname = item.type === '-' ? '其他支出' : '其他收入'
+				const db = uniCloud.database();
+				db.collection('recordList').where({
+					uid: db.env.uid,
+					tag: item.title,
+					type: item.type
+				}).update({
+					tagName: "iconfont icon-qita" + tagtype,
+					tag: tagname
+				}).then(res => {
+					this.$store.commit('recordListChange');
+				})
 			},
 			onUpdateTime(value) {
 				this.record.time = dayjs(value).valueOf();

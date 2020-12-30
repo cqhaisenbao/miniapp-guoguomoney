@@ -76,8 +76,6 @@
 						uni.hideLoading()
 						this.$toast.success('新建成功')
 					}).catch(err => console.log(err));
-				} else if (currentName === '') {
-					return
 				} else {
 					this.isrepeat = true
 				}

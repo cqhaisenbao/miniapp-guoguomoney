@@ -52,12 +52,12 @@
 			editusertag(item) {
 				const tagid = item._id
 				this.$dialog.confirm({
-					title: '删除标签',
-					message: '请确认是否删除此标签',
+					title: '删除分类',
+					message: '删除后，当前分类下的内容将归为“其他”分类',
 				}).then(() => {
 					const db = uniCloud.database();
 					db.collection('income').doc(tagid).remove().then((res) => {
-						this.$emit('deletetag',tagid)
+						this.$emit('deletetag',item)
 					})
 				}).catch(() => {
 					return
