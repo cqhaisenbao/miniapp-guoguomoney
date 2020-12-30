@@ -86,6 +86,7 @@
 				const db = uniCloud.database();
 				db.collection('recordList').where('uid==$env.uid').get().then(res => {
 					this.recordList = res.result.data
+					// console.log(this.recordList)
 				})
 			},
 			beautify(string) {

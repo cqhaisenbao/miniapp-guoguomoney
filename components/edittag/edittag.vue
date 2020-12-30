@@ -59,8 +59,13 @@
 			savetag() {
 				const list = this.nameList
 				const currentName = this.userTag.title
-				const x = list.every(function(elem, index, arr) {
-					return elem.title !== currentName
+				const currentType = this.userTag.type
+				const x = list.every(function(elem) {
+					if(elem.title === currentName && elem.type === currentType){
+						return false
+					}else{
+						return true
+					}
 				})
 				if (x && currentName) {
 					this.userTag.type === this.tagtype

@@ -57,7 +57,8 @@
 			close() {
 				this.popshow = false
 			},
-			deletetag() {
+			deletetag(tagid) {
+				console.log(tagid)
 				gettags.call(this)
 			},
 			onUpdateTime(value) {

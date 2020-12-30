@@ -57,7 +57,7 @@
 				}).then(() => {
 					const db = uniCloud.database();
 					db.collection('income').doc(tagid).remove().then((res) => {
-						this.$emit('deletetag')
+						this.$emit('deletetag',tagid)
 					})
 				}).catch(() => {
 					return
@@ -95,10 +95,6 @@
 					color: #c4c4c4;
 					font-size: 32px;
 
-					&:last-child {
-						margin-right: 16px;
-					}
-
 					&.selected {
 						color: #e84545;
 
@@ -111,11 +107,14 @@
 		}
 	}
 
-
 	.icon_font {
 		font-size: 10px;
 		margin-top: 5px;
 		color: gray;
+	}
 
+	.icon-tianjiazc {
+		width: 57px!important;
+		padding-right: 16px;
 	}
 </style>
