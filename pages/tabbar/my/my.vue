@@ -1,177 +1,225 @@
 <template>
-	<view>
-		<!-- <button open-type="getUserInfo" @click="login">获取用户信息</button>
-		<view class="userinfo">
-			<view class="userinfo-avatar">
-				<open-data type="userAvatarUrl"></open-data>
-			</view>
-			<open-data type="userNickName"></open-data>
-		</view> -->
-		<view class="qiun-columns">
-			<view class="qiun-bg-white qiun-title-bar qiun-common-mt">
-				<view class="qiun-title-dot-light">柱状图</view>
-			</view>
-		</view>
-	</view>
+  <view>
+    <uni-ec-canvas
+      class="uni-ec-canvas"
+      id="line-chart"
+      canvas-id="multi-charts-line"
+      :ec="ec"
+    ></uni-ec-canvas>
+
+    <uni-ec-canvas
+      class="uni-ec-canvas"
+      id="pie-chart"
+      canvas-id="multi-charts-pie"
+      :ec="ec2"
+    ></uni-ec-canvas>
+  </view>
 </template>
 
 <script>
-	import uCharts from '@/components/u-charts/u-charts';
-	var _self;
-	var canvaColumn = null;
-	export default {
-		data() {
-			return {
-				cWidth: '',
-				cHeight: '',
-				pixelRatio: 1,
-				serverData: ''
-			}
-		},
-		onLoad() {
-			_self = this;
-			this.cWidth = uni.upx2px(750);
-			this.cHeight = uni.upx2px(500);
-			this.getServerData();
-		},
-		methods: {
-			getServerData() {
-				uni.request({
-					url: 'https://www.easy-mock.com/mock/5cc586b64fc5576cba3d647b/uni-wx-charts/chartsdata2',
-					data: {},
-					success: function(res) {
-						console.log(res.data.data)
-						//下面这个根据需要保存后台数据，我是为了模拟更新柱状图，所以存下来了
-						_self.serverData = res.data.data;
-						let Column = { categories: [], series: [] };
-						//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-						Column.categories = res.data.data.Column.categories;
-						//这里的series数据是后台做好的，如果您的数据没有和前面我注释掉的格式一样，请自行拼接数据
-						Column.series = res.data.data.Column.series;
-						_self.showColumn("canvasColumn", Column);
-					},
-					fail: () => {
-						console.log("网络错误，小程序端请检查合法域名");
-					},
-				});
-			},
-			showColumn(canvasId, chartData) {
-				canvaColumn = new uCharts({
-					$this: _self,
-					canvasId: canvasId,
-					type: 'column',
-					legend: true,
-					fontSize: 11,
-					background: '#FFFFFF',
-					pixelRatio: _self.pixelRatio,
-					animation: true,
-					categories: chartData.categories,
-					series: chartData.series,
-					xAxis: {
-						disableGrid: true,
-					},
-					yAxis: {},
-					dataLabel: true,
-					width: _self.cWidth * _self.pixelRatio,
-					height: _self.cHeight * _self.pixelRatio,
-					extra: {
-						column: {
-							width: _self.cWidth * _self.pixelRatio * 0.45 / chartData.categories.length
-						}
-					}
-				});
-			},
-			changeData() {
-				canvaColumn.updateData({
-					series: _self.serverData.ColumnB.series,
-					categories: _self.serverData.ColumnB.categories
-				});
-			}
-		}
-	}
+import uniEcCanvas from "@/components/uni-ec-canvas/uni-ec-canvas";
+export default {
+  data() {
+    return {
+      ec: {
+        option: {
+          title: {
+            text: "折线图"
+          },
+          tooltip: {
+            trigger: "axis",
+            formatter: "{b}\r\n{c0}人",
+            axisPointer: {
+              type: "line",
+              axis: "x",
+              label: {
+                backgroundColor: "#000000"
+              }
+            }
+          },
+          grid: {
+            left: "6%",
+            right: "6%",
+            top: "6%",
+            bottom: "6%",
+            containLabel: true
+          },
+          xAxis: {
+            type: "category",
+            boundaryGap: false,
+            data: ["2-12", "2-14", "2-16", "2-18", "2-20", "2-22", "2-24"],
+            axisLine: {
+              // y轴
+              show: false
+            },
+            axisTick: {
+              // y轴刻度线
+              show: false
+            },
+            splitLine: {
+              // 网格线
+              show: false
+            }
+          },
+          yAxis: {
+            type: "value",
+            axisLine: {
+              // y轴
+              show: false
+            },
+            axisTick: {
+              // y轴刻度线
+              show: false
+            },
+            splitLine: {
+              // 网格线
+              show: false
+            }
+          },
+          series: [
+            {
+              name: "浏览量",
+              type: "line",
+              smooth: true,
+              areaStyle: {
+                color: {
+                  type: "linear",
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#E50113" // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "#fff" // 100% 处的颜色
+                    }
+                  ],
+                  global: false // 缺省为 false
+                }
+              },
+              lineStyle: {
+                color: "#EF5959"
+              },
+              data: [120, 132, 101, 134, 90, 230, 210]
+            }
+          ]
+        }
+      },
+      ec2: {
+        option: {
+          title: {
+            text: "7,5950",
+            left: "center",
+            top: "40%",
+            subtext: "客户总数",
+            subtextStyle: {
+              color: "#959595",
+              fontSize: 12,
+              align: "center"
+            },
+            textStyle: {
+              color: "#19193E",
+              fontSize: 23,
+              align: "center"
+            }
+          },
+          series: [
+            {
+              name: "访问来源",
+              type: "pie",
+              radius: ["40%", "60%"],
+              label: {
+                position: "outside",
+                color: "#19193E",
+                normal: {
+                  show: false
+                },
+                emphasis: {
+                  show: true
+                },
+                fontSize: 10
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                },
+                emphasis: {
+                  show: true
+                }
+              },
+              data: [
+                {
+                  value: 3321,
+                  name: "直销中心",
+                  itemStyle: {
+                    normal: { color: "#EF5959" },
+                    emphasis: { color: "#EF5959" }
+                  }
+                },
+                {
+                  value: 1148,
+                  name: "手动录入",
+                  itemStyle: {
+                    normal: { color: "#ffa974" },
+                    emphasis: { color: "#ffa974" }
+                  }
+                },
+                {
+                  value: 2532,
+                  name: "线上访客",
+                  itemStyle: {
+                    normal: { color: "#ffc68a" },
+                    emphasis: { color: "#ffc68a" }
+                  }
+                },
+                {
+                  value: 1148,
+                  name: "线下拓客",
+                  itemStyle: { color: "#F0DD93" }
+                },
+                {
+                  value: 1148,
+                  name: "名片海报",
+                  itemStyle: { color: "#E7CB84" }
+                },
+                {
+                  value: 1148,
+                  name: "自然来访",
+                  itemStyle: { color: "#7EBD95" }
+                },
+                { value: 11480, name: "分享家", itemStyle: { color: "#687793" } }
+              ]
+            }
+          ]
+        }
+      }
+    };
+  },
+  onReady() {
+    setTimeout(() => {
+      this.ec.option.series[0].data = [1, 2, 3, 4, 5, 6, 7];
+      console.log("折线图数据改变啦");
+    }, 1000);
+    setTimeout(() => {
+      //数组内的数据要$set哦
+      this.ec2.option.series[0].data[0].value = 0;
+      console.log("折线图数据改变啦");
+    }, 2000);
+  },
+  components: {
+    uniEcCanvas
+  }
+};
 </script>
 
-<style lang="scss" scoped>
-	page {
-		background: #F2F2F2;
-		width: 750upx;
-		overflow-x: hidden;
-	}
-
-	.qiun-padding {
-		padding: 2%;
-		width: 96%;
-	}
-
-	.qiun-wrap {
-		display: flex;
-		flex-wrap: wrap;
-	}
-
-	.qiun-rows {
-		display: flex;
-		flex-direction: row !important;
-	}
-
-	.qiun-columns {
-		display: flex;
-		flex-direction: column !important;
-	}
-
-	.qiun-common-mt {
-		margin-top: 10upx;
-	}
-
-	.qiun-bg-white {
-		background: #FFFFFF;
-	}
-
-	.qiun-title-bar {
-		width: 96%;
-		padding: 10upx 2%;
-		flex-wrap: nowrap;
-	}
-
-	.qiun-title-dot-light {
-		border-left: 10upx solid #0ea391;
-		padding-left: 10upx;
-		font-size: 32upx;
-		color: #000000
-	}
-
-	/* 通用样式 */
-	.qiun-charts {
-		width: 750upx;
-		height: 500upx;
-		background-color: #FFFFFF;
-	}
-
-	.charts {
-		width: 750upx;
-		height: 500upx;
-		background-color: #FFFFFF;
-	}
-
-	.userinfo {
-		position: relative;
-		width: 750rpx;
-		height: 320rpx;
-		color: black;
-		font-weight: 600;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.userinfo-avatar {
-		overflow: hidden;
-		display: block;
-		width: 120rpx;
-		height: 120rpx;
-		margin: 20rpx;
-		margin-top: 50rpx;
-		border-radius: 50%;
-		border: 2px solid #fff;
-		box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-	}
+<style scoped>
+.uni-ec-canvas {
+  width: 750upx;
+  height: 750upx;
+  display: block;
+}
 </style>
