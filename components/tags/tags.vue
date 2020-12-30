@@ -1,19 +1,21 @@
 <template>
-	<view v-if="iconName.length>0" class="tags">
-		<van-dialog id="van-dialog" />
-		<scroll-view show-scrollbar=false class="icon_wrapper" scroll-x>
-			<view class="tags_scroll__box">
-				<view v-if="item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
-					<text class="icon_font">{{item.title}}</text>
+	<view>
+		<view v-if="iconName.length>0" class="tags">
+			<van-dialog id="van-dialog" />
+			<scroll-view class="u-skeleton-rect" show-scrollbar=false class="icon_wrapper" scroll-x>
+				<view class="tags_scroll__box">
+					<view v-if="item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
+						<text class="icon_font">{{item.title}}</text>
+					</view>
+					<view @longpress='editusertag(item)' v-if="!item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
+						<text class="icon_font">{{item.title}}</text>
+					</view>
+					<view @click="addtag" class="iconfont icon-tianjiazc icon">
+						<text class="icon_font">新增分类</text>
+					</view>
 				</view>
-				<view @longpress='editusertag(item)' v-if="!item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
-					<text class="icon_font">{{item.title}}</text>
-				</view>
-				<view @click="addtag" class="iconfont icon-tianjiazc icon">
-					<text class="icon_font">新增分类</text>
-				</view>
-			</view>
-		</scroll-view>
+			</scroll-view>
+		</view>
 	</view>
 </template>
 
@@ -57,7 +59,7 @@
 				}).then(() => {
 					const db = uniCloud.database();
 					db.collection('income').doc(tagid).remove().then((res) => {
-						this.$emit('deletetag',item)
+						this.$emit('deletetag', item)
 					})
 				}).catch(() => {
 					return
@@ -114,7 +116,7 @@
 	}
 
 	.icon-tianjiazc {
-		width: 57px!important;
+		width: 57px !important;
 		padding-right: 16px;
 	}
 </style>

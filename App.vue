@@ -3,8 +3,11 @@
 	import wxLogin from '@/lib/weixinlogin'
 	export default {
 		onShow() {
-			wxLogin()
+			wxLogin.call(this)
 		},
+		methods:{
+			...mapMutations(['changeisLogin'])
+		}
 		// methods:{
 		// 	checkLogin(){
 		// 		const id = uni.getStorageSync('uni_id_token');

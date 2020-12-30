@@ -25,10 +25,8 @@
 	import dayjs from 'dayjs'
 	export default {
 		computed: {
+			...mapState(['recordListChanged']),
 			...mapState(['isLogin'])
-		},
-		computed: {
-			...mapState(['recordListChanged'])
 		},
 		data() {
 			return {
@@ -44,12 +42,27 @@
 			};
 		},
 		created() {
-			gettags.call(this)
+			if (!this.isLogin) {
+				uni.showLoading({ title: '加载中'});
+			}
+			this.weekOfYear()
+		},
+		watch:{
+			isLogin(nval){
+				if(nval===true){
+					gettags.call(this)
+				}
+			}
 		},
 		onShow() {
 			networkcheck.call(this)
 		},
 		methods: {
+			weekOfYear() {
+				var weekday = require('dayjs/plugin/weekday')
+				dayjs.extend(weekday)
+				console.log(dayjs().weekday(0))
+			},
 			savetag(value) {
 				this.popshow = false
 				this.record.tag = value

@@ -57,7 +57,7 @@
 				"pagePath": "pages/tabbar/static/static",
 				"iconPath": "static/static.png",
 				"selectedIconPath": "static/static_selected.png",
-				"text": "统计"
+				"text": "明细"
 			}, {
 				"pagePath": "pages/tabbar/my/my",
 				"iconPath": "static/my.png",
