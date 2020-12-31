@@ -1,15 +1,16 @@
 <template>
 	<view class="contentWrapper">
 		<view class="top">
-			<text>{{nowmonth}}</text>
+			<text class="month">{{nowmonth}}</text>
 			<text class="span-line">|</text>
-			<picker mode="date" :value="nowmonth" fields="month" @change="bindDateChange">
-				<u-icon class="icon_" name="calendar"></u-icon>
+			<picker class="icon_" mode="date" :value="nowmonth" fields="month" @change="bindDateChange">
+				<u-icon size="28" name="calendar"></u-icon>
 			</picker>
 		</view>
 		<view class="text_wrapper">
-			<view>共支出</view>
-			<view v-if="hasrecordlist">￥{{amount.toFixed(2)}}</view>
+			<text>共支出</text>
+			<text v-if="hasrecordlist" class="amount_text">￥{{amount.toFixed(2)}}</text>
+			<text class="ls_text">共收入￥</text>
 		</view>
 	</view>
 </template>
@@ -65,15 +66,51 @@
 		@extend %df;
 		padding-top: 30px;
 		flex-direction: column;
+		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
 		.top {
 			@extend %df;
+			width: 32%;
+			margin: 0 auto;
 			background-color: #F7F7F7;
-			border-radius: 3px;
+			border-radius: 4px;
 			padding: 7px 10px;
+			font-size: 12px;
+
+			.month {
+				margin-right: 10px;
+				flex-shrink: 0;
+			}
+
+			.span-line {
+				margin-right: 10px;
+			}
 
 			.icon_ {
-				margin-left: 5px;
+				@extend %df;
+				color: #666666;
+			}
+		}
+
+		;
+
+		.text_wrapper {
+			font-size: 12px;
+			color: $main-color;
+			@extend %df;
+			margin: 25px auto;
+			flex-direction: column;
+			text-align: center;
+
+			.amount_text {
+				font-weight: 500;
+				font-size: 18px;
+				margin: 13px auto;
+			}
+
+			.ls_text {
+				font-weight: 400;
+				color: #666666;
 			}
 		}
 	}
