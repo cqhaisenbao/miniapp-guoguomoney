@@ -9,7 +9,7 @@
 		</view>
 		<view class="text_wrapper">
 			<view>共支出</view>
-			<view>￥{{amount.toFixed(2)}}</view>
+			<view v-if="hasrecordlist">￥{{amount.toFixed(2)}}</view>
 		</view>
 	</view>
 </template>
@@ -20,13 +20,19 @@
 		data() {
 			return {
 				nowmonth: dayjs().format('YYYY年MM月'),
-				amount: 1,
+				amount: {
+					type: Number
+				},
 				recordlist: [],
+				hasrecordlist: false,
 				currentlist: []
 			};
 		},
 		created() {
-			this.fetchList()
+			this.fetchList().then(() => {
+				this.hasrecordlist = true
+				this.fetchSelectedList(this.nowmonth)
+			})
 		},
 		methods: {
 			bindDateChange(e) {
@@ -34,11 +40,10 @@
 				this.nowmonth = dayjs(selectedMonth).format('YYYY年MM月')
 				this.fetchSelectedList(this.nowmonth)
 			},
-			fetchList() {
+			async fetchList() {
 				const db = uniCloud.database();
-				db.collection('recordList').where('uid==$env.uid').field('amount,tag,time').get().then((res) => {
-					this.recordlist = res.result.data
-				})
+				let res = await db.collection('recordList').where('uid==$env.uid').field('amount,tag,time').get()
+				this.recordlist = res.result.data
 			},
 			fetchSelectedList(value) {
 				this.amount = 0
@@ -50,7 +55,6 @@
 						this.amount += list[i].amount
 					}
 				}
-				console.log(this.currentlist)
 			}
 		}
 	}
