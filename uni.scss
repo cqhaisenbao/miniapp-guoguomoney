@@ -15,6 +15,12 @@
 /* 颜色变量 */
 $main-color:#3EB575;
 
+%df {
+		display: flex;
+		justify-content: center;
+		align-content: center;
+	}
+
 /* 行为相关颜色 */
 $uni-color-primary: #007aff;
 $uni-color-success: #4cd964;
