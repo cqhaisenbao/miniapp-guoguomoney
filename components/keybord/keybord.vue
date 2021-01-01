@@ -77,12 +77,13 @@
 			ok() {
 				if(this.output === '0'){
 					uni.showToast({
-						title:'请输入一笔具体的金额'
+						title:'请输入一笔具体的金额',
+						icon:'none'
 					})
 					return
 				}else if (this.tag.length <= 0) {
 					uni.showModal({
-						title: '错误提醒',
+						title: '提醒',
 						content: '请选择一个标签'
 					})
 					return

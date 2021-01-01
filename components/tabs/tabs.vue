@@ -23,6 +23,7 @@
 		methods: {
 			select(item) {
 				this.$emit('update:value', item.value);
+				this.$emit('typechange', item.value);
 			},
 		}
 

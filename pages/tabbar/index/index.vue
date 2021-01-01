@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="content">
-			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
+			<tabs @typechange='typechange' :data_source="recordTypeList" :value.sync="record.type"></tabs>
 			<tags @deletetag="deletetag" :type="record.type" class="tag_content" :selectedTag.sync="record.tag" :tagName.sync="record.tagName" :popshow.sync="popshow"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
 				<datapick @timeupdate="onUpdateTime" :now='now'></datapick>
@@ -26,22 +26,34 @@
 		},
 		data() {
 			return {
-				selected: false,
+				// selected: false,
 				networkType: true,
-				// default_iconName: [],
-				deleteTagRecordList: [],
+				// deleteTagRecordList: [],
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
 				popshow: false,
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
-				record: { tag: '', tagName: '', notes: '', type: '-', amount: '', time: 0 },
+				record: { tag: '交通', tagName: '', notes: '', type: '-', amount: '', time: 0 },
 			};
 		},
 		onShow() {
 			networkcheck.call(this)
 		},
+		// watch:{
+		// 	this.record.type(nval){
+		// 		if(nval==='+'){
+		// 			console.log(1)
+		// 		}
+		// 	}
+		// },
 		methods: {
-			// ...mapActions(['fetchRecordList']),
+			typechange(value){
+				if(value==='-' ){
+					this.record.tag='交通'
+				}else if(value==='+' ){
+					this.record.tag='工资'
+				}
+			},
 			savetag(value) {
 				this.popshow = false
 				this.record.tag = value
@@ -80,7 +92,8 @@
 				db.collection('recordList').add(this.record).then((res) => {
 					uni.showToast({
 						title:'已记一笔',
-						icon:'success'
+						icon:'none',
+						duration: 2000
 					})
 					this.$store.dispatch('fetchRecordList')
 					this.record.notes = '';
