@@ -4,27 +4,33 @@ import clone from '@/lib/clone';
 
 Vue.use(Vuex);
 
+const asyncFetch=async(commit,mutationName,colName,rule)=>{
+	const db = uniCloud.database();
+	uni.showLoading({ title: '加载中' });
+	let res = await db.collection(colName).where(rule).get()
+	uni.hideLoading()
+	const { result } = res
+	commit(mutationName, result)
+	return result
+}
+
 const store = new Vuex.Store({
 	state: {
 		recordList: [],
-		recordListChanged: false,
 		iconName: []
 	},
 	mutations: {
-		recordListChange(state, value) {
-			state.recordListChanged = !state.recordListChanged
-		},
-		createRecord(state, record) {
-			const record2 = clone(record);
-			state.recordList.push(record2);
-			store.commit('saveRecords');
-		},
-		saveRecords(state) {
-			uni.setStorage({
-				key: 'recordList',
-				data: JSON.stringify(state.recordList)
-			})
-		},
+		// createRecord(state, record) {
+		// 	const record2 = clone(record);
+		// 	state.recordList.push(record2);
+		// 	store.commit('saveRecords');
+		// },
+		// saveRecords(state) {
+		// 	uni.setStorage({
+		// 		key: 'recordList',
+		// 		data: JSON.stringify(state.recordList)
+		// 	})
+		// },
 		fetchIconName(state, result) {
 			state.iconName = result.data
 		},
@@ -34,24 +40,11 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
-		async fetchIconName({ commit }) {
-			const db = uniCloud.database();
-			uni.showLoading({ title: '加载中' });
-			let res = await db.collection('income').where('default=="true" || uid == $env.uid').get()
-			uni.hideLoading()
-			const { result } = res
-			commit('fetchIconName', result)
-			return result
+		fetchIconName({commit}){
+			return asyncFetch(commit,'fetchIconName','income','default=="true" || uid == $env.uid')
 		},
-		async fetchRecordList({ commit }) {
-			const db = uniCloud.database();
-			uni.showLoading({ title: '加载中' });
-			let res = await db.collection('recordList').where('uid==$env.uid').get()
-			uni.hideLoading()
-			const { result } = res
-			commit('fetchRecordList', result)
-			return result
-
+		fetchRecordList({ commit }) {
+			return asyncFetch(commit,'fetchRecordList','recordList','uid==$env.uid')
 		},
 	}
 });

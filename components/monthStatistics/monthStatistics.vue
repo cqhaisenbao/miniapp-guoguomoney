@@ -16,7 +16,7 @@
 
 <script>
 	import dayjs from 'dayjs'
-	import { mapState, mapMutations } from 'vuex';
+	import { mapState, mapMutations, mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -36,7 +36,7 @@
 			};
 		},
 		watch: {
-			recordListChanged() {
+			recordList() {
 				this.fetchList().then(() => {
 					this.hasrecordlist = true
 					this.fetchSelectedList(this.nowmonth)
@@ -44,7 +44,7 @@
 			}
 		},
 		computed: {
-			...mapState(['recordListChanged']),
+			...mapState(['recordList']),
 		},
 		created() {
 			this.fetchList().then(() => {

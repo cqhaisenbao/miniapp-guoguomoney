@@ -22,7 +22,6 @@
 	import dayjs from 'dayjs'
 	export default {
 		computed: {
-			...mapState(['recordListChanged']),
 			...mapState(['isLogin']),
 		},
 		data() {
