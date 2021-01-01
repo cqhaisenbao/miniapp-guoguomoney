@@ -18,6 +18,9 @@
 	import dayjs from 'dayjs'
 	import { mapState, mapMutations, mapActions } from 'vuex';
 	export default {
+		props:{
+			nowmonth:''
+		},
 		data() {
 			return {
 				params: {
@@ -26,7 +29,7 @@
 					day: false,
 				},
 				show: false,
-				nowmonth: dayjs().format('YYYY年MM月'),
+				// nowmonth: dayjs().format('YYYY年MM月'),
 				amount_pay:0,
 				amount_income:0,
 				hasrecordlist: false,
@@ -37,6 +40,9 @@
 			recordList() {
 				this.hasrecordlist = true
 				this.selectedListAmount(this.nowmonth,'-')
+			},
+			nowmonth(){
+				this.selectedListAmount(this.nowmonth, '-')
 			}
 		},
 		computed: {
@@ -50,8 +56,9 @@
 		},
 		methods: {
 			dateChange(value) {
-				this.nowmonth = value.year + "年" + value.month + "月"
-				this.selectedListAmount(this.nowmonth, '-')
+				this.$emit('update:nowmonth', value.year + "年" + value.month + "月");
+				// this.nowmonth = value.year + "年" + value.month + "月"
+				// this.selectedListAmount(this.nowmonth, '-')
 			},
 			selectedListAmount(value, type) {
 				this.amount_pay = 0
@@ -96,6 +103,7 @@
 
 			.span-line {
 				margin-right: 10px;
+				color: #999999;
 			}
 
 			.icon_ {

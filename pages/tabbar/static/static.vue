@@ -64,13 +64,6 @@
 				return result;
 			}
 		},
-		created() {
-			// uni.showLoading({ title: '加载中' });
-			// this.$store.dispatch('fetchRecordList').then((res) => {
-			// 	uni.hideLoading()
-				// this.hasrecordList = true
-			// })
-		},
 		methods: {
 			editRecord(item) {
 				this.$u.route('pages/editrecord/editrecord', {
