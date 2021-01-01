@@ -9,6 +9,7 @@ const store = new Vuex.Store({
 		recordList: [],
 		isLogin: false,
 		recordListChanged: false,
+		iconName:[]
 		// tagList: [],
 		// currentTag: undefined,
 		// currentRecord: undefined,
@@ -32,6 +33,16 @@ const store = new Vuex.Store({
 				data: JSON.stringify(state.recordList)
 			})
 		},
+		fetchIconName(state){
+			const db = uniCloud.database();
+			uni.showLoading({ title: '加载中' });
+			db.collection('income').where('default=="true" || uid == $env.uid').get().then((res) => {
+				uni.hideLoading()
+				const { result } = res
+				state.iconName = result.data
+				console.log('state.iconName',state.iconName)
+			});
+		}
 	}
 });
 

@@ -3,11 +3,14 @@
 	import wxLogin from '@/lib/weixinlogin';
 	export default {
 		onShow() {
-			wxLogin.call(this)
+			wxLogin.call(this).then(()=>{
+				this.$store.commit('fetchIconName')
+			})
 			// console.log(wxLogin.call(this))
 		},
 		methods: {
-			...mapMutations(['changeisLogin'])
+			...mapMutations(['changeisLogin']),
+			...mapMutations(['fetchIconName'])
 		}
 	}
 </script>

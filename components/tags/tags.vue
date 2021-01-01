@@ -20,23 +20,22 @@
 </template>
 
 <script>
+	import {mapState, mapMutations} from 'vuex'; 
 	export default {
 		props: {
-			iconName: {
-				type: Array
-			},
 			type: {
 				type: String
 			},
 			selectedTag: '',
 			tagName: '',
 			popshow: false,
-
 		},
+		computed: {  
+				...mapState(['iconName'])  
+			}, 
 		data() {
 			return {
 				selectedTags: [],
-				condition1: true,
 				tagid:'',
 				item:{},
 				show: false,
@@ -47,10 +46,7 @@
 			confirm() {
 				const db = uniCloud.database();
 				db.collection('income').doc(this.tagid).remove().then((res) => {
-					// uni.showToast({
-					// 	title:'删除成功',
-					// 	icon:'none'
-					// })
+					this.$store.commit('fetchIconName')
 					this.$emit('deletetag', this.item)
 				})
 			},

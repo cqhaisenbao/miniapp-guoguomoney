@@ -15,14 +15,12 @@
 </template>
 
 <script>
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		props: {
 			tagtype: {
 				type: String
 			},
-			iconName: {
-				type: Array
-			}
 		},
 		data() {
 			return {
@@ -37,6 +35,7 @@
 			},
 		},
 		computed: {
+			...mapState(['iconName']),
 			userTag() {
 				return {
 					name: 'iconfont icon-zidingyi',
@@ -44,9 +43,6 @@
 					type: this.tagtype
 				}
 			},
-			nameList() {
-				return this.iconName
-			}
 		},
 		methods: {
 			taginput(e) {
@@ -56,13 +52,13 @@
 				this.$emit("close")
 			},
 			savetag() {
-				const list = this.nameList
+				const list = this.iconName
 				const currentName = this.userTag.title
 				const currentType = this.userTag.type
 				const x = list.every(function(elem) {
-					if(elem.title === currentName && elem.type === currentType){
+					if (elem.title === currentName && elem.type === currentType) {
 						return false
-					}else{
+					} else {
 						return true
 					}
 				})
@@ -71,11 +67,12 @@
 					uni.showLoading({ title: '加载中' });
 					const db = uniCloud.database();
 					db.collection('income').add(this.userTag).then((res) => {
-						this.$emit("savetag",currentName)
+						this.$store.commit('fetchIconName')
+						this.$emit("savetag", currentName)
 						uni.hideLoading()
 						uni.showToast({
-							title:'新建成功',
-							icon:'success'
+							title: '新建成功',
+							icon: 'success'
 						})
 					}).catch(err => console.log(err));
 				} else {

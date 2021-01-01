@@ -10,7 +10,7 @@
 		</view>
 		<view v-if="popshow">
 			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">
-				<edittag @close='close' :iconName='default_iconName' @savetag='savetag' :tagtype.sync="record.type"></edittag>
+				<edittag @close='close' @savetag='savetag' :tagtype.sync="record.type"></edittag>
 			</u-popup>
 		</view>
 	</view>
@@ -19,7 +19,7 @@
 <script>
 	import { mapState, mapMutations } from 'vuex';
 	import networkcheck from '@/lib/networkcheck.js';
-	import gettags from '@/lib/gettags.js';
+	// import gettags from '@/lib/gettags.js';
 	import wxLogin from '@/lib/weixinlogin';
 	import dayjs from 'dayjs'
 	export default {
@@ -31,7 +31,7 @@
 			return {
 				selected: false,
 				networkType: true,
-				default_iconName: [],
+				// default_iconName: [],
 				deleteTagRecordList: [],
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
@@ -40,20 +40,20 @@
 				record: { tag: '', tagName: '', notes: '', type: '-', amount: '', time: 0 },
 			};
 		},
-		watch: {
-			default_iconName(nval) {
-				if (nval.length === 0) {
-					wxLogin.call(this).then(()=>{
-						gettags.call(this)
-					})
-				}
-			},
-			isLogin(nval){
-				if(nval===true){
-					gettags.call(this)
-				}
-			}
-		},
+		// watch: {
+		// 	default_iconName(nval) {
+		// 		if (nval.length === 0) {
+		// 			wxLogin.call(this).then(()=>{
+		// 				gettags.call(this)
+		// 			})
+		// 		}
+		// 	},
+		// 	isLogin(nval){
+		// 		if(nval===true){
+		// 			gettags.call(this)
+		// 		}
+		// 	}
+		// },
 		onShow() {
 			networkcheck.call(this)
 		},
@@ -63,13 +63,11 @@
 				this.popshow = false
 				this.record.tag = value
 				this.record.tagName = "iconfont icon-zidingyi"
-				gettags.call(this)
 			},
 			close() {
 				this.popshow = false
 			},
 			deletetag(item) {
-				gettags.call(this)
 				const tagtype = item.type === '-' ? 'zhichu' : 'shouru'
 				const tagname = item.type === '-' ? '其他支出' : '其他收入'
 				const db = uniCloud.database();
