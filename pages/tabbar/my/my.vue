@@ -31,6 +31,7 @@
 						},
 						xAxis: {
 							type: 'value',
+							boundaryGap: ['20%', '20%'],
 							splitLine: {
 								show: false
 							},
@@ -47,14 +48,25 @@
 								show: false
 							},
 							data: [],
-							min: -6,
+							min: -8,
 						},
 						series: [{
 							type: 'bar',
-							barWidth: "50%",
+							barWidth: "30%",
 							itemStyle: {
-								barBorderRadius: 8,
-								color: "rgba(62, 181, 117, 1)"
+								barBorderRadius: 5,
+								color: "rgba(62, 181, 117, 1)",
+								borderWidth: 5,
+								borderColor:"rgba(62, 181, 117, 1)"
+							},
+							label: {
+								show: true,
+								position: 'right',
+								formatter: '￥{c}',
+								textStyle: {
+									color: '#a2a2a2',
+									fontSize: 12,
+								}
 							},
 							data: []
 						}, ]
@@ -72,7 +84,7 @@
 			nowmonth() {
 				// this.ec2.option.series[0].data = []
 				// this.ec2.option.yAxis.data =[]
-				this.datalist=[]
+				this.datalist = []
 				this.fetchList()
 			}
 		},
