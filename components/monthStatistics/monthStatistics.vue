@@ -8,8 +8,8 @@
 		</view>
 		<view class="text_wrapper">
 			<text>共支出</text>
-			<text class="amount_text">￥{{amount.toFixed(2)}}</text>
-			<text class="ls_text">共收入￥</text>
+			<text class="amount_text">￥{{amount_pay.toFixed(2)}}</text>
+			<text class="ls_text">共收入￥{{amount_income.toFixed(2)}}</text>
 		</view>
 	</view>
 </template>
@@ -27,9 +27,8 @@
 				},
 				show: false,
 				nowmonth: dayjs().format('YYYY年MM月'),
-				amount: {
-					type: Number
-				},
+				amount_pay:0,
+				amount_income:0,
 				hasrecordlist: false,
 				currentlist: []
 			};
@@ -55,14 +54,17 @@
 				this.selectedListAmount(this.nowmonth, '-')
 			},
 			selectedListAmount(value, type) {
-				this.amount = 0
+				this.amount_pay = 0
+				this.amount_income=0
 				const list = this.recordList
 				for (let i = 0; i < list.length; i++) {
 					const time = dayjs(list[i].time).format('YYYY年MM月')
 					const currentType = list[i].type
 					if (time === value && currentType === type) {
 						this.currentlist.push(list[i])
-						this.amount += list[i].amount
+						this.amount_pay += list[i].amount
+					}else if(time === value && currentType !== type){
+						this.amount_income += list[i].amount
 					}
 				}
 			}
