@@ -15,7 +15,7 @@
 </template>
 
 <script>
-	import { mapState, mapMutations } from 'vuex';
+	import { mapState, mapMutations,mapActions } from 'vuex';
 	export default {
 		props: {
 			tagtype: {
@@ -67,7 +67,7 @@
 					uni.showLoading({ title: '加载中' });
 					const db = uniCloud.database();
 					db.collection('income').add(this.userTag).then((res) => {
-						this.$store.commit('fetchIconName')
+						this.$store.dispatch('fetchIconName')
 						this.$emit("savetag", currentName)
 						uni.hideLoading()
 						uni.showToast({

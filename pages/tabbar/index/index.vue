@@ -2,7 +2,7 @@
 	<view>
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
-			<tags @deletetag="deletetag" :type="record.type" class="tag_content" :iconName='default_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName" :popshow.sync="popshow"></tags>
+			<tags @deletetag="deletetag" :type="record.type" class="tag_content" :selectedTag.sync="record.tag" :tagName.sync="record.tagName" :popshow.sync="popshow"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
 				<datapick @timeupdate="onUpdateTime" :now='now'></datapick>
 			</notes>
@@ -19,8 +19,6 @@
 <script>
 	import { mapState, mapMutations } from 'vuex';
 	import networkcheck from '@/lib/networkcheck.js';
-	// import gettags from '@/lib/gettags.js';
-	import wxLogin from '@/lib/weixinlogin';
 	import dayjs from 'dayjs'
 	export default {
 		computed: {
@@ -40,25 +38,10 @@
 				record: { tag: '', tagName: '', notes: '', type: '-', amount: '', time: 0 },
 			};
 		},
-		// watch: {
-		// 	default_iconName(nval) {
-		// 		if (nval.length === 0) {
-		// 			wxLogin.call(this).then(()=>{
-		// 				gettags.call(this)
-		// 			})
-		// 		}
-		// 	},
-		// 	isLogin(nval){
-		// 		if(nval===true){
-		// 			gettags.call(this)
-		// 		}
-		// 	}
-		// },
 		onShow() {
 			networkcheck.call(this)
 		},
 		methods: {
-			...mapMutations(['changeisLogin']),
 			savetag(value) {
 				this.popshow = false
 				this.record.tag = value

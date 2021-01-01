@@ -20,7 +20,7 @@
 </template>
 
 <script>
-	import {mapState, mapMutations} from 'vuex'; 
+	import { mapState, mapMutations,mapActions } from 'vuex';
 	export default {
 		props: {
 			type: {
@@ -46,7 +46,7 @@
 			confirm() {
 				const db = uniCloud.database();
 				db.collection('income').doc(this.tagid).remove().then((res) => {
-					this.$store.commit('fetchIconName')
+					this.$store.dispatch('fetchIconName')
 					this.$emit('deletetag', this.item)
 				})
 			},

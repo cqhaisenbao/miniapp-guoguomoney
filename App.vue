@@ -1,16 +1,15 @@
 <script>
-	import { mapState, mapMutations } from 'vuex';
+	import { mapState, mapMutations,mapActions } from 'vuex';
 	import wxLogin from '@/lib/weixinlogin';
 	export default {
 		onShow() {
 			wxLogin.call(this).then(()=>{
-				this.$store.commit('fetchIconName')
+				this.$store.dispatch('fetchIconName')
 			})
 			// console.log(wxLogin.call(this))
 		},
 		methods: {
-			...mapMutations(['changeisLogin']),
-			...mapMutations(['fetchIconName'])
+			...mapActions(['fetchIconName'])
 		}
 	}
 </script>

@@ -7,21 +7,13 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
 	state: {
 		recordList: [],
-		isLogin: false,
 		recordListChanged: false,
-		iconName:[]
-		// tagList: [],
-		// currentTag: undefined,
-		// currentRecord: undefined,
+		iconName: []
 	},
 	mutations: {
-		changeisLogin(state, value) {
-			state.isLogin = value
-		},
 		recordListChange(state, value) {
 			state.recordListChanged = !state.recordListChanged
 		},
-
 		createRecord(state, record) {
 			const record2 = clone(record);
 			state.recordList.push(record2);
@@ -33,14 +25,20 @@ const store = new Vuex.Store({
 				data: JSON.stringify(state.recordList)
 			})
 		},
-		fetchIconName(state){
+		fetchIconName(state, result) {
+			state.iconName = result.data
+			console.log('state.iconName', state.iconName)
+		},
+		fetchRecordList(state) {}
+	},
+	actions: {
+		fetchIconName({ commit }) {
 			const db = uniCloud.database();
 			uni.showLoading({ title: '加载中' });
 			db.collection('income').where('default=="true" || uid == $env.uid').get().then((res) => {
 				uni.hideLoading()
 				const { result } = res
-				state.iconName = result.data
-				console.log('state.iconName',state.iconName)
+				commit('fetchIconName',result)
 			});
 		}
 	}
