@@ -62,7 +62,7 @@
 					tagName: "iconfont icon-qita" + tagtype,
 					tag: tagname
 				}).then(res => {
-					this.$store.commit('recordListChange');
+					this.$store.dispatch('fetchIconName')
 				})
 			},
 			onUpdateTime(value) {

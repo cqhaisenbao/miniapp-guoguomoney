@@ -30,44 +30,37 @@
 				amount: {
 					type: Number
 				},
-				recordlist: [],
 				hasrecordlist: false,
 				currentlist: []
 			};
 		},
 		watch: {
 			recordList() {
-				this.fetchList().then(() => {
-					this.hasrecordlist = true
-					this.fetchSelectedList(this.nowmonth)
-				})
+				this.hasrecordlist = true
+				this.selectedListAmount(this.nowmonth,'-')
 			}
 		},
 		computed: {
 			...mapState(['recordList']),
 		},
 		created() {
-			this.fetchList().then(() => {
+			if (this.recordList) {
 				this.hasrecordlist = true
-				this.fetchSelectedList(this.nowmonth)
-			})
+				this.selectedListAmount(this.nowmonth, '-')
+			}
 		},
 		methods: {
 			dateChange(value) {
 				this.nowmonth = value.year + "年" + value.month + "月"
-				this.fetchSelectedList(this.nowmonth)
+				this.selectedListAmount(this.nowmonth, '-')
 			},
-			async fetchList() {
-				const db = uniCloud.database();
-				let res = await db.collection('recordList').where('uid==$env.uid && type=="-"').field('amount,tag,time').get()
-				this.recordlist = res.result.data
-			},
-			fetchSelectedList(value) {
+			selectedListAmount(value, type) {
 				this.amount = 0
-				const list = this.recordlist
+				const list = this.recordList
 				for (let i = 0; i < list.length; i++) {
 					const time = dayjs(list[i].time).format('YYYY年MM月')
-					if (time === value) {
+					const currentType = list[i].type
+					if (time === value && currentType === type) {
 						this.currentlist.push(list[i])
 						this.amount += list[i].amount
 					}
