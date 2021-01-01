@@ -5,11 +5,12 @@
 		onShow() {
 			wxLogin.call(this).then(()=>{
 				this.$store.dispatch('fetchIconName')
+				this.$store.dispatch('fetchRecordList')
 			})
 			// console.log(wxLogin.call(this))
 		},
 		methods: {
-			...mapActions(['fetchIconName'])
+			// ...mapActions(['fetchIconName'])
 		}
 	}
 </script>

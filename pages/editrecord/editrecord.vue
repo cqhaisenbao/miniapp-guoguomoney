@@ -31,7 +31,7 @@
 
 <script>
 	import dayjs from 'dayjs';
-	import { mapState, mapMutations } from 'vuex';
+	import { mapState, mapMutations, mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -49,6 +49,7 @@
 			this.fetchCurrentRecord()
 		},
 		methods: {
+			...mapActions(['fetchRecordList']),
 			updated(value) {
 				this.popshow = value
 				uni.showToast({
@@ -73,11 +74,7 @@
 			confirm() {
 				const db = uniCloud.database();
 				db.collection('recordList').doc(this.recordid).remove().then(() => {
-					// uni.showToast({
-					// 	title:'删除成功',
-					// 	icon:'none'
-					// })
-					this.$store.commit('recordListChange');
+					this.$store.dispatch('fetchRecordList')
 					uni.navigateBack()
 				})
 			}

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-	import { mapState, mapMutations } from 'vuex';
+	import { mapState, mapMutations, mapActions } from 'vuex';
 	import networkcheck from '@/lib/networkcheck.js';
 	import dayjs from 'dayjs'
 	export default {
@@ -42,6 +42,7 @@
 			networkcheck.call(this)
 		},
 		methods: {
+			// ...mapActions(['fetchRecordList']),
 			savetag(value) {
 				this.popshow = false
 				this.record.tag = value
@@ -82,7 +83,7 @@
 						title:'已记一笔',
 						icon:'success'
 					})
-					this.$store.commit('recordListChange');
+					this.$store.dispatch('fetchRecordList')
 					this.record.notes = '';
 					this.record.tag = '';
 					this.record.time = 0;

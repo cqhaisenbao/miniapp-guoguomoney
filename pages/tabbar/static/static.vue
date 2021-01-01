@@ -21,33 +21,24 @@
 </template>
 
 <script>
-	import { mapState, mapMutations } from 'vuex';
+	import { mapState, mapMutations, mapActions } from 'vuex';
 	import networkcheck from '@/lib/networkcheck.js';
 	import clone from '@/lib/clone';
 	import dayjs from 'dayjs';
 	export default {
 		data() {
 			return {
-				recordList: [],
-				hasrecordList: false,
+				hasrecordList: true,
 				type: "-",
 				networkType: true,
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
-			}
-		},
-		watch: {
-			recordListChanged() {
-				this.fetchRecordList()
-			},
-			isLogin() {
-				this.fetchRecordList()
 			}
 		},
 		onShow() {
 			networkcheck.call(this)
 		},
 		computed: {
-			...mapState(['recordListChanged']),
+			...mapState(['recordList']),
 			groupedList() {
 				const { recordList } = this;
 				if (recordList.length === 0) { return []; }
@@ -74,22 +65,17 @@
 			}
 		},
 		created() {
-			uni.showLoading({ title: '加载中' });
-			this.fetchRecordList().then(()=>{
-				uni.hideLoading()
-			})
+			// uni.showLoading({ title: '加载中' });
+			// this.$store.dispatch('fetchRecordList').then((res) => {
+			// 	uni.hideLoading()
+				// this.hasrecordList = true
+			// })
 		},
 		methods: {
 			editRecord(item) {
 				this.$u.route('pages/editrecord/editrecord', {
 					recordid: item._id,
 				})
-			},
-			async fetchRecordList() {
-				const db = uniCloud.database();
-				let res = await db.collection('recordList').where('uid==$env.uid').get()
-				this.recordList = res.result.data
-				this.hasrecordList = true
 			},
 			beautify(string) {
 				const day = dayjs(string);

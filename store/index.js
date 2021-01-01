@@ -27,20 +27,32 @@ const store = new Vuex.Store({
 		},
 		fetchIconName(state, result) {
 			state.iconName = result.data
-			console.log('state.iconName', state.iconName)
 		},
-		fetchRecordList(state) {}
+		fetchRecordList(state, result) {
+			state.recordList = result.data
+			console.log('state.recordList', state.recordList)
+		}
 	},
 	actions: {
-		fetchIconName({ commit }) {
+		async fetchIconName({ commit }) {
 			const db = uniCloud.database();
 			uni.showLoading({ title: '加载中' });
-			db.collection('income').where('default=="true" || uid == $env.uid').get().then((res) => {
-				uni.hideLoading()
-				const { result } = res
-				commit('fetchIconName',result)
-			});
-		}
+			let res = await db.collection('income').where('default=="true" || uid == $env.uid').get()
+			uni.hideLoading()
+			const { result } = res
+			commit('fetchIconName', result)
+			return result
+		},
+		async fetchRecordList({ commit }) {
+			const db = uniCloud.database();
+			uni.showLoading({ title: '加载中' });
+			let res = await db.collection('recordList').where('uid==$env.uid').get()
+			uni.hideLoading()
+			const { result } = res
+			commit('fetchRecordList', result)
+			return result
+
+		},
 	}
 });
 

@@ -21,13 +21,11 @@
 
 <script>
 	import dayjs from 'dayjs';
-	import { mapState, mapMutations } from 'vuex';
-	import gettags from '@/lib/gettags.js';
+	import { mapState, mapMutations, mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
-				default_iconName: [],
 				income_iconName: [],
 				tagpopshow: false,
 			};
@@ -39,17 +37,15 @@
 			}
 		},
 		computed: {
+			...mapState(['iconName']),
 			popcurrentrecord() {
 				return this.currentrecord
 			},
 		},
-		mounted() {
-			gettags.call(this)
-		},
 		methods: {
 			savetag() {
 				this.popshow = false
-				gettags.call(this)
+				this.$store.dispatch('fetchIconName')
 			},
 			select(item) {
 				this.popcurrentrecord.type = item.value;
@@ -71,7 +67,7 @@
 				const db = uniCloud.database();
 				db.collection('recordList').doc(docid).update(this.popcurrentrecord).then(() => {
 					this.$emit('updated', false);
-					this.$store.commit('recordListChange');
+					this.$store.dispatch('fetchRecordList')
 				}).catch((err) => {
 					console.log(err)
 				}).finally(() => {
