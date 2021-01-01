@@ -76,7 +76,7 @@
 	.tags {
 		width: 100%;
 		box-sizing: border-box;
-		padding-right: 16px;
+		// padding-right: 16px;
 
 		.icon_wrapper {
 

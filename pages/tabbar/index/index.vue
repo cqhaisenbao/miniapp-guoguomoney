@@ -9,8 +9,8 @@
 			<keybord @update:value="onUpdateAmount" :tag.sync="record.tag" @submit="saveRecord"></keybord>
 		</view>
 		<view v-if="popshow">
-			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">
-				<edittag @close='close' @savetag='savetag' :tagtype.sync="record.type"></edittag>
+			<u-popup @open="onPopupChange" v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">
+				<edittag :isFocus='isFocus' @close='close' @savetag='savetag' :tagtype.sync="record.type"></edittag>
 			</u-popup>
 		</view>
 	</view>
@@ -24,6 +24,7 @@
 		data() {
 			return {
 				networkType: true,
+				isFocus: false,
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
 				popshow: false,
@@ -34,7 +35,19 @@
 		onShow() {
 			networkcheck.call(this)
 		},
+		watch: {
+			popshow(nval) {
+				if (nval === false) {
+					this.isFocus = false
+					uni.showTabBar()
+				}
+			}
+		},
 		methods: {
+			onPopupChange() {
+				this.isFocus = true
+				uni.hideTabBar()
+			},
 			typechange(value) {
 				if (value === "-") {
 					this.record.tag = '交通'

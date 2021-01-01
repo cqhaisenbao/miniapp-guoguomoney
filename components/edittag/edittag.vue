@@ -6,7 +6,7 @@
 			<text class="text_ok" :class="{isinputed:isinputed}" @click="savetag">确定</text>
 		</view>
 		<view class="input_">
-			<input @input="taginput" v-model="userTag.title" maxlength="4" class="input_text" cursor-spacing='50px' placeholder="不能与已有类型名重复" />
+			<input :focus="isFocus" @input="taginput" v-model="userTag.title" maxlength="4" class="input_text" cursor-spacing='50px' placeholder="不能与已有类型名重复" />
 			<u-line color="#d4d3d3" hair-line="false" />
 			<view v-if="isrepeat" class="isrepeat">该分类已存在</view>
 			<view v-else class="cursor_">{{cursor}}/4</view>
@@ -15,18 +15,21 @@
 </template>
 
 <script>
-	import { mapState, mapMutations,mapActions } from 'vuex';
+	import { mapState, mapMutations, mapActions } from 'vuex';
 	export default {
 		props: {
 			tagtype: {
 				type: String
 			},
+			isFocus:{
+				type:Boolean
+			}
 		},
 		data() {
 			return {
 				isinputed: false,
 				cursor: 0,
-				isrepeat: false
+				isrepeat: false,
 			};
 		},
 		watch: {
@@ -105,7 +108,7 @@
 		}
 
 		.input_ {
-			margin: 16px 16px 10px;
+			margin: 16px 16px 0;
 			font-size: 15px;
 
 			.input_text {
