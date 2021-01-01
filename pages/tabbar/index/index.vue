@@ -21,37 +21,27 @@
 	import networkcheck from '@/lib/networkcheck.js';
 	import dayjs from 'dayjs'
 	export default {
-		computed: {
-			...mapState(['isLogin']),
-		},
 		data() {
 			return {
-				// selected: false,
 				networkType: true,
-				// deleteTagRecordList: [],
 				now: dayjs().format('MM月DD日'),
 				title: '果果记账',
 				popshow: false,
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
-				record: { tag: '交通', tagName: '', notes: '', type: '-', amount: '', time: 0 },
+				record: { tag: '交通', tagName: 'iconfont icon-jiaotong', notes: '', type: '-', amount: '', time: 0 },
 			};
 		},
 		onShow() {
 			networkcheck.call(this)
 		},
-		// watch:{
-		// 	this.record.type(nval){
-		// 		if(nval==='+'){
-		// 			console.log(1)
-		// 		}
-		// 	}
-		// },
 		methods: {
-			typechange(value){
-				if(value==='-' ){
-					this.record.tag='交通'
-				}else if(value==='+' ){
-					this.record.tag='工资'
+			typechange(value) {
+				if (value === "-") {
+					this.record.tag = '交通'
+					this.record.tagName = 'iconfont icon-jiaotong'
+				} else {
+					this.record.tag = '工资'
+					this.record.tagName = 'iconfont icon-gongzi'
 				}
 			},
 			savetag(value) {
@@ -84,29 +74,28 @@
 			onUpdateAmount(value) {
 				this.record.amount = parseFloat(value);
 			},
-			saveRecord() {
+			async saveRecord() {
 				const db = uniCloud.database();
 				if (this.record.time === 0) {
 					this.record.time = dayjs().valueOf()
 				};
 				db.collection('recordList').add(this.record).then((res) => {
-					uni.showToast({
-						title:'已记一笔',
-						icon:'none',
-						duration: 2000
-					})
 					this.$store.dispatch('fetchRecordList')
 					this.record.notes = '';
-					this.record.tag = '';
+					this.typechange(this.record.type)
 					this.record.time = 0;
 					this.now = dayjs().format('MM月DD日')
+					uni.showToast({
+						title: '已记一笔',
+						icon: 'success'
+					})
 				}).catch((err) => {
 					console.log(err)
 				}).finally(() => {
 					if (this.networkType === false) {
 						uni.showToast({
-							title:'网络异常~',
-							icon:'none'
+							title: '网络异常~',
+							icon: 'none'
 						})
 					}
 				})

@@ -10,7 +10,7 @@
 					<view @longpress='editusertag(item)' v-if="!item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
 						<text class="icon_font">{{item.title}}</text>
 					</view>
-					<view @click="addtag" class="iconfont icon-tianjiazc icon">
+					<view v-if="addtagshow" @click="addtag" class="iconfont icon-tianjiazc icon">
 						<text class="icon_font">新增分类</text>
 					</view>
 				</view>
@@ -20,24 +20,25 @@
 </template>
 
 <script>
-	import { mapState, mapMutations,mapActions } from 'vuex';
+	import { mapState, mapMutations, mapActions } from 'vuex';
 	export default {
 		props: {
-			type: {
-				type: String
-			},
+			type: '',
 			selectedTag: '',
 			tagName: '',
 			popshow: false,
+			addtagshow: {
+				default: true
+			}
 		},
-		computed: {  
-				...mapState(['iconName'])  
-			}, 
+		computed: {
+			...mapState(['iconName'])
+		},
 		data() {
 			return {
 				selectedTags: [],
-				tagid:'',
-				item:{},
+				tagid: '',
+				item: {},
 				show: false,
 				content: '删除后，当前分类下的内容将归为“其他”分类'
 			};
@@ -63,7 +64,7 @@
 				this.$emit('update:popshow', true);
 			},
 			editusertag(item) {
-				this.item=item
+				this.item = item
 				this.tagid = item._id
 				this.show = true;
 			}
@@ -75,6 +76,7 @@
 	.tags {
 		width: 100%;
 		box-sizing: border-box;
+		padding-right: 16px;
 
 		.icon_wrapper {
 
