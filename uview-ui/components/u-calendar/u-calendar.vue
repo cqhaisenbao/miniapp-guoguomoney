@@ -36,7 +36,7 @@
 					'u-calendar__content--start-date': (mode == 'range' && startDate==`${year}-${month}-${index+1}`) || mode== 'date',
 					'u-calendar__content--end-date':(mode== 'range' && endDate==`${year}-${month}-${index+1}`) || mode == 'date'
 				}" :style="{backgroundColor: getColor(index,1)}" v-for="(item, index) in daysArr" :key="index"
-				 @tap="dateClick(index)">
+				 @tap="dateClick(index)" @click="btnFix(false)">
 					<view class="u-calendar__content__item__inner" :style="{color: getColor(index,2)}">
 						<view>{{ index + 1 }}</view>
 					</view>
@@ -45,15 +45,15 @@
 				</view>
 				<view class="u-calendar__content__bg-month">{{month}}</view>
 			</view>
-			<view class="u-calendar__bottom">
+		<!-- 	<view class="u-calendar__bottom">
 				<view class="u-calendar__bottom__choose">
 					<text>{{mode == 'date' ? activeDate : startDate}}</text>
 					<text v-if="endDate">至{{endDate}}</text>
 				</view>
 				<view class="u-calendar__bottom__btn">
-					<u-button :type="btnType" shape="circle" size="default" @click="btnFix(false)">确定</u-button>
+					<u-button :type="btnType" shape="circle" size="default" >确定</u-button>
 				</view>
-			</view>
+			</view> -->
 		</view>
 	</u-popup>
 </template>

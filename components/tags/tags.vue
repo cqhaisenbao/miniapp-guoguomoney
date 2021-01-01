@@ -1,7 +1,7 @@
 <template>
 	<view>
+		<u-modal confirm-color="#3EB575" @confirm="confirm" show-cancel-button="true" v-model="show" :content="content"></u-modal>
 		<view v-if="iconName.length>0" class="tags">
-			<van-dialog id="van-dialog" />
 			<scroll-view show-scrollbar=false class="icon_wrapper" scroll-x>
 				<view class="tags_scroll__box">
 					<view v-if="item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
@@ -31,14 +31,29 @@
 			selectedTag: '',
 			tagName: '',
 			popshow: false,
+
 		},
 		data() {
 			return {
 				selectedTags: [],
 				condition1: true,
+				tagid:'',
+				item:{},
+				show: false,
+				content: '删除后，当前分类下的内容将归为“其他”分类'
 			};
 		},
 		methods: {
+			confirm() {
+				const db = uniCloud.database();
+				db.collection('income').doc(this.tagid).remove().then((res) => {
+					// uni.showToast({
+					// 	title:'删除成功',
+					// 	icon:'none'
+					// })
+					this.$emit('deletetag', this.item)
+				})
+			},
 			toggle(item) {
 				const length = this.selectedTags.length;
 				if (length > 0) {
@@ -52,18 +67,9 @@
 				this.$emit('update:popshow', true);
 			},
 			editusertag(item) {
-				const tagid = item._id
-				this.$dialog.confirm({
-					title: '删除分类',
-					message: '删除后，当前分类下的内容将归为“其他”分类',
-				}).then(() => {
-					const db = uniCloud.database();
-					db.collection('income').doc(tagid).remove().then((res) => {
-						this.$emit('deletetag', item)
-					})
-				}).catch(() => {
-					return
-				})
+				this.item=item
+				this.tagid = item._id
+				this.show = true;
 			}
 		}
 	}

@@ -6,7 +6,6 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
-		test: '123',
 		recordList: [],
 		isLogin: false,
 		recordListChanged: false,

@@ -174,12 +174,16 @@ export default {
 		// 年份开始时间
 		startYear: {
 			type: [String, Number],
-			default: 1950
+			default: 2015
 		},
 		// 年份结束时间
 		endYear: {
 			type: [String, Number],
-			default: 2050
+			default: 2030
+		},
+		endMonth: {
+			type: [String, Number],
+			default: 12
 		},
 		// "取消"按钮的颜色
 		cancelColor: {
@@ -283,7 +287,7 @@ export default {
 	computed: {
 		propsChange() {
 			// 引用这几个变量，是为了监听其变化
-			return `${this.mode}-${this.defaultTime}-${this.startYear}-${this.endYear}-${this.defaultRegion}-${this.areaCode}`;
+			return `${this.mode}-${this.defaultTime}-${this.startYear}-${this.endYear}-${this.endMonth}-${this.defaultRegion}-${this.areaCode}`;
 		},
 		regionChange() {
 			// 引用这几个变量，是为了监听其变化
@@ -433,7 +437,7 @@ export default {
 			this.valueArr.splice(this.valueArr.length - 1, 1, this.getIndex(this.years, this.year));
 		},
 		setMonths() {
-			this.months = this.generateArray(1, 12);
+			this.months = this.generateArray(1, this.endMonth);
 			this.valueArr.splice(this.valueArr.length - 1, 1, this.getIndex(this.months, this.month));
 		},
 		setDays() {

@@ -1,6 +1,5 @@
 <template>
 	<view v-show="show">
-		<van-dialog id="van-dialog" />
 		<view class="content">
 			<view class="line-1">
 				<icon class="recordIcon" :class="currentRecord.tagName" />
@@ -23,10 +22,10 @@
 		</view>
 		<view>
 			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom=true closeable=true>
-				<van-toast id="van-toast" />
-				<popeditrecord @updated="updated" :currentrecord="currentRecord"/>
+				<popeditrecord @updated="updated" :currentrecord="currentRecord" />
 			</u-popup>
 		</view>
+		<u-modal confirm-color="#3EB575" @confirm="confirm" show-cancel-button="true" v-model="deletetagshow" :content="content"></u-modal>
 	</view>
 </template>
 
@@ -40,7 +39,9 @@
 				currentRecord: {},
 				show: false,
 				popshow: false,
+				deletetagshow: false,
 				time: '',
+				content: '请确认是否删除该条记录'
 			}
 		},
 		onLoad(option) {
@@ -53,7 +54,6 @@
 				uni.showToast({
 					title: '修改成功',
 					icon: 'none',
-					duration: 2000
 				});
 				this.fetchCurrentRecord()
 			},
@@ -68,21 +68,21 @@
 				})
 			},
 			remove() {
-				this.$dialog.confirm({
-					title: '删除记录',
-					message: '请确认是否删除该条记录',
-				}).then(() => {
-					const db = uniCloud.database();
-					db.collection('recordList').doc(this.recordid).remove().then(() => {
-						this.$store.commit('recordListChange');
-						uni.navigateBack()
-					})
-				}).catch(() => {
-					return
+				this.deletetagshow = true
+			},
+			confirm() {
+				const db = uniCloud.database();
+				db.collection('recordList').doc(this.recordid).remove().then(() => {
+					// uni.showToast({
+					// 	title:'删除成功',
+					// 	icon:'none'
+					// })
+					this.$store.commit('recordListChange');
+					uni.navigateBack()
 				})
 			}
-		}
-	}
+		},
+	};
 </script>
 
 <style lang="scss" scoped>

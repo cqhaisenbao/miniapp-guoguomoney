@@ -1,6 +1,5 @@
 <template>
 	<view v-if="popcurrentrecord.amount">
-		<van-dialog id="van-dialog" />
 		<view class="topWrapper-record">
 			<ul class="record-tabs">
 				<li v-for="item in recordTypeList" :key="item.value" :class="{selected: item.value=== popcurrentrecord.type}" @click="select(item)" class="record-tabs-item">
@@ -9,7 +8,6 @@
 			</ul>
 			<datapick @timeupdate="onUpdateTime" :now="now(popcurrentrecord.time)" />
 		</view>
-		<van-toast id="van-toast"/>
 		<tags @deletetag="deletetag" :type="popcurrentrecord.type" class="tag_content" :iconName='default_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName" :popshow.sync="tagpopshow"></tags>
 		<notes :value.sync="popcurrentrecord.notes" field-name="备注" placeholder="请在这里输入备注" />
 		<keybord :tag.sync="popcurrentrecord.tag" @update:value="onUpdateAmount" :popoutput="popcurrentrecord.amount" @submit="saveRecord"></keybord>
@@ -78,7 +76,9 @@
 					console.log(err)
 				}).finally(() => {
 					if (this.networkType === false) {
-						this.$toast.fail('网络异常')
+						uni.showToast({
+							title:'网络异常~'
+						})
 					}
 				})
 			}

@@ -1,7 +1,6 @@
 <template>
 	<view>
 		<view class="numberPad">
-			<van-toast id="van-toast" />
 			<view class="output">{{output}}</view>
 			<view class="buttons">
 				<button clsaa="mybutton" @click="inputContent" data-text="1">1</button>
@@ -77,7 +76,9 @@
 			},
 			ok() {
 				if(this.output === '0'){
-					this.$toast('请输入一笔具体金额')
+					uni.showToast({
+						title:'请输入一笔具体的金额'
+					})
 					return
 				}else if (this.tag.length <= 0) {
 					uni.showModal({

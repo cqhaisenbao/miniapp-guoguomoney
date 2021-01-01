@@ -1,9 +1,7 @@
 <template>
 	<view>
-		<van-dialog id="van-dialog" />
 		<view class="content">
 			<tabs :data_source="recordTypeList" :value.sync="record.type"></tabs>
-			<van-toast id="van-toast" />
 			<tags @deletetag="deletetag" :type="record.type" class="tag_content" :iconName='default_iconName' :selectedTag.sync="record.tag" :tagName.sync="record.tagName" :popshow.sync="popshow"></tags>
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
 				<datapick @timeupdate="onUpdateTime" :now='now'></datapick>
@@ -22,11 +20,12 @@
 	import { mapState, mapMutations } from 'vuex';
 	import networkcheck from '@/lib/networkcheck.js';
 	import gettags from '@/lib/gettags.js';
+	import wxLogin from '@/lib/weixinlogin';
 	import dayjs from 'dayjs'
 	export default {
 		computed: {
 			...mapState(['recordListChanged']),
-			...mapState(['isLogin'])
+			...mapState(['isLogin']),
 		},
 		data() {
 			return {
@@ -41,13 +40,14 @@
 				record: { tag: '', tagName: '', notes: '', type: '-', amount: '', time: 0 },
 			};
 		},
-		created() {
-			if (!this.isLogin) {
-				uni.showLoading({ title: '加载中'});
-			}
-			this.weekOfYear()
-		},
-		watch:{
+		watch: {
+			default_iconName(nval) {
+				if (nval.length === 0) {
+					wxLogin.call(this).then(()=>{
+						gettags.call(this)
+					})
+				}
+			},
 			isLogin(nval){
 				if(nval===true){
 					gettags.call(this)
@@ -58,11 +58,7 @@
 			networkcheck.call(this)
 		},
 		methods: {
-			weekOfYear() {
-				var weekday = require('dayjs/plugin/weekday')
-				dayjs.extend(weekday)
-				console.log(dayjs().weekday(0))
-			},
+			...mapMutations(['changeisLogin']),
 			savetag(value) {
 				this.popshow = false
 				this.record.tag = value
@@ -101,7 +97,10 @@
 					this.record.time = dayjs().valueOf()
 				};
 				db.collection('recordList').add(this.record).then((res) => {
-					this.$toast.success('已记一笔')
+					uni.showToast({
+						title:'已记一笔',
+						icon:'success'
+					})
 					this.$store.commit('recordListChange');
 					this.record.notes = '';
 					this.record.tag = '';
@@ -111,7 +110,10 @@
 					console.log(err)
 				}).finally(() => {
 					if (this.networkType === false) {
-						this.$toast.fail('网络异常')
+						uni.showToast({
+							title:'网络异常~',
+							icon:'none'
+						})
 					}
 				})
 			}

@@ -1,6 +1,5 @@
 <template>
 	<view class="content">
-		<van-toast id="van-toast" />
 		<view class="top">
 			<u-icon @click="close" name="close" size="30" color="#bfbdbd"></u-icon>
 			<text class="text_">请填写类别名</text>
@@ -74,7 +73,10 @@
 					db.collection('income').add(this.userTag).then((res) => {
 						this.$emit("savetag",currentName)
 						uni.hideLoading()
-						this.$toast.success('新建成功')
+						uni.showToast({
+							title:'新建成功',
+							icon:'success'
+						})
 					}).catch(err => console.log(err));
 				} else {
 					this.isrepeat = true

@@ -1,15 +1,14 @@
 <template>
-	<view class="contentWrapper">
+	<view v-if="hasrecordlist" class="contentWrapper">
 		<view class="top">
 			<text class="month">{{nowmonth}}</text>
 			<text class="span-line">|</text>
-			<picker class="icon_" mode="date" :value="nowmonth" fields="month" @change="bindDateChange">
-				<u-icon size="28" name="calendar"></u-icon>
-			</picker>
+			<u-icon class="icon_" @click="show=true" size="38" name="calendar"></u-icon>
+			<u-picker mode="time" v-model="show" :params="params" confirm-color="#3EB575" @confirm="dateChange"></u-picker>
 		</view>
 		<view class="text_wrapper">
 			<text>共支出</text>
-			<text v-if="hasrecordlist" class="amount_text">￥{{amount.toFixed(2)}}</text>
+			<text class="amount_text">￥{{amount.toFixed(2)}}</text>
 			<text class="ls_text">共收入￥</text>
 		</view>
 	</view>
@@ -17,9 +16,16 @@
 
 <script>
 	import dayjs from 'dayjs'
+	import { mapState, mapMutations } from 'vuex';
 	export default {
 		data() {
 			return {
+				params: {
+					year: true,
+					month: true,
+					day: false,
+				},
+				show: false,
 				nowmonth: dayjs().format('YYYY年MM月'),
 				amount: {
 					type: Number
@@ -29,6 +35,17 @@
 				currentlist: []
 			};
 		},
+		watch: {
+			recordListChanged() {
+				this.fetchList().then(() => {
+					this.hasrecordlist = true
+					this.fetchSelectedList(this.nowmonth)
+				})
+			}
+		},
+		computed: {
+			...mapState(['recordListChanged']),
+		},
 		created() {
 			this.fetchList().then(() => {
 				this.hasrecordlist = true
@@ -36,14 +53,13 @@
 			})
 		},
 		methods: {
-			bindDateChange(e) {
-				const selectedMonth = e.detail.value
-				this.nowmonth = dayjs(selectedMonth).format('YYYY年MM月')
+			dateChange(value) {
+				this.nowmonth = value.year + "年" + value.month + "月"
 				this.fetchSelectedList(this.nowmonth)
 			},
 			async fetchList() {
 				const db = uniCloud.database();
-				let res = await db.collection('recordList').where('uid==$env.uid').field('amount,tag,time').get()
+				let res = await db.collection('recordList').where('uid==$env.uid && type=="-"').field('amount,tag,time').get()
 				this.recordlist = res.result.data
 			},
 			fetchSelectedList(value) {
@@ -66,16 +82,17 @@
 		@extend %df;
 		padding-top: 30px;
 		flex-direction: column;
+		text-align: center;
 		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
 		.top {
 			@extend %df;
-			width: 32%;
+			// width: 32%;
 			margin: 0 auto;
 			background-color: #F7F7F7;
 			border-radius: 4px;
 			padding: 7px 10px;
-			font-size: 12px;
+			font-size: 15px;
 
 			.month {
 				margin-right: 10px;
@@ -95,16 +112,15 @@
 		;
 
 		.text_wrapper {
-			font-size: 12px;
+			font-size: 14px;
 			color: $main-color;
 			@extend %df;
 			margin: 25px auto;
 			flex-direction: column;
-			text-align: center;
 
 			.amount_text {
 				font-weight: 500;
-				font-size: 18px;
+				font-size: 28px;
 				margin: 13px auto;
 			}
 

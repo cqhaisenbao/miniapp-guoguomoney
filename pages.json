@@ -36,11 +36,7 @@
 		"navigationBarTitleText": "果果记账",
 		"navigationBarBackgroundColor": "#3EB575",
 		"backgroundColor": "#F8F8F8",
-		"usingComponents": {
-			"van-toast": "/wxcomponents/vant-weapp/toast/index",
-			"van-popup": "/wxcomponents/vant-weapp/popup/index",
-			"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
-		}
+		"usingComponents": {}
 	},
 	"tabBar": {
 		"color": "#666",
