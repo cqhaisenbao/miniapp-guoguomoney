@@ -50,15 +50,15 @@
 				"text": "记账"
 			},
 			{
-				"pagePath": "pages/tabbar/my/my",
-				"iconPath": "static/static.png",
-				"selectedIconPath": "static/static_selected.png",
-				"text": "统计"
-			}, {
 				"pagePath": "pages/tabbar/static/static",
 				"iconPath": "static/mx.png",
 				"selectedIconPath": "static/mx_selected.png",
 				"text": "明细"
+			}, {
+				"pagePath": "pages/tabbar/my/my",
+				"iconPath": "static/static.png",
+				"selectedIconPath": "static/static_selected.png",
+				"text": "统计"
 			}
 		]
 	}

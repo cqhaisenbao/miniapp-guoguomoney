@@ -9,6 +9,7 @@
 	import uniEcCanvas from "@/components/uni-ec-canvas/uni-ec-canvas";
 	import dayjs from 'dayjs'
 	import { mapState, mapMutations, mapActions } from 'vuex';
+	import objArrtransArr from '@/lib/objArrtransArr.js';
 	export default {
 		components: { uniEcCanvas },
 		data() {
@@ -27,6 +28,7 @@
 							left: '3%',
 							right: '4%',
 							bottom: '3%',
+							top: 20,
 							containLabel: true
 						},
 						xAxis: {
@@ -44,11 +46,14 @@
 							axisLine: {
 								show: false
 							},
+							axisLabel: {
+								fontSize: 14,
+							},
 							axisTick: {
 								show: false
 							},
 							data: [],
-							min: -8,
+							min: -6,
 						},
 						series: [{
 							type: 'bar',
@@ -57,7 +62,7 @@
 								barBorderRadius: 5,
 								color: "rgba(62, 181, 117, 1)",
 								borderWidth: 5,
-								borderColor:"rgba(62, 181, 117, 1)"
+								borderColor: "rgba(62, 181, 117, 1)"
 							},
 							label: {
 								show: true,
@@ -82,22 +87,15 @@
 		},
 		watch: {
 			nowmonth() {
-				// this.ec2.option.series[0].data = []
-				// this.ec2.option.yAxis.data =[]
+				this.datalist = []
+				this.fetchList()
+			},
+			recordList() {
 				this.datalist = []
 				this.fetchList()
 			}
 		},
 		methods: {
-			objArrtransArr(arr, oldname, oldnum) {
-				var nameArr = [];
-				var numArr = [];
-				arr.forEach(item => {
-					nameArr.push(item[oldname]);
-					numArr.push(item[oldnum]);
-				});
-				return { nameArr, numArr };
-			},
 			fetchList() {
 				const list = this.recordList
 				const currenttime = this.nowmonth
@@ -121,7 +119,7 @@
 					}
 				})
 				console.log(newrecordList)
-				const data = this.objArrtransArr(newrecordList, "name", "value");
+				const data = objArrtransArr(newrecordList, "name", "value");
 				const yname = data.nameArr
 				const num = data.numArr
 				// console.log('yname', yname)

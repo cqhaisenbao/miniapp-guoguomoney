@@ -10,7 +10,6 @@
 			// console.log(wxLogin.call(this))
 		},
 		methods: {
-			// ...mapActions(['fetchIconName'])
 		}
 	}
 </script>

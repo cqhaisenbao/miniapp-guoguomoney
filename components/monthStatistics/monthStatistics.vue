@@ -29,7 +29,6 @@
 					day: false,
 				},
 				show: false,
-				// nowmonth: dayjs().format('YYYY年MM月'),
 				amount_pay:0,
 				amount_income:0,
 				hasrecordlist: false,
@@ -57,8 +56,6 @@
 		methods: {
 			dateChange(value) {
 				this.$emit('update:nowmonth', value.year + "年" + value.month + "月");
-				// this.nowmonth = value.year + "年" + value.month + "月"
-				// this.selectedListAmount(this.nowmonth, '-')
 			},
 			selectedListAmount(value, type) {
 				this.amount_pay = 0

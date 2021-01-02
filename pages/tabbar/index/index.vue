@@ -78,6 +78,7 @@
 					tag: tagname
 				}).then(res => {
 					this.$store.dispatch('fetchIconName')
+					this.$store.dispatch('fetchRecordList')
 				})
 			},
 			onUpdateTime(value) {

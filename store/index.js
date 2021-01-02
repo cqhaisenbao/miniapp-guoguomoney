@@ -7,7 +7,7 @@ Vue.use(Vuex);
 const asyncFetch=async(commit,mutationName,colName,rule,field)=>{
 	const db = uniCloud.database();
 	uni.showLoading({ title: '加载中' });
-	let res = await db.collection(colName).where(rule).field(field).get()
+	let res = await db.action('test_action').collection(colName).where(rule).field(field).get()
 	uni.hideLoading()
 	const { result } = res
 	commit(mutationName, result)
