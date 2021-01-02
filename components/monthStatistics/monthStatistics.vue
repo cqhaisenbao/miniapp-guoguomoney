@@ -107,9 +107,7 @@
 				@extend %df;
 				color: #666666;
 			}
-		}
-
-		;
+		};
 
 		.text_wrapper {
 			font-size: 14px;
