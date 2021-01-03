@@ -1,13 +1,5 @@
 <template>
 	<view>
-		<view class="header_">
-			<text class="header_left">收支构成</text>
-			<view class='header_right'>
-				<text v-for="item in data_source" class="button_" :key="item.value" :class="{selected: item.value=== selectedType}" @click="selectType(item)">
-					{{ item.text }}
-				</text>
-			</view>
-		</view>
 		<uni-ec-canvas class="uni-ec-canvas" id="pie-chart" canvas-id="multi-charts-pie" :ec="ec2"></uni-ec-canvas>
 	</view>
 </template>
@@ -21,11 +13,9 @@
 		components: { uniEcCanvas },
 		props: {
 			nowmonth: '',
-			selectedType: ''
 		},
 		data() {
 			return {
-				data_source: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
 				datalist: [],
 				ec2: {
 					option: {
@@ -70,7 +60,8 @@
 						},
 						series: [{
 							type: 'bar',
-							barWidth: "30%",
+							barWidth: 10,
+							// barWidth: "30%",
 							itemStyle: {
 								barBorderRadius: 5,
 								color: "rgba(62, 181, 117, 1)",
@@ -121,9 +112,6 @@
 			}
 		},
 		methods: {
-			selectType(item) {
-				this.$emit('update:selectedType', item.value);
-			},
 			fetchList() {
 				const list = this.recordList
 				const currenttime = this.nowmonth
@@ -160,46 +148,10 @@
 </script>
 
 <style scoped lang="scss" scoped>
-	.header_ {
-		padding: 20px 12px 12px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-
-		.header_left {
-			font-size: 17px;
-		}
-
-		.header_right {
-			font-size: 14px;
-			color: #777777;
-
-			.button_ {
-				background-color: #FAFAFA;
-				padding: 6px 12px;
-				border-radius: 3px;
-				margin-right: 8px;
-
-				&:first-child.selected {
-					color: $main-color;
-					background-color: lighten($main-color, 40%);
-				}
-
-				;
-
-				&:last-child.selected {
-					color: $main-color-red;
-					background-color: lighten($main-color-red, 35%);
-				}
-			}
-		}
-	}
-
-	;
-
 	.uni-ec-canvas {
 		width: 750upx;
-		height: 750upx;
+		height: 100vh;
+		// height: 750upx;
 		display: block;
 	}
 </style>

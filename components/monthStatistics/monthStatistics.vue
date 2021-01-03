@@ -1,5 +1,5 @@
 <template>
-	<view v-if="hasrecordlist" class="contentWrapper">
+	<view class="contentWrapper">
 		<view class="top">
 			<text class="month">{{nowmonth}}</text>
 			<text class="span-line">|</text>
@@ -15,11 +15,15 @@
 </template>
 
 <script>
-	import dayjs from 'dayjs'
-	import { mapState, mapMutations, mapActions } from 'vuex';
 	export default {
-		props:{
-			nowmonth:''
+		props: {
+			nowmonth: '',
+			amount_pay: {
+				default: 0
+			},
+			amount_income: {
+				default: 0
+			},
 		},
 		data() {
 			return {
@@ -29,49 +33,12 @@
 					day: false,
 				},
 				show: false,
-				amount_pay:0,
-				amount_income:0,
-				hasrecordlist: false,
-				currentlist: []
 			};
-		},
-		watch: {
-			recordList() {
-				this.hasrecordlist = true
-				this.selectedListAmount(this.nowmonth,'-')
-			},
-			nowmonth(){
-				this.selectedListAmount(this.nowmonth, '-')
-			}
-		},
-		computed: {
-			...mapState(['recordList']),
-		},
-		created() {
-			if (this.recordList) {
-				this.hasrecordlist = true
-				this.selectedListAmount(this.nowmonth, '-')
-			}
 		},
 		methods: {
 			dateChange(value) {
 				this.$emit('update:nowmonth', value.year + "年" + value.month + "月");
 			},
-			selectedListAmount(value, type) {
-				this.amount_pay = 0
-				this.amount_income=0
-				const list = this.recordList
-				for (let i = 0; i < list.length; i++) {
-					const time = dayjs(list[i].time).format('YYYY年MM月')
-					const currentType = list[i].type
-					if (time === value && currentType === type) {
-						this.currentlist.push(list[i])
-						this.amount_pay += list[i].amount
-					}else if(time === value && currentType !== type){
-						this.amount_income += list[i].amount
-					}
-				}
-			}
 		}
 	}
 </script>
@@ -107,7 +74,9 @@
 				@extend %df;
 				color: #666666;
 			}
-		};
+		}
+
+		;
 
 		.text_wrapper {
 			font-size: 14px;
