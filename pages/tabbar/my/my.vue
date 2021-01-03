@@ -3,7 +3,6 @@
 		<monthStatistics v-if="recordList" :nowmonth.sync="nowmonth" :amount_pay="amount_pay" :amount_income="amount_income"></monthStatistics>
 		<typeSelect :selectedType.sync='selectedType'></typeSelect>
 		<typeProgress :currentlist="selectedList_norepeat" :currentAmount="currentAmount" :amount_income="amount_income"></typeProgress>
-		<!-- <canvasBar :nowmonth='nowmonth' ></canvasBar> -->
 	</view>
 </template>
 
@@ -19,27 +18,22 @@
 				selectedType: '-',
 				amount_pay: 0,
 				amount_income: 0,
-				currentAmount:0,
+				currentAmount: 0,
 				selectedList: [],
 				selectedList_norepeat: []
 			}
 		},
 		computed: {
 			...mapState(['recordList']),
+			listenChange() {
+				const { recordList, nowmonth, selectedType } = this
+				return { recordList, nowmonth, selectedType }
+			}
 		},
 		watch: {
-			recordList() {
+			listenChange(){
 				selectedListAmount.call(this, this.nowmonth, this.selectedType)
 				selectedMonthAmount.call(this, this.nowmonth, '-')
-				this.handleCurrentList()
-			},
-			nowmonth() {
-				selectedListAmount.call(this, this.nowmonth, this.selectedType)
-				selectedMonthAmount.call(this, this.nowmonth, '-')
-				this.handleCurrentList()
-			},
-			selectedType(){
-				selectedListAmount.call(this, this.nowmonth, this.selectedType)
 				this.handleCurrentList()
 			}
 		},
@@ -60,7 +54,7 @@
 						this.selectedList.push({
 							tag: list[i].tag,
 							amount: list[i].amount,
-							tagName:list[i].tagName
+							tagName: list[i].tagName
 						})
 					}
 				}
