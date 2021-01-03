@@ -7,7 +7,8 @@
 					<view class="content_text">{{item.tag}}</view>
 				</view>
 				<u-line-progress :show-percent="false" :height=20 class="line_progress" :active-color="line_color" :percent="countPercent(item)"></u-line-progress>
-				<view class="amount">￥{{item.amount.toFixed(2)}}</view>
+				<!-- <view class="amount">￥{{item.amount.toFixed(2)}}</view> -->
+				<view class="amount">￥{{amount(item)}}</view>
 			</view>
 		</view>
 		<view class="noList" v-else>
@@ -42,6 +43,10 @@
 			}
 		},
 		methods: {
+			amount(item){
+				const num=item.amount.toFixed(2)
+				return item.amount > 9999 ? (Math.floor(num/1000)/10).toFixed(2) + '万' : num
+			},
 			countPercent(item) {
 				return parseInt(item.amount / this.currentAmount * 100)
 			},
@@ -53,7 +58,7 @@
 	.content {
 		height: 30px;
 		display: flex;
-		margin-bottom: 8px;
+		margin-bottom: 10px;
 		justify-content: space-between;
 		align-items: center;
 		padding: 20px 24px 10px 12px;
@@ -92,6 +97,7 @@
 			width: 15vw;
 			margin-left: 5px;
 			display: flex;
+			flex-wrap: nowrap;
 			justify-content: flex-end;
 		}
 	}
