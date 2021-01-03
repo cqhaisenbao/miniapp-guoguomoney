@@ -37,14 +37,14 @@
 	.dateWrapper {
 		background: #e8e8e8;
 		display: inline-block;
-		padding: 3px 15px;
-		border-radius: 20px;
-		font-size: 13px;
+		padding: 6rpx 30rpx;
+		border-radius: 40rpx;
+		font-size: 26rpx;
 		font-weight: 600;
-		margin-right: 10px;
+		margin-right: 20rpx;
 
 		.text_ {
-			margin-left: 3px;
+			margin-left: 6rpx;
 			color: #bfbdbd;
 		}
 	}

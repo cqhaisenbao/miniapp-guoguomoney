@@ -94,11 +94,11 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			margin: 15px 16px;
+			margin: 30rpx 32rpx;
 			font-weight: 500;
 
 			.text_ok {
-				font-size: 16px;
+				font-size: 32rpx;
 				color: lighten($main-color, 30%);
 
 				&.isinputed {
@@ -108,24 +108,24 @@
 		}
 
 		.input_ {
-			margin: 16px 16px 0;
-			font-size: 15px;
+			margin: 32rpx 32rpx 0;
+			font-size: 30rpx;
 
 			.input_text {
-				margin-bottom: 10px;
+				margin-bottom: 30rpx;
 			}
 
 			.cursor_ {
-				margin-top: 10px;
-				margin-bottom: 10px;
-				font-size: 12px;
+				margin-top: 20rpx;
+				margin-bottom: 20rpx;
+				font-size: 24rpx;
 				color: #d4d3d3
 			}
 
 			.isrepeat {
-				margin-top: 10px;
-				margin-bottom: 10px;
-				font-size: 12px;
+				margin-top: 20rpx;
+				margin-bottom: 20rpx;
+				font-size: 24rpx;
 				color: #e84545;
 			}
 		}

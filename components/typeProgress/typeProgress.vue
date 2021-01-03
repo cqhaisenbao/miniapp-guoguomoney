@@ -7,7 +7,6 @@
 					<view class="content_text">{{item.tag}}</view>
 				</view>
 				<u-line-progress :show-percent="false" :height=20 class="line_progress" :active-color="line_color" :percent="countPercent(item)"></u-line-progress>
-				<!-- <view class="amount">￥{{item.amount.toFixed(2)}}</view> -->
 				<view class="amount">￥{{amount(item)}}</view>
 			</view>
 		</view>
@@ -58,22 +57,22 @@
 	.content {
 		height: 30px;
 		display: flex;
-		margin-bottom: 10px;
+		margin-bottom: 12px;
 		justify-content: space-between;
 		align-items: center;
-		padding: 20px 24px 10px 12px;
+		padding: 40rpx 48rpx 20rpx 24rpx;
 
 		.content_left {
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
-			margin-right: 5px;
-			width: 28vw;
+			margin-right: 10rpx;
+			width: 26vw;
 
 			.content_icon {
 				color: $main-color;
-				font-size: 24px;
-				margin-right: 12px;
+				font-size: 48rpx;
+				margin-right: 24rpx;
 
 				&.income {
 					color: $uni-color-warning;
@@ -82,7 +81,7 @@
 
 			.content_text {
 				color: #777777;
-				font-size: 14px;
+				font-size: 24rpx;
 				line-height: 30px;
 			}
 		}
@@ -91,17 +90,16 @@
 			@extend %df;
 			flex-shrink: 0;
 			flex-grow: 1;
-			margin-right: 10px;
+			margin-right: 20rpx;
 		}
 		.amount{
-			width: 15vw;
-			margin-left: 5px;
+			width: 18vw;
+			margin-left: 8rpx;
 			display: flex;
-			flex-wrap: nowrap;
 			justify-content: flex-end;
 		}
 	}
 	.noList{
-		margin-top: 20px;
+		margin-top: 40rpx;
 	}
 </style>

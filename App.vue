@@ -9,8 +9,6 @@
 			})
 			// console.log(wxLogin.call(this))
 		},
-		methods: {
-		}
 	}
 </script>
 

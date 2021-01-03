@@ -50,7 +50,6 @@
 				for (let i = 0; i < list.length; i++) {
 					let time = dayjs(list[i].time).format('YYYY年MM月')
 					if (list[i].type === this.selectedType && time === this.nowmonth) {
-						// this.selectedList.push(list[i])
 						this.selectedList.push({
 							tag: list[i].tag,
 							amount: list[i].amount,

@@ -13,7 +13,7 @@
 
 <script>
 	export default {
-		props:{
+		props: {
 			selectedType: ''
 		},
 		data() {
@@ -30,33 +30,31 @@
 </script>
 
 <style lang="scss" scoped>
-.header_ {
-		padding: 35px 12px 20px;
+	.header_ {
+		padding: 70rpx 24rpx 40rpx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 
 		.header_left {
-			font-size: 17px;
+			font-size: 34rpx;
 			color: #555555;
 		}
 
 		.header_right {
-			font-size: 14px;
+			font-size: 28rpx;
 			color: #777777;
 
 			.button_ {
 				background-color: #FAFAFA;
-				padding: 6px 12px;
-				border-radius: 3px;
-				margin-right: 8px;
+				padding: 12rpx 24rpx;
+				border-radius: 6rpx;
+				margin-right: 16rpx;
 
 				&:first-child.selected {
 					color: $main-color;
 					background-color: lighten($main-color, 40%);
 				}
-
-				;
 
 				&:last-child.selected {
 					color: $uni-color-warning;

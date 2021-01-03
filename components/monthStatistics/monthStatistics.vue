@@ -46,27 +46,27 @@
 <style lang="scss" scoped>
 	.contentWrapper {
 		@extend %df;
-		padding-top: 30px;
+		padding-top: 60rpx;
 		flex-direction: column;
 		text-align: center;
-		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
 
 		.top {
 			@extend %df;
 			// width: 32%;
 			margin: 0 auto;
 			background-color: #F7F7F7;
-			border-radius: 4px;
-			padding: 7px 10px;
-			font-size: 15px;
+			border-radius: 8rpx;
+			padding: 14rpx 20rpx;
+			font-size: 30rpx;
 
 			.month {
-				margin-right: 10px;
+				margin-right: 20rpx;
 				flex-shrink: 0;
 			}
 
 			.span-line {
-				margin-right: 10px;
+				margin-right: 20rpx;
 				color: #999999;
 			}
 
@@ -79,16 +79,16 @@
 		;
 
 		.text_wrapper {
-			font-size: 14px;
+			font-size: 28rpx;
 			color: $main-color;
 			@extend %df;
-			margin: 25px auto;
+			margin: 50rpx auto;
 			flex-direction: column;
 
 			.amount_text {
 				font-weight: 500;
-				font-size: 28px;
-				margin: 13px auto;
+				font-size: 56rpx;
+				margin: 26rpx auto;
 			}
 
 			.ls_text {

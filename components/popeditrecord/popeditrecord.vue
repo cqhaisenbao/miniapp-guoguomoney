@@ -85,8 +85,8 @@
 <style lang="scss" scoped>
 	.topWrapper-record {
 		display: flex;
-		padding: 10px 20px;
-		margin-top: 40px;
+		padding: 20rpx 40rpx;
+		margin-top: 80rpx;
 
 		.record-tabs {
 			flex-grow: 1;
@@ -94,11 +94,11 @@
 			.record-tabs-item {
 				display: inline-block;
 				background: #e8e8e8;
-				padding: 3px 15px;
-				border-radius: 20px;
-				font-size: 13px;
+				padding: 6rpx 30rpx;
+				border-radius: 40rpx;
+				font-size: 26rpx;
 				font-weight: 600;
-				margin-right: 10px;
+				margin-right: 20rpx;
 				flex-grow: 1;
 
 				&.selected {

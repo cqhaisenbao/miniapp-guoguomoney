@@ -90,25 +90,25 @@
 	}
 
 	.icon_ {
-		margin-right: 5px;
+		margin-right: 10rpx;
 	}
 
 	.content {
 		@extend %df;
 		flex-direction: column;
-		margin: 10px;
+		margin: 20rpx;
 		background: #FBFBFB;
-		border-radius: 15px;
-		padding: 20px 10px 0;
-		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+		border-radius: 30rpx;
+		padding: 40rpx 20rpx 0;
+		box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
 
 		.line-1 {
 			@extend %df;
 
 			.recordIcon {
-				font-size: 20px;
+				font-size: 40rpx;
 				color: #2b2e4a;
-				margin-right: 5px;
+				margin-right: 10rpx;
 				@extend %df;
 			}
 

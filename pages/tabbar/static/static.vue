@@ -91,52 +91,52 @@
 
 <style lang="scss">
 	%item {
-		padding: 8px 16px;
-		line-height: 24px;
+		padding: 16rpx 32rpx;
+		line-height: 48rpx;
 		display: flex;
 		justify-content: space-between;
 		align-content: center;
 	}
 
 	.noResult {
-		margin-top: 30px;
+		margin-top: 60rpx;
 		text-align: center;
 	}
 
 	.li_ {
-		margin: 10px 5px 0;
+		margin: 20rpx 10rpx 0;
 		background: #FBFBFB;
-		border-radius: 15px;
+		border-radius: 30rpx;
 		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
 		.title {
 			@extend %item;
 			font-weight: 600;
-			font-size: 16px;
+			font-size: 32rpx;
 		}
 
 		.record {
 			background: #FFFFFF;
 			@extend %item;
-			border-bottom: 1px solid #e6e6e6;
+			border-bottom: 2rpx solid #e6e6e6;
 			display: flex;
 			align-items: center;
-			line-height: 35px;
+			line-height: 70rpx;
 			justify-content: center;
 
 			.icon_ {
-				width: 25px;
+				width: 50rpx;
 				color: $uni-color-warning;
-				margin-right: 5px;
+				margin-right: 10rpx;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: 20px;
+				font-size: 40rpx;
 			}
 
 			.note {
 				margin-right: auto;
-				margin-left: 16px;
+				margin-left: 32rpx;
 				color: #999;
 			}
 		}

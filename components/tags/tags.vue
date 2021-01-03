@@ -85,8 +85,8 @@
 				align-items: center;
 				flex-wrap: nowrap;
 				box-sizing: border-box;
-				padding-top: 20px;
-				padding-left: 16px;
+				padding-top: 40rpx;
+				padding-left: 32rpx;
 				min-height: 80px;
 
 				.icon {
@@ -97,9 +97,9 @@
 					justify-content: center;
 					box-sizing: border-box;
 					align-items: center;
-					margin-right: 16px;
+					margin-right: 32rpx;
 					color: #c4c4c4;
-					font-size: 32px;
+					font-size: 64rpx;
 
 					&.selected {
 						color: $uni-color-warning;

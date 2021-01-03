@@ -129,7 +129,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
-			margin-bottom: 5px;
+			margin-bottom: 10rpx;
 		}
 	}
 </style>

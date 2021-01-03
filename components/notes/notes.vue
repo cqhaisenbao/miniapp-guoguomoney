@@ -28,9 +28,6 @@
 				default: ''
 			}
 		},
-		data() {
-			return {};
-		},
 		methods:{
 			onValueChanged(value){
 				 this.$emit('update:value', value);
@@ -41,8 +38,8 @@
 
 <style lang="scss" scoped>
 	.formItem {
-		font-size: 14px;
-		padding-left: 16px;
+		font-size: 28rpx;
+		padding-left: 32rpx;
 		display: flex;
 		align-items: center;
 
@@ -50,21 +47,15 @@
 			flex-grow: 1;
 			display: flex;
 			align-items: center;
-			padding: 10px 0;
+			padding: 20rpx 0;
 		}
 
-		// >view {
-		// 	flex-shrink: 0;
-		// }
-
-		.name {}
-
 		.input_content {
-			height: 40px;
+			height: 80rpx;
 			flex-grow: 1;
 			background: transparent;
 			border: none;
-			margin-left: 10px;
+			margin-left: 20rpx;
 		}
 	}
 </style>

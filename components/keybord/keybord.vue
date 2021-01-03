@@ -111,21 +111,21 @@
 
 		.output {
 			@extend %innerShadow;
-			font-size: 36px;
+			font-size: 72rpx;
 			font-family: Consolas, monospace;
-			padding: 9px 16px;
+			padding: 9rpx 32rpx;
 			text-align: right;
-			height: 60px;
+			height: 120rpx;
 		}
 
 		.buttons {
-			padding: 6px 5px;
+			padding: 12rpx 10rpx;
 			border: none;
 			background-color: #f6f7f8;
 			display: grid;
 			grid-template-columns: 1fr 1fr 1fr 1fr;
 			grid-template-rows: auto;
-			grid-gap: 6px;
+			grid-gap: 12rpx;
 			grid-template-areas:
 				"one two three delete"
 				"four five six empty"
@@ -135,10 +135,10 @@
 			>button {
 				width: 100%;
 				background-color: #fff;
-				font-size: 20px;
-				box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+				font-size: 40rpx;
+				box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.05);
 				border-color: #fff;
-				border-radius: 8px;
+				border-radius: 16rpx;
 				display: flex;
 				align-items: center;
 				justify-content: center;
