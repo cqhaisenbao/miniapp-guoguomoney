@@ -2,10 +2,10 @@
 	<view>
 		<view class="content" v-for="(item,_id) in currentlist" :key="_id">
 			<view class="content_left">
-				<view :class='item.tagName' class="content_icon"></view>
+				<view :class='[item.tagName,{income:"+"===item.type?true:false}]' class="content_icon"></view>
 				<view class="content_text">{{item.tag}}</view>
 			</view>
-			<u-line-progress :show-percent="false" :height=20 class="line_progress" active-color="#3EB575" :percent="countPercent(item)"></u-line-progress>
+			<u-line-progress :show-percent="false" :height=20 class="line_progress" :active-color="line_color" :percent="countPercent(item)"></u-line-progress>
 			<view>￥{{item.amount.toFixed(2)}}</view>
 		</view>
 	</view>
@@ -14,6 +14,7 @@
 <script>
 	export default {
 		props: {
+			selectedType: '',
 			currentlist: {
 				type: Array
 			},
@@ -25,8 +26,12 @@
 			}
 		},
 		data() {
-			return {
-			};
+			return {};
+		},
+		computed: {
+			line_color() {
+				return this.selectedType === '-' ? '#3EB575' : '#e84545'
+			}
 		},
 		methods: {
 			countPercent(item) {
@@ -55,6 +60,10 @@
 				color: $main-color;
 				font-size: 24px;
 				margin-right: 12px;
+
+				&.income {
+					color: $main-color-red;
+				}
 			}
 
 			.content_text {

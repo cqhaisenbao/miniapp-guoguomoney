@@ -2,7 +2,7 @@
 	<view>
 		<monthStatistics v-if="recordList" :nowmonth.sync="nowmonth" :amount_pay="amount_pay" :amount_income="amount_income"></monthStatistics>
 		<typeSelect :selectedType.sync='selectedType'></typeSelect>
-		<typeProgress :currentlist="selectedList_norepeat" :currentAmount="currentAmount" :amount_income="amount_income"></typeProgress>
+		<typeProgress :selectedType='selectedType' :currentlist="selectedList_norepeat" :currentAmount="currentAmount" :amount_income="amount_income"></typeProgress>
 	</view>
 </template>
 
@@ -31,7 +31,7 @@
 			}
 		},
 		watch: {
-			listenChange(){
+			listenChange() {
 				selectedListAmount.call(this, this.nowmonth, this.selectedType)
 				selectedMonthAmount.call(this, this.nowmonth, '-')
 				this.handleCurrentList()
@@ -54,10 +54,12 @@
 						this.selectedList.push({
 							tag: list[i].tag,
 							amount: list[i].amount,
-							tagName: list[i].tagName
+							tagName: list[i].tagName,
+							type: list[i].type
 						})
 					}
 				}
+				//重复类型金额相加后的表：selectedList_norepeat
 				const newRecordList = []
 				this.selectedList.forEach(el => {
 					const result = newRecordList.findIndex(ol => { return el.tag === ol.tag })
@@ -67,9 +69,7 @@
 						newRecordList.push(el)
 					}
 				})
-
 				this.selectedList_norepeat = newRecordList
-				console.log('处理去重后的表', newRecordList)
 			}
 		}
 	};
