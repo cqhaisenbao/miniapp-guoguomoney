@@ -2,7 +2,7 @@
 	<view>
 		<monthStatistics v-if="recordList" :nowmonth.sync="nowmonth" :amount_pay="amount_pay" :amount_income="amount_income"></monthStatistics>
 		<typeSelect :selectedType.sync='selectedType'></typeSelect>
-		<typeProgress :selectedType='selectedType' :currentlist="selectedList_norepeat" :currentAmount="currentAmount" :amount_income="amount_income"></typeProgress>
+		<typeProgress :selectedList='selectedList' :selectedType='selectedType' :currentlist="selectedList_norepeat" :currentAmount="currentAmount" :amount_income="amount_income"></typeProgress>
 	</view>
 </template>
 

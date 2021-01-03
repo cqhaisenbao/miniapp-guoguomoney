@@ -31,13 +31,14 @@
 
 <style lang="scss" scoped>
 .header_ {
-		padding: 20px 12px 12px;
+		padding: 35px 12px 20px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 
 		.header_left {
 			font-size: 17px;
+			color: #555555;
 		}
 
 		.header_right {
@@ -58,8 +59,8 @@
 				;
 
 				&:last-child.selected {
-					color: $main-color-red;
-					background-color: lighten($main-color-red, 35%);
+					color: $uni-color-warning;
+					background-color: lighten($uni-color-warning, 35%);
 				}
 			}
 		}

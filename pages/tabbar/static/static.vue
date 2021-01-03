@@ -126,7 +126,7 @@
 
 			.icon_ {
 				width: 25px;
-				color: #d68060;
+				color: $uni-color-warning;
 				margin-right: 5px;
 				display: flex;
 				justify-content: center;

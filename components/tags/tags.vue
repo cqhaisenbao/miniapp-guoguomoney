@@ -102,7 +102,7 @@
 					font-size: 32px;
 
 					&.selected {
-						color: #e84545;
+						color: $uni-color-warning;
 
 						.icon_font {
 							color: #484848;
