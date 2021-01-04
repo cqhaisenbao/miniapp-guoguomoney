@@ -17,10 +17,12 @@
   },
   "homepage": "https://github.com/cqhaisenbao/miniapp-guoguomoney#readme",
   "devDependencies": {
+    "@types/lodash": "^4.14.167",
     "@types/uni-app": "^1.4.3"
   },
   "dependencies": {
-    "dayjs": "^1.9.7"
+    "dayjs": "^1.9.7",
+    "lodash": "^4.17.20"
   },
   "description": ""
 }

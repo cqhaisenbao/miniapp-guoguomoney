@@ -27,8 +27,8 @@
 			"path": "pages/tabbar/static/static",
 			"style": {
 				"navigationBarTitleText": "果果记账",
-				"enablePullDownRefresh": false,
-				"disableScroll": true
+				"enablePullDownRefresh": false
+				// "disableScroll": true
 			}
 		}
 	],

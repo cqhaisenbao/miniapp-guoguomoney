@@ -5,7 +5,6 @@
 </template>
 
 <script>
-	import uniEcCanvas from "@/components/uni-ec-canvas/uni-ec-canvas";
 	import dayjs from 'dayjs'
 	import { mapState, mapMutations, mapActions } from 'vuex';
 	import objArrtransArr from '@/lib/objArrtransArr.js';

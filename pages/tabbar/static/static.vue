@@ -20,7 +20,7 @@
 	</view>
 </template>
 
-<script>
+// <script>
 	import { mapState, mapMutations, mapActions } from 'vuex';
 	import networkcheck from '@/lib/networkcheck.js';
 	import clone from '@/lib/clone';
@@ -87,56 +87,56 @@
 			}
 		}
 	}
-</script>
+// </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	%item {
-		padding: 16rpx 32rpx;
-		line-height: 48rpx;
+		padding: 8px 16px;
+		line-height: 24px;
 		display: flex;
 		justify-content: space-between;
 		align-content: center;
 	}
 
 	.noResult {
-		margin-top: 60rpx;
+		margin-top: 30px;
 		text-align: center;
 	}
 
 	.li_ {
-		margin: 20rpx 10rpx 0;
+		margin: 10px 5px 0;
 		background: #FBFBFB;
-		border-radius: 30rpx;
+		border-radius: 15px;
 		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
 		.title {
 			@extend %item;
 			font-weight: 600;
-			font-size: 32rpx;
+			font-size: 16px;
 		}
 
 		.record {
 			background: #FFFFFF;
 			@extend %item;
-			border-bottom: 2rpx solid #e6e6e6;
+			border-bottom: 1px solid #e6e6e6;
 			display: flex;
 			align-items: center;
-			line-height: 70rpx;
+			line-height: 35px;
 			justify-content: center;
 
 			.icon_ {
-				width: 50rpx;
+				width: 25px;
 				color: $uni-color-warning;
-				margin-right: 10rpx;
+				margin-right: 5px;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: 40rpx;
+				font-size: 20px;
 			}
 
 			.note {
 				margin-right: auto;
-				margin-left: 32rpx;
+				margin-left: 16px;
 				color: #999;
 			}
 		}
