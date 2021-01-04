@@ -21,8 +21,8 @@
 			</view>
 		</view>
 		<view>
-			<u-popup v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom=true closeable=true>
-				<popeditrecord @updated="updated" :currentrecord="currentRecord" />
+			<u-popup  v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom=true closeable=true>
+				<popeditrecord :popshow="popshow" @updated="updated" :currentrecord="currentRecord" />
 			</u-popup>
 		</view>
 		<u-modal confirm-color="#3EB575" @confirm="confirm" show-cancel-button="true" v-model="deletetagshow" :content="content"></u-modal>

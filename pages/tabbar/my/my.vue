@@ -1,16 +1,18 @@
 <template>
 	<view>
 		<monthStatistics v-if="recordList" :nowmonth.sync="nowmonth" :amount_pay="amount_pay" :amount_income="amount_income"></monthStatistics>
-		<typeSelect :selectedType.sync='selectedType'></typeSelect>
-		<typeProgress :selectedList='selectedList' :selectedType='selectedType' :currentlist="selectedList_norepeat" :currentAmount="currentAmount" :amount_income="amount_income"></typeProgress>
+		<typeProgress :selectedList='selectedList' :selectedType='selectedType' :currentlist="selectedList_norepeat" :currentAmount="currentAmount" :amount_income="amount_income">
+			<typeSelect :selectedType.sync='selectedType'></typeSelect>
+		</typeProgress>
 	</view>
 </template>
 
 <script>
 	import dayjs from 'dayjs';
 	import { mapState, mapMutations, mapActions } from 'vuex';
-	import selectedListAmount from '@/lib/selectedListAmount.js'
-	import selectedMonthAmount from '@/lib/selectedMonthAmount.js'
+	import selectedListAmount from '@/lib/selectedListAmount.js';
+	import selectedMonthAmount from '@/lib/selectedMonthAmount.js';
+	import networkcheck from '@/lib/networkcheck.js';
 	export default {
 		data() {
 			return {
@@ -22,6 +24,9 @@
 				selectedList: [],
 				selectedList_norepeat: []
 			}
+		},
+		onShow() {
+			networkcheck.call(this)
 		},
 		computed: {
 			...mapState(['recordList']),

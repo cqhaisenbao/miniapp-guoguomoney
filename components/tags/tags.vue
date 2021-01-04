@@ -2,15 +2,15 @@
 	<view>
 		<u-modal confirm-color="#3EB575" @confirm="confirm" show-cancel-button="true" v-model="show" :content="content"></u-modal>
 		<view v-if="iconName.length>0" class="tags">
-			<scroll-view show-scrollbar=false class="icon_wrapper" scroll-x>
+			<scroll-view :scroll-into-view='renqun' show-scrollbar=false class="icon_wrapper" scroll-x>
 				<view class="tags_scroll__box">
-					<view v-if="item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
+					<view :id="item.name.slice(14)"  v-if="item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
 						<text class="icon_font">{{item.title}}</text>
 					</view>
 					<view @longpress='editusertag(item)' v-if="!item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
 						<text class="icon_font">{{item.title}}</text>
 					</view>
-					<view v-if="addtagshow" @click="addtag" class="iconfont icon-tianjiazc icon">
+					<view id="test" v-if="addtagshow" @click="addtag" class="iconfont icon-tianjiazc icon">
 						<text class="icon_font">新增分类</text>
 					</view>
 				</view>
@@ -25,8 +25,8 @@
 		props: {
 			type: '',
 			selectedTag: '',
-			tagName: '',
 			popshow: false,
+			poptitle:'',
 			addtagshow: {
 				default: true
 			}
@@ -43,6 +43,14 @@
 				content: '删除后，当前分类下的内容将归为“其他”分类'
 			};
 		},
+		// updated() {
+		// 	const query = uni.createSelectorQuery().in(this);
+		// 	const title='#'+this.tagName.slice(14)
+		// 	console.log('this.poptitle',this.poptitle)
+		// 	query.select(this.poptitle).boundingClientRect(data => {
+		// 	  console.log("当前节点距离左边" + JSON.stringify(data.left));
+		// 	}).exec();
+		// },
 		methods: {
 			confirm() {
 				const db = uniCloud.database();

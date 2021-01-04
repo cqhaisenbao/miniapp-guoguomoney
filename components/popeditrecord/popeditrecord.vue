@@ -34,7 +34,7 @@
 			currentrecord: {},
 			popshow: {
 				type: Boolean
-			}
+			},
 		},
 		computed: {
 			...mapState(['iconName']),
@@ -73,7 +73,7 @@
 				}).finally(() => {
 					if (this.networkType === false) {
 						uni.showToast({
-							title:'网络异常~'
+							title: '网络异常~'
 						})
 					}
 				})

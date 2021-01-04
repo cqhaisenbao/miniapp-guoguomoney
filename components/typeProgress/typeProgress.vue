@@ -1,5 +1,6 @@
 <template>
-	<view>
+	<view class="main_">
+		<slot></slot>
 		<view v-if="selectedList.length>0">
 			<view class="content" v-for="(item,_id) in currentlist" :key="_id">
 				<view class="content_left">
@@ -54,6 +55,11 @@
 </script>
 
 <style lang="scss" scoped>
+	.main_{
+		margin-top: 10px;
+		padding-bottom: 10px;
+		// box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
+	}
 	.content {
 		height: 30px;
 		display: flex;

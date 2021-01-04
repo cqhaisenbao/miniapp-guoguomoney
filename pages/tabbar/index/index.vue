@@ -43,7 +43,17 @@
 				}
 			}
 		},
+		onLoad() {
+			// this.test()
+		},
 		methods: {
+			test() {
+				let view = uni.createSelectorQuery().in(this).select("#fucktag")
+				view.boundingClientRect(data => {
+					console.log("得到布局位置信息" + JSON.stringify(data));
+					console.log("节点离页面顶部的距离为" + data.top);
+				}).exec();
+			},
 			onPopupChange() {
 				this.isFocus = true
 				uni.hideTabBar()
