@@ -7,7 +7,7 @@
 		<view>
 			<block v-for="(item, index) in arr" :key="index">
 				<view class="qiun-columns" style="background-color: #FFFFFF;">
-					<u-charts :canvas-id="item.id" :chartType="item.chartType" :cWidth="cWidth" :cHeight="cHeight" :opts="item.opts" :ref="item.id" />
+					<u-charts :newdata='chartData' :chartShouldupdate='chartShouldupdate' :opts="item.opts" :ref="item.id" />
 				</view>
 			</block>
 		</view>
@@ -39,6 +39,7 @@
 				cWidth: '',
 				cHeight: '',
 				arr: [],
+				chartShouldupdate: false,
 				chartData: {
 					categories: [],
 					series: [{
@@ -54,8 +55,6 @@
 		},
 		onLoad() {
 			_self = this;
-			this.cWidth = uni.upx2px(750);
-			this.cHeight = uni.upx2px(500);
 			this.getServerData();
 		},
 		computed: {
@@ -85,17 +84,14 @@
 				};
 				LineA.categories = this.chartData.categories;
 				LineA.series = this.chartData.series;
-
 				// _self.textarea = JSON.stringify(res.data.data.LineA);
-
 				let serverData = [{
 					opts: LineA,
-					chartType: "line",
-					id: "abcc"
 				}];
 				_self.arr = serverData;
 			},
 			handleCurrentList() {
+				this.chartShouldupdate = !this.chartShouldupdate
 				this.chartData.series[0].data = []
 				this.chartData.categories = []
 				this.selectedList = []
@@ -140,7 +136,7 @@
 				const amounts = daysArray.map(item => item.amount)
 				this.chartData.series[0].data = amounts
 				this.chartData.categories = times
-				console.log('chartData', this.chartData.series[0].data)
+				console.log('chartData', this.chartData)
 
 				//重复类型金额相加后的表：selectedList_norepeat
 				const newRecordList = []

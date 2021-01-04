@@ -1,5 +1,6 @@
 <template>
-	<canvas v-if="canvasId" :id="canvasId" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px', 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error">
+	<canvas :id="canvasId" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px',
+	 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error">
 	</canvas>
 </template>
 
@@ -9,82 +10,39 @@
 
 	export default {
 		props: {
-			chartType: {
-				required: true,
-				type: String,
-				default: 'column'
+			newdata: {
+				type: Object
 			},
+			chartShouldupdate: {
+				type: Boolean
+			},
+			chartType: { default: 'line' },
 			opts: {
 				required: true,
-				type: Object,
 				default () {
 					return null;
 				},
 			},
-			canvasId: {
-				type: String,
-				default: 'u-canvas',
-			},
-			cWidth: {
-				default: 375,
-			},
-			cHeight: {
-				default: 250,
-			},
-			pixelRatio: {
-				type: Number,
-				default: 1,
-			},
+			canvasId: { default: 'u-canvas', },
+			cWidth: { default: uni.upx2px(750), },
+			cHeight: { default: uni.upx2px(500), },
+			pixelRatio: { default: 1, },
 		},
 		mounted() {
-			this.init();
+			this.initLineChart()
+		},
+		computed:{
+			newdata_(){
+				return this.newdata
+			}
+		},
+		watch: {
+			chartShouldupdate() {
+				console.log('this.newdata_',this.newdata_)
+				this.changeData('u-canvas', this.newdata_)
+			}
 		},
 		methods: {
-			init() {
-				switch (this.chartType) {
-					case 'column':
-						this.initColumnChart();
-						break;
-					case 'line':
-						this.initLineChart();
-						break;
-					default:
-						break;
-				}
-			},
-			initColumnChart() {
-				canvases[this.canvasId] = new uCharts({
-					$this: this,
-					canvasId: this.canvasId,
-					type: 'column',
-					legend: true,
-					fontSize: 11,
-					background: '#FFFFFF',
-					pixelRatio: this.pixelRatio,
-					animation: true,
-					categories: this.opts.categories,
-					series: this.opts.series,
-					enableScroll: true,
-					xAxis: {
-						disableGrid: true,
-						itemCount: 4,
-						scrollShow: true
-					},
-					yAxis: {
-						data: {
-							disabled: false,
-						}
-					},
-					dataLabel: true,
-					width: this.cWidth * this.pixelRatio,
-					height: this.cHeight * this.pixelRatio,
-					extra: {
-						column: {
-							type: 'group',
-						}
-					}
-				});
-			},
 			initLineChart() {
 				canvases[this.canvasId] = new uCharts({
 					$this: this,
