@@ -2,13 +2,16 @@
 	<view>
 		<view class="title">{{month}}{{type==='-'?'支出':'收入'}}排行</view>
 		<view v-if="moneySortList.length>0">
-			<view class="content_" v-for="(item,index) in moneySortList" :key="index">
+			<view  class="content_" v-for="(item,index) in moneySortList" :key="index" @click="editRecord(item)">
 				<view class="num">{{index+1}}</view>
 				<icon :class='[item.tagName,{typePayIcon:item.type===`-`?true:false}]' class="icon_" />
 				<view>{{ item.tag }}</view>
 				<view class="right_wrapper">
 					<view class="money">{{ item.type + ' ' +item.amount.toFixed(2) }}</view>
 					<view class="time">{{item._time}}</view>
+				</view>
+				<view>
+					<u-icon color='#808080' name="arrow-right"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -31,6 +34,13 @@
 		},
 		data() {
 			return {}
+		},
+		methods:{
+			editRecord(item) {
+				this.$u.route('pages/editrecord/editrecord', {
+					recordid: item._id,
+				})
+			},
 		},
 		computed: {
 			month() {
@@ -94,6 +104,7 @@
 			flex-direction: column;
 			justify-content: flex-end;
 			align-items: flex-end;
+			margin-right: 20rpx;
 
 			.money {
 				font-size: 32rpx;

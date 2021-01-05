@@ -107,7 +107,8 @@
 							tagName:list[i].tagName,
 							type:list[i].type,
 							tag:list[i].tag,
-							amount: list[i].amount
+							amount: list[i].amount,
+							_id:list[i]._id
 						})
 					}
 				}

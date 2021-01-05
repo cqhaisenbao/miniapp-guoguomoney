@@ -62,7 +62,7 @@
 	.content {
 		height: 30px;
 		display: flex;
-		margin-bottom: 12px;
+		margin-bottom: 20px;
 		justify-content: space-between;
 		align-items: center;
 		padding: 40rpx 48rpx 24rpx 48rpx;
