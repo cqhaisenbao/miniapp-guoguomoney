@@ -10,7 +10,7 @@
 		</view>
 		<tags :addtagshow='false' @deletetag="deletetag" :type="popcurrentrecord.type" class="tag_content" :iconName='default_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName" :popshow.sync="tagpopshow"></tags>
 		<notes :value.sync="popcurrentrecord.notes" field-name="备注" placeholder="请在这里输入备注" />
-		<keybord :tag.sync="popcurrentrecord.tag" @update:value="onUpdateAmount" :popoutput="popcurrentrecord.amount" @submit="saveRecord"></keybord>
+		<keybord :type="popcurrentrecord.type" :tag.sync="popcurrentrecord.tag" @update:value="onUpdateAmount" :popoutput="popcurrentrecord.amount" @submit="saveRecord"></keybord>
 		<view v-if="tagpopshow">
 			<u-popup v-model="tagpopshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">
 				<edittag :iconName='default_iconName' @savetag='savetag' :tagtype.sync="record.type"></edittag>
