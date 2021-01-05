@@ -32,10 +32,6 @@
 		data() {
 			return {}
 		},
-		methods: {},
-		mounted() {
-			console.log(this.currentList)
-		},
 		computed: {
 			month() {
 				return this.nowmonth.slice(5) === '10月' ? '10月' : this.nowmonth.slice(5).replace('0', '')
@@ -55,18 +51,24 @@
 
 <style lang="scss" scoped>
 	.title {
-		padding-left: 24rpx;
+		padding-left: 44rpx;
+		margin-bottom: 20rpx;
 		font-size: 24rpx;
 		color: $uni-text-color-placeholder;
 	}
 
 	.content_ {
-		padding: 70rpx 48rpx 50rpx 34rpx;
+		padding: 48rpx 48rpx 6rpx 48rpx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 
+		&:last-child {
+			padding-bottom: 50rpx;
+		}
+
 		.num {
+			width: 40rpx;
 			margin-right: 20rpx;
 			font-size: 28rpx;
 			color: #666666;
@@ -96,6 +98,7 @@
 			.money {
 				font-size: 32rpx;
 				color: #333333;
+				font-weight: 500;
 			}
 
 			.time {

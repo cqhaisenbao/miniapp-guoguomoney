@@ -3,7 +3,7 @@
 		<canvas v-show="canvasShow" :id="canvasId" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px',
 	 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error">
 		</canvas>
-		<u-line color="#E6E6E6" length='95%' margin='60rpx auto 30rpx' />
+		<u-line color="#E6E6E6" length='90%' margin='60rpx auto 30rpx' />
 	</view>
 </template>
 

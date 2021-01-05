@@ -14,7 +14,7 @@
 		<view class="noList" v-else>
 			<u-empty text="目前没有相关记录"></u-empty>
 		</view>
-		<u-line color="#E6E6E6" length='95%' margin='60rpx auto 0' />
+		<u-line color="#E6E6E6" length='90%' margin='60rpx auto 0' />
 	</view>
 </template>
 
