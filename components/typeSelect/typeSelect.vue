@@ -36,7 +36,7 @@
 
 <style lang="scss" scoped>
 	.header_ {
-		padding: 70rpx 24rpx 50rpx;
+		padding: 70rpx 24rpx 50rpx 48rpx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

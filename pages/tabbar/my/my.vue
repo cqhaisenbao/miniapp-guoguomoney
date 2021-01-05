@@ -12,6 +12,7 @@
 				</view>
 			</block>
 		</view>
+		<moneySort :currentList='line_selectedList' :nowmonth='nowmonth' :type='line_selectedType'></moneySort>
 	</view>
 </template>
 
@@ -102,6 +103,10 @@
 					if (list[i].type === this.line_selectedType && time === this.nowmonth) {
 						this.line_selectedList.push({
 							time: dayjs(list[i].time).format('D'),
+							_time:dayjs(list[i].time).format('M月D日'),
+							tagName:list[i].tagName,
+							type:list[i].type,
+							tag:list[i].tag,
 							amount: list[i].amount
 						})
 					}
