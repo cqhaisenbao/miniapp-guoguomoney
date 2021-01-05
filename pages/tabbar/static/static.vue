@@ -6,7 +6,7 @@
 				<h3 class="title">{{ beautify(group.title) }} <span>￥{{ group.total }}</span></h3>
 				<ol>
 					<view v-for="item in group.items" :key="item._id" class="record" @click="editRecord(item)">
-						<icon :class="item.tagName" class="icon_" />
+						<icon :class='[item.tagName,{typePayIcon:item.type===`-`?true:false}]' class="icon_" />
 						<span>{{ item.tag }}</span>
 						<span class="note">{{ item.notes }}</span>
 						<span>￥{{ item.amount }} </span>
@@ -132,6 +132,9 @@
 				justify-content: center;
 				align-items: center;
 				font-size: 20px;
+				&.typePayIcon{
+					color:$main-color
+				}
 			}
 
 			.note {

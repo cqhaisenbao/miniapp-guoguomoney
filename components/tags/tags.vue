@@ -4,7 +4,8 @@
 		<view v-if="iconName.length>0" class="tags">
 			<scroll-view :scroll-into-view='renqun' show-scrollbar=false class="icon_wrapper" scroll-x>
 				<view class="tags_scroll__box">
-					<view :id="item.name.slice(14)"  v-if="item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
+					<view :id="item.name.slice(14)"  v-if="item.default && item.type===type" v-for="(item,index) in iconName" :key="index" 
+					:class='[item.name,{selected:selectedTag===item.title?true:false},{typePayIcon:item.type===`-`?true:false}]' class="icon" @click="toggle(item)">
 						<text class="icon_font">{{item.title}}</text>
 					</view>
 					<view @longpress='editusertag(item)' v-if="!item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
@@ -111,6 +112,9 @@
 
 					&.selected {
 						color: $uni-color-warning;
+						&.typePayIcon{
+							color:$main-color
+						}
 
 						.icon_font {
 							color: #484848;

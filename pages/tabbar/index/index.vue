@@ -6,7 +6,7 @@
 			<notes :value.sync="record.notes" field-name="备注" placeholder="请在这里输入备注">
 				<datapick @timeupdate="onUpdateTime" :now='now'></datapick>
 			</notes>
-			<keybord @update:value="onUpdateAmount" :tag.sync="record.tag" @submit="saveRecord"></keybord>
+			<keybord :type="record.type" @update:value="onUpdateAmount" :tag.sync="record.tag" @submit="saveRecord"></keybord>
 		</view>
 		<view v-if="popshow">
 			<u-popup @open="onPopupChange" v-model="popshow" mode="bottom" border-radius="14" height="auto" safe-area-inset-bottom="true">

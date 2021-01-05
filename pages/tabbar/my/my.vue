@@ -46,7 +46,6 @@
 					series: [{
 						name: '支出',
 						data: [],
-						month:'1',
 						color: '#3EB575'
 					}]
 				}
@@ -130,7 +129,6 @@
 				const amounts = daysArray.map(item => item.amount)
 				this.chartData.series[0].data = amounts
 				this.chartData.categories = times
-				this.chartData.series[0].month = '11'
 				// console.log('chartData', this.chartData)
 			},
 			canvasHidden(nval) {

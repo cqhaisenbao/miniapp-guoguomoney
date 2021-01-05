@@ -14,7 +14,8 @@
 				<button clsaa="mybutton" @click="inputContent" data-text="7">7</button>
 				<button clsaa="mybutton" @click="inputContent" data-text="8">8</button>
 				<button clsaa="mybutton" @click="inputContent" data-text="9">9</button>
-				<button clsaa="mybutton" @click.stop="ok" class="ok" :class="{numChange:x}">OK</button>
+				<button v-if="type==='-'" clsaa="mybutton" @click.stop="ok" class="ok" :class="{numChange:x}">OK</button>
+				<button v-else clsaa="mybutton" @click.stop="ok" class="ok_" :class="{numChange_:x}">OK</button>
 				<button clsaa="mybutton" @click="inputContent" class="zero" data-text="0">0</button>
 				<button clsaa="mybutton" @click="inputContent" data-text=".">.</button>
 			</view>
@@ -25,6 +26,7 @@
 <script>
 	export default {
 		props: {
+			type: '',
 			value: {
 				type: String,
 			},
@@ -101,7 +103,7 @@
 
 <style lang="scss" scoped>
 	$color-shadow: rgba(0, 0, 0, 0.25);
-
+	
 	%innerShadow {
 		box-shadow: inset 0 -3px 3px -3px $color-shadow,
 			inset 0 3px 3px -3px $color-shadow;
@@ -192,6 +194,15 @@
 				}
 
 				&:nth-child(12) {
+					&.ok_{
+						grid-area: ok;
+						color: #fff;
+						background-color: lighten($uni-color-warning, 20%);
+										
+						&.numChange_ {
+							background: $uni-color-warning;
+						}
+					}
 					grid-area: ok;
 					color: #fff;
 					background-color: lighten($main-color, 20%);
