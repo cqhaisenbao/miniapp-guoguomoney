@@ -5,6 +5,7 @@
 			<typeSelect :selectedType.sync='selectedType'></typeSelect>
 		</typeProgress>
 		<view>
+			<typeSelect title='每日对比' :selectedType.sync='line_selectedType'></typeSelect>
 			<block v-for="(item, index) in arr" :key="index">
 				<view class="qiun-columns" style="background-color: #FFFFFF;">
 					<uCharts :canvasShow='canvasShow' :newdata='chartData' :chartShouldupdate='chartShouldupdate' :opts="item.opts" :ref="item.id" />
@@ -30,11 +31,13 @@
 			return {
 				nowmonth: dayjs().format('YYYY年MM月'),
 				selectedType: '-',
+				line_selectedType: '-',
 				canvasShow: true,
 				amount_pay: 0,
 				amount_income: 0,
 				currentAmount: 0,
 				selectedList: [],
+				line_selectedList: [],
 				selectedList_norepeat: [],
 				arr: [],
 				chartShouldupdate: false,
@@ -58,8 +61,8 @@
 		computed: {
 			...mapState(['recordList']),
 			listenChange() {
-				const { recordList, nowmonth, selectedType } = this
-				return { recordList, nowmonth, selectedType }
+				const { recordList, nowmonth } = this
+				return { recordList, nowmonth }
 			}
 		},
 		watch: {
@@ -67,18 +70,67 @@
 				selectedListAmount.call(this, this.nowmonth, this.selectedType)
 				selectedMonthAmount.call(this, this.nowmonth, '-')
 				this.handleCurrentList()
+				this.handleChartstList()
 			},
-			selectedType(nval) {
+			line_selectedType(nval) {
+				this.handleChartstList()
 				this.chartData.series[0].name = nval === '-' ? '支出' : '收入'
 				this.chartData.series[0].color = nval === '-' ? '#3EB575' : '#f0ad4e'
+			},
+			selectedType() {
+				selectedListAmount.call(this, this.nowmonth, this.selectedType)
+				selectedMonthAmount.call(this, this.nowmonth, '-')
+				this.handleCurrentList()
 			}
 		},
 		created() {
 			selectedListAmount.call(this, this.nowmonth, this.selectedType)
 			selectedMonthAmount.call(this, this.nowmonth, '-')
 			this.handleCurrentList()
+			this.handleChartstList()
 		},
 		methods: {
+			handleChartstList() {
+				this.chartShouldupdate = !this.chartShouldupdate
+				this.chartData.series[0].data = []
+				this.chartData.categories = []
+				this.line_selectedList = []
+				const list = this.recordList
+				const currenttime = this.nowmonth
+				for (let i = 0; i < list.length; i++) {
+					let time = dayjs(list[i].time).format('YYYY年MM月')
+					if (list[i].type === this.line_selectedType && time === this.nowmonth) {
+						this.line_selectedList.push({
+							time: dayjs(list[i].time).format('D'),
+							amount: list[i].amount
+						})
+					}
+				}
+				//同一天的表
+				const fn_list = this.line_selectedList.map(r => _.pick(r, ['time', 'amount']))
+				const oneDayList = []
+				fn_list.forEach(el => {
+					const result = oneDayList.findIndex(ol => { return el.time === ol.time })
+					if (result !== -1) {
+						oneDayList[result].amount = oneDayList[result].amount + el.amount
+					} else {
+						oneDayList.push(el)
+					}
+				})
+				const daysArray = []
+				const x = _.replace(_.replace(this.nowmonth, '年', ''), '月', '')
+				const days = dayjs(x).daysInMonth()
+				for (let i = 1; i < days + 1; i++) {
+					const date = dayjs().date(i).format('D')
+					const found = _.find(oneDayList, { time: date })
+					daysArray.push({ date: i, amount: found ? found.amount : 0 })
+				}
+				const times = daysArray.map(item => item.date)
+				const amounts = daysArray.map(item => item.amount)
+				this.chartData.series[0].data = amounts
+				this.chartData.categories = times
+				// console.log('chartData', this.chartData)
+			},
 			canvasHidden(nval) {
 				this.canvasShow = !nval
 			},
@@ -95,9 +147,6 @@
 				_self.arr = serverData;
 			},
 			handleCurrentList() {
-				this.chartShouldupdate = !this.chartShouldupdate
-				this.chartData.series[0].data = []
-				this.chartData.categories = []
 				this.selectedList = []
 				const list = this.recordList
 				const currenttime = this.nowmonth
@@ -109,39 +158,15 @@
 							amount: list[i].amount,
 							tagName: list[i].tagName,
 							type: list[i].type,
-							//如果异常就是这句有问题
-							time: dayjs(list[i].time).format('D')
+						})
+					}
+					if (list[i].type === this.line_selectedType && time === this.nowmonth) {
+						this.line_selectedList.push({
+							time: dayjs(list[i].time).format('D'),
+							amount: list[i].amount
 						})
 					}
 				}
-				//同一天的表
-				const fn_list = this.selectedList.map(r => _.pick(r, ['time', 'amount']))
-				console.log('fn_list', fn_list)
-				const oneDayList = []
-				fn_list.forEach(el => {
-					const result = oneDayList.findIndex(ol => { return el.time === ol.time })
-					if (result !== -1) {
-						oneDayList[result].amount = oneDayList[result].amount + el.amount
-					} else {
-						oneDayList.push(el)
-					}
-				})
-				// console.log('oneDayList', oneDayList)
-				const daysArray = []
-				const x = _.replace(_.replace(this.nowmonth, '年', ''), '月', '')
-				const days = dayjs(x).daysInMonth()
-				console.log('这个月有多少天', days)
-				for (let i = 1; i < days + 1; i++) {
-					const date = dayjs().date(i).format('D')
-					const found = _.find(oneDayList, { time: date })
-					daysArray.push({ date: i, amount: found ? found.amount : 0 })
-				}
-				const times = daysArray.map(item => item.date)
-				const amounts = daysArray.map(item => item.amount)
-				this.chartData.series[0].data = amounts
-				this.chartData.categories = times
-				console.log('chartData', this.chartData)
-
 				//重复类型金额相加后的表：selectedList_norepeat
 				const newRecordList = []
 				this.selectedList.forEach(el => {
