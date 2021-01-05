@@ -52,10 +52,12 @@
 			...mapActions(['fetchRecordList']),
 			updated(value) {
 				this.popshow = value
+				setTimeout(()=>{
 				uni.showToast({
 					title: '修改成功',
 					icon: 'none',
-				});
+				});	
+				},0)
 				this.fetchCurrentRecord()
 			},
 			fetchCurrentRecord() {
@@ -76,6 +78,12 @@
 				db.collection('recordList').doc(this.recordid).remove().then(() => {
 					this.$store.dispatch('fetchRecordList')
 					uni.navigateBack()
+					setTimeout(()=>{
+					uni.showToast({
+						title: '删除成功',
+						icon: 'none',
+					});	
+					},0)
 				})
 			}
 		},
