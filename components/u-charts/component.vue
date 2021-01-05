@@ -31,14 +31,14 @@
 		mounted() {
 			this.initLineChart()
 		},
-		computed:{
-			newdata_(){
+		computed: {
+			newdata_() {
 				return this.newdata
 			}
 		},
 		watch: {
 			chartShouldupdate() {
-				console.log('this.newdata_',this.newdata_)
+				console.log('this.newdata_', this.newdata_)
 				this.changeData('u-canvas', this.newdata_)
 			}
 		},
@@ -84,11 +84,13 @@
 					},
 					width: this.cWidth * this.pixelRatio,
 					height: this.cHeight * this.pixelRatio,
+
 					extra: {
 						line: {
 							type: 'straight',
 							width: 1
-						}
+						},
+						tooltip: {}
 					}
 				});
 			},
@@ -102,7 +104,7 @@
 			touchStart(e) {
 				canvases[this.canvasId].showToolTip(e, {
 					format: function(item, category) {
-						return category + ' ' + item.name + ':' + item.data
+						return category + '日' + ' ' + item.name + '：' + item.data + '元'
 					}
 				});
 				canvases[this.canvasId].scrollStart(e);

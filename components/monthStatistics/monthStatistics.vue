@@ -3,7 +3,7 @@
 		<view class="top">
 			<text class="month">{{nowmonth}}</text>
 			<text class="span-line">|</text>
-			<u-icon class="icon_" @click="iconClick" size="38" name="calendar"></u-icon>
+			<u-icon class="icon_" @click="show = true" size="38" name="calendar"></u-icon>
 			<u-picker mode="time" v-model="show" :params="params" confirm-color="#3EB575" @confirm="dateChange"></u-picker>
 		</view>
 		<view class="text_wrapper">
@@ -41,10 +41,6 @@
 			}
 		},
 		methods: {
-			iconClick() {
-				this.show = true
-				console.log(this.show)
-			},
 			dateChange(value) {
 				this.$emit('update:nowmonth', value.year + "年" + value.month + "月");
 			},

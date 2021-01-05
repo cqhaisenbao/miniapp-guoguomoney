@@ -68,6 +68,10 @@
 				selectedMonthAmount.call(this, this.nowmonth, '-')
 				this.handleCurrentList()
 			},
+			selectedType(nval) {
+				this.chartData.series[0].name = nval === '-' ? '支出' : '收入'
+				this.chartData.series[0].color = nval === '-' ? '#3EB575' : '#f0ad4e'
+			}
 		},
 		created() {
 			selectedListAmount.call(this, this.nowmonth, this.selectedType)
@@ -76,7 +80,6 @@
 		},
 		methods: {
 			canvasHidden(nval) {
-				console.log('canvasHiddennval',nval)
 				this.canvasShow = !nval
 			},
 			getServerData() {
