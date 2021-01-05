@@ -8,7 +8,7 @@
 			<typeSelect title='每日对比' :selectedType.sync='line_selectedType'></typeSelect>
 			<block v-for="(item, index) in arr" :key="index">
 				<view class="qiun-columns" style="background-color: #FFFFFF;">
-					<uCharts :canvasShow='canvasShow' :newdata='chartData' :chartShouldupdate='chartShouldupdate' :opts="item.opts" :ref="item.id" />
+					<uCharts :nowmonth='nowmonth' :canvasShow='canvasShow' :newdata='chartData' :chartShouldupdate='chartShouldupdate' :opts="item.opts" :ref="item.id" />
 				</view>
 			</block>
 		</view>
@@ -46,6 +46,7 @@
 					series: [{
 						name: '支出',
 						data: [],
+						month:'1',
 						color: '#3EB575'
 					}]
 				}
@@ -129,6 +130,7 @@
 				const amounts = daysArray.map(item => item.amount)
 				this.chartData.series[0].data = amounts
 				this.chartData.categories = times
+				this.chartData.series[0].month = '11'
 				// console.log('chartData', this.chartData)
 			},
 			canvasHidden(nval) {

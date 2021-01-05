@@ -1,8 +1,9 @@
 <template>
-	<view >
+	<view>
 		<canvas v-show="canvasShow" disable-scroll=false :id="canvasId" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px',
 	 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error">
 		</canvas>
+		<u-line color="#E6E6E6" length='95%' margin='60rpx auto 30rpx' />
 	</view>
 </template>
 
@@ -12,6 +13,9 @@
 
 	export default {
 		props: {
+			nowmonth: {
+				type: String
+			},
 			newdata: {
 				type: Object
 			},
@@ -43,7 +47,7 @@
 		},
 		watch: {
 			chartShouldupdate() {
-				console.log('this.newdata_', this.newdata_)
+				// console.log('this.newdata_', this.newdata_)
 				this.changeData('u-canvas', this.newdata_)
 			}
 		},
@@ -108,20 +112,14 @@
 				});
 			},
 			touchStart(e) {
+				const month = this.nowmonth
 				canvases[this.canvasId].showToolTip(e, {
 					format: function(item, category) {
-						return category + '日' + ' ' + item.name + '：' + item.data + '元'
+						return month + category + '日' + ' ' + item.name + '：' + item.data + '元'
 					}
 				});
 				canvases[this.canvasId].scrollStart(e);
 			},
-			// touchLegend(e){
-			// 	canvases[this.canvasId].showToolTip(e, {
-			// 		format: function(item, category) {
-			// 			return category + ' ' + item.name + ':' + item.data
-			// 		}
-			// 	});
-			// },
 			touchMove(e) {
 				canvases[this.canvasId].scroll(e);
 			},
