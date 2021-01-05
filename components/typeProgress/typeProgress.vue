@@ -7,13 +7,14 @@
 					<view :class='[item.tagName,{income:"+"===item.type?true:false}]' class="content_icon"></view>
 					<view class="content_text">{{item.tag}}</view>
 				</view>
-				<u-line-progress :show-percent="false" :height=20 class="line_progress" :active-color="line_color" :percent="countPercent(item)"></u-line-progress>
+				<u-line-progress :show-percent="false" :height='14' class="line_progress" :active-color="line_color" :percent="countPercent(item)"></u-line-progress>
 				<view class="amount">￥{{amount(item)}}</view>
 			</view>
 		</view>
 		<view class="noList" v-else>
 			<u-empty text="目前没有相关记录"></u-empty>
 		</view>
+		<u-line color="#E6E6E6" length='95%' margin='60rpx auto 30rpx' />
 	</view>
 </template>
 
@@ -56,9 +57,7 @@
 
 <style lang="scss" scoped>
 	.main_{
-		margin-top: 10px;
 		padding-bottom: 10px;
-		// box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
 	}
 	.content {
 		height: 30px;
@@ -66,7 +65,7 @@
 		margin-bottom: 12px;
 		justify-content: space-between;
 		align-items: center;
-		padding: 40rpx 48rpx 20rpx 24rpx;
+		padding: 40rpx 48rpx 24rpx 24rpx;
 
 		.content_left {
 			display: flex;
@@ -86,8 +85,8 @@
 			}
 
 			.content_text {
-				color: #777777;
-				font-size: 24rpx;
+				color: #333333;
+				font-size: 26rpx;
 				line-height: 30px;
 			}
 		}

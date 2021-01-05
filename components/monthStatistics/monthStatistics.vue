@@ -11,6 +11,7 @@
 			<text class="amount_text">￥{{amount_pay.toFixed(2)}}</text>
 			<text class="ls_text">共收入￥{{amount_income.toFixed(2)}}</text>
 		</view>
+		<u-gap height="15" bg-color="#F5F5F5"></u-gap>
 	</view>
 </template>
 
@@ -54,7 +55,7 @@
 		padding-top: 60rpx;
 		flex-direction: column;
 		text-align: center;
-		box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
+		// box-shadow: 0 4rpx 24rpx 0 rgba(0, 0, 0, 0.1);
 
 		.top {
 			@extend %df;

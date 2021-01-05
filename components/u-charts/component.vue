@@ -1,7 +1,10 @@
 <template>
-	<canvas disable-scroll=false :id="canvasId" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px',
+	<view >
+		<view class="title_">当月趋势</view>
+		<canvas v-show="canvasShow" disable-scroll=false :id="canvasId" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px',
 	 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error">
-	</canvas>
+		</canvas>
+	</view>
 </template>
 
 <script>
@@ -12,6 +15,9 @@
 		props: {
 			newdata: {
 				type: Object
+			},
+			canvasShow: {
+				type: Boolean
 			},
 			chartShouldupdate: {
 				type: Boolean
@@ -67,6 +73,7 @@
 						gridType: 'dash',
 						dashLength: 8,
 						disableGrid: true,
+						calibration: true,
 						itemCount: 15,
 						scrollShow: false
 					},
@@ -129,7 +136,14 @@
 	};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+	.title_ {
+		font-size: 34rpx;
+		padding-left: 24rpx;
+		padding-bottom: 24rpx;
+		color: #555555;
+	}
+
 	.charts {
 		width: 100%;
 		height: 100%;

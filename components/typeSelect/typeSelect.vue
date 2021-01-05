@@ -14,7 +14,8 @@
 <script>
 	export default {
 		props: {
-			selectedType: ''
+			selectedType: '',
+			// line_selectedType:''
 		},
 		data() {
 			return {
@@ -24,6 +25,7 @@
 		methods: {
 			selectType(item) {
 				this.$emit('update:selectedType', item.value);
+				// this.$emit('update:line_selectedType', item.value);
 			},
 		}
 	}
@@ -31,7 +33,7 @@
 
 <style lang="scss" scoped>
 	.header_ {
-		padding: 70rpx 24rpx 40rpx;
+		padding: 70rpx 24rpx 50rpx;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

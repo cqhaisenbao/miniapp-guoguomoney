@@ -4,10 +4,10 @@
 		<typeProgress :selectedList='selectedList' :selectedType='selectedType' :currentlist="selectedList_norepeat" :currentAmount="currentAmount" :amount_income="amount_income">
 			<typeSelect :selectedType.sync='selectedType'></typeSelect>
 		</typeProgress>
-		<view v-show='canvasShow'>
+		<view>
 			<block v-for="(item, index) in arr" :key="index">
 				<view class="qiun-columns" style="background-color: #FFFFFF;">
-					<uCharts :newdata='chartData' :chartShouldupdate='chartShouldupdate' :opts="item.opts" :ref="item.id" />
+					<uCharts :canvasShow='canvasShow' :newdata='chartData' :chartShouldupdate='chartShouldupdate' :opts="item.opts" :ref="item.id" />
 				</view>
 			</block>
 		</view>
