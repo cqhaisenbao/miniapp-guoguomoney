@@ -1,5 +1,5 @@
 <template>
-	<canvas :id="canvasId" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px',
+	<canvas disable-scroll=false :id="canvasId" :canvasId="canvasId" :style="{'width':cWidth*pixelRatio+'px','height':cHeight*pixelRatio+'px',
 	 'transform': 'scale('+(1/pixelRatio)+')','margin-left':-cWidth*(pixelRatio-1)/2+'px','margin-top':-cHeight*(pixelRatio-1)/2+'px'}" @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @error="error">
 	</canvas>
 </template>
@@ -67,7 +67,7 @@
 						gridType: 'dash',
 						dashLength: 8,
 						disableGrid: true,
-						itemCount: 11,
+						itemCount: 15,
 						scrollShow: false
 					},
 					yAxis: {
@@ -107,6 +107,13 @@
 				});
 				canvases[this.canvasId].scrollStart(e);
 			},
+			// touchLegend(e){
+			// 	canvases[this.canvasId].showToolTip(e, {
+			// 		format: function(item, category) {
+			// 			return category + ' ' + item.name + ':' + item.data
+			// 		}
+			// 	});
+			// },
 			touchMove(e) {
 				canvases[this.canvasId].scroll(e);
 			},

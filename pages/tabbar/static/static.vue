@@ -1,5 +1,5 @@
 <template>
-	<view v-if="hasrecordList">
+	<view class='page_' v-if="hasrecordList">
 		<tabs :data_source="recordTypeList" :value.sync="type"></tabs>
 		<ol v-if="groupedList.length>0">
 			<li class="li_" v-for="(group,index) in groupedList" :key="index">
@@ -20,7 +20,7 @@
 	</view>
 </template>
 
-// <script>
+<script>
 	import { mapState, mapMutations, mapActions } from 'vuex';
 	import networkcheck from '@/lib/networkcheck.js';
 	import clone from '@/lib/clone';
@@ -87,7 +87,7 @@
 			}
 		}
 	}
-// </script>
+</script>
 
 <style lang="scss" scoped>
 	%item {

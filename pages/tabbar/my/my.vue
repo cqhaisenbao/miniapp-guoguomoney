@@ -1,13 +1,13 @@
 <template>
 	<view>
-		<monthStatistics v-if="recordList" :nowmonth.sync="nowmonth" :amount_pay="amount_pay" :amount_income="amount_income"></monthStatistics>
+		<monthStatistics v-if="recordList" @iconClick=canvasHidden :nowmonth.sync="nowmonth" :amount_pay="amount_pay" :amount_income="amount_income"></monthStatistics>
 		<typeProgress :selectedList='selectedList' :selectedType='selectedType' :currentlist="selectedList_norepeat" :currentAmount="currentAmount" :amount_income="amount_income">
 			<typeSelect :selectedType.sync='selectedType'></typeSelect>
 		</typeProgress>
-		<view>
+		<view v-show='canvasShow'>
 			<block v-for="(item, index) in arr" :key="index">
 				<view class="qiun-columns" style="background-color: #FFFFFF;">
-					<u-charts :newdata='chartData' :chartShouldupdate='chartShouldupdate' :opts="item.opts" :ref="item.id" />
+					<uCharts :newdata='chartData' :chartShouldupdate='chartShouldupdate' :opts="item.opts" :ref="item.id" />
 				</view>
 			</block>
 		</view>
@@ -30,14 +30,12 @@
 			return {
 				nowmonth: dayjs().format('YYYY年MM月'),
 				selectedType: '-',
+				canvasShow: true,
 				amount_pay: 0,
 				amount_income: 0,
 				currentAmount: 0,
 				selectedList: [],
 				selectedList_norepeat: [],
-				textarea: '',
-				cWidth: '',
-				cHeight: '',
 				arr: [],
 				chartShouldupdate: false,
 				chartData: {
@@ -69,7 +67,7 @@
 				selectedListAmount.call(this, this.nowmonth, this.selectedType)
 				selectedMonthAmount.call(this, this.nowmonth, '-')
 				this.handleCurrentList()
-			}
+			},
 		},
 		created() {
 			selectedListAmount.call(this, this.nowmonth, this.selectedType)
@@ -77,6 +75,10 @@
 			this.handleCurrentList()
 		},
 		methods: {
+			canvasHidden(nval) {
+				console.log('canvasHiddennval',nval)
+				this.canvasShow = !nval
+			},
 			getServerData() {
 				let LineA = {
 					categories: [],
@@ -84,7 +86,6 @@
 				};
 				LineA.categories = this.chartData.categories;
 				LineA.series = this.chartData.series;
-				// _self.textarea = JSON.stringify(res.data.data.LineA);
 				let serverData = [{
 					opts: LineA,
 				}];
