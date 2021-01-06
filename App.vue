@@ -4,10 +4,10 @@
 	export default {
 		onShow() {
 			wxLogin.call(this).then(()=>{
-				this.$store.dispatch('fetchIconName')
-				this.$store.dispatch('fetchRecordList')
+				// uni.switchTab({
+				//     url: 'pages/tabbar/index/index'
+				// });
 			})
-			// console.log(wxLogin.call(this))
 		},
 	}
 </script>
