@@ -1,12 +1,17 @@
 <script>
-	import { mapState, mapMutations,mapActions } from 'vuex';
+	import { mapState, mapMutations, mapActions } from 'vuex';
 	import wxLogin from '@/lib/weixinlogin';
 	export default {
 		onShow() {
-			wxLogin.call(this).then(()=>{
-				// uni.switchTab({
-				//     url: 'pages/tabbar/index/index'
-				// });
+			uni.checkSession({
+				success: (res) => {
+					console.log('success', res.errMsg)
+					this.$store.dispatch('fetchIconName')
+					this.$store.dispatch('fetchRecordList')
+				},
+				fail: (res) => {
+					wxLogin.call(this)
+				},
 			})
 		},
 	}
