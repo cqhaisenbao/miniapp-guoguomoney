@@ -1,7 +1,7 @@
 {
 	"passwordSecret": "passwordSecret-demo",
 	"tokenSecret": "tokenSecret-demo",
-	"tokenExpiresIn": 86400,
+	"tokenExpiresIn": 864000,
 	"tokenExpiresThreshold": 600,
 	"passwordErrorLimit": 6,
 	"bindTokenToDevice": true,

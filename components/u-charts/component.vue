@@ -20,7 +20,7 @@
 				type: Object
 			},
 			canvasShow: {
-				type: Boolean
+				default:true
 			},
 			chartShouldupdate: {
 				type: Boolean

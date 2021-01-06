@@ -57,12 +57,12 @@
 
 <style lang="scss" scoped>
 	.main_{
-		padding-bottom: 10px;
+		padding-bottom: 20rpx;
 	}
 	.content {
-		height: 30px;
+		height: 60rpx;
 		display: flex;
-		margin-bottom: 20px;
+		margin-bottom: 40rpx;
 		justify-content: space-between;
 		align-items: center;
 		padding: 40rpx 48rpx 24rpx 48rpx;
@@ -87,7 +87,7 @@
 			.content_text {
 				color: #333333;
 				font-size: 26rpx;
-				line-height: 30px;
+				line-height: 60rpx;
 			}
 		}
 

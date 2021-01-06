@@ -34,7 +34,7 @@
 	.tabsWrapper {
 		width: 100vw;
 		background: $main-color;
-		height: 120rpx;
+		height: 60px;
 		display: flex;
 		align-items: center;
 
@@ -45,13 +45,13 @@
 			color: white;
 			width: 40%;
 			margin: 0 auto;
-			border: 2rpx solid #303030;
+			border: 1px solid #303030;
 			border-radius: 10rpx;
 			border-collapse: collapse;
 
 			li:first-of-type {
 				width: 50%;
-				height: 64rpx;
+				height: 32px;
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -61,12 +61,12 @@
 
 			li:last-of-type {
 				width: 50%;
-				height: 64rpx;
+				height: 32px;
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				position: relative;
-				border-radius: 0 8rpx 8rpx 0;
+				border-radius: 0 4px 4px 0;
 			}
 
 			& .selected {

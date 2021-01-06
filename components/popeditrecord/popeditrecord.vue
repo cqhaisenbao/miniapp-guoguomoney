@@ -8,7 +8,7 @@
 			</ul>
 			<datapick @timeupdate="onUpdateTime" :now="now(popcurrentrecord.time)" />
 		</view>
-		<tags :addtagshow='false' @deletetag="deletetag" :type="popcurrentrecord.type" class="tag_content" :iconName='default_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName" :popshow.sync="tagpopshow"></tags>
+		<tags @deletetag="deletetag" :type="popcurrentrecord.type" class="tag_content" :iconName='default_iconName' :selectedTag.sync="popcurrentrecord.tag" :tagName.sync="popcurrentrecord.tagName" :popshow.sync="tagpopshow"></tags>
 		<notes :value.sync="popcurrentrecord.notes" field-name="备注" placeholder="请在这里输入备注" />
 		<keybord :type="popcurrentrecord.type" :tag.sync="popcurrentrecord.tag" @update:value="onUpdateAmount" :popoutput="popcurrentrecord.amount" @submit="saveRecord"></keybord>
 		<view v-if="tagpopshow">

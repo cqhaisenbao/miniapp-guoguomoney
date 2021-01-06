@@ -2,20 +2,21 @@
 	<view>
 		<u-modal confirm-color="#3EB575" @confirm="confirm" show-cancel-button="true" v-model="show" :content="content"></u-modal>
 		<view v-if="iconName.length>0" class="tags">
-			<scroll-view :scroll-into-view='renqun' show-scrollbar=false class="icon_wrapper" scroll-x>
+			<scroll-view v-if="displaySwiper" :scroll-into-view='renqun' show-scrollbar=false class="icon_wrapper" scroll-x>
 				<view class="tags_scroll__box">
-					<view :id="item.name.slice(14)"  v-if="item.default && item.type===type" v-for="(item,index) in iconName" :key="index" 
-					:class='[item.name,{selected:selectedTag===item.title?true:false},{typePayIcon:item.type===`-`?true:false}]' class="icon" @click="toggle(item)">
+					<view @longpress='editusertag(item)' :id="item.name.slice(14)" v-if="item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false},{typePayIcon:item.type===`-`?true:false}]' class="icon" @click="toggle(item)">
 						<text class="icon_font">{{item.title}}</text>
 					</view>
-					<view @longpress='editusertag(item)' v-if="!item.default && item.type===type" v-for="(item,index) in iconName" :key="index" :class='[item.name,{selected:selectedTag===item.title?true:false}]' class="icon" @click="toggle(item)">
-						<text class="icon_font">{{item.title}}</text>
-					</view>
-					<view id="test" v-if="addtagshow" @click="addtag" class="iconfont icon-tianjiazc icon">
+					<view id="test" @click="addtag" class="iconfont icon-tianjiazc icon">
 						<text class="icon_font">新增分类</text>
 					</view>
 				</view>
 			</scroll-view>
+			<swiper v-else>
+				<swiper-item v-for="(item ,index) in info" :key="index">
+
+				</swiper-item>
+			</swiper>
 		</view>
 	</view>
 </template>
@@ -27,17 +28,41 @@
 			type: '',
 			selectedTag: '',
 			popshow: false,
-			poptitle:'',
-			addtagshow: {
-				default: true
-			}
+			poptitle: ''
+		},
+		created() {
+			const res = uni.getSystemInfoSync()
+			console.log(res)
+			this.windowHeight = res.windowHeight
 		},
 		computed: {
-			...mapState(['iconName'])
+			...mapState(['iconName']),
+			info() {
+				const info = []
+				const num = Math.ceil(this.iconName.length / 8)
+				for (let i = 0; i < num; i++) {
+					info.push([])
+				}
+				const iconListLength = this.iconName.length
+				for (let n = 0; n < iconListLength; n++) {
+					if (n < 8) {
+						info[0].push(this.iconName[n])
+					} else if (8 <= n && n < 16) {
+						info[1].push(this.iconName[n])
+					} else {
+						info[2].push(this.iconName[n])
+					}
+				}
+				return info
+			},
+			displaySwiper() {
+				return this.windowHeight >= 600 ? true : false
+			}
 		},
 		data() {
 			return {
 				selectedTags: [],
+				windowHeight: '',
 				tagid: '',
 				item: {},
 				show: false,
@@ -61,6 +86,7 @@
 				})
 			},
 			toggle(item) {
+				console.log(this.info)
 				const length = this.selectedTags.length;
 				if (length > 0) {
 					this.selectedTags.pop();
@@ -73,9 +99,11 @@
 				this.$emit('update:popshow', true);
 			},
 			editusertag(item) {
-				this.item = item
-				this.tagid = item._id
-				this.show = true;
+				if (item.default) {return} else {
+					this.item = item
+					this.tagid = item._id
+					this.show = true;
+				}
 			}
 		}
 	}
@@ -112,8 +140,9 @@
 
 					&.selected {
 						color: $uni-color-warning;
-						&.typePayIcon{
-							color:$main-color
+
+						&.typePayIcon {
+							color: $main-color
 						}
 
 						.icon_font {

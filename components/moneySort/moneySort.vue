@@ -85,13 +85,13 @@
 		}
 
 		.icon_ {
-			width: 40px;
+			width: 80rpx;
 			color: $uni-color-warning;
-			margin-right: 6px;
+			margin-right: 12rpx;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			font-size: 32px;
+			font-size: 64rpx;
 
 			&.typePayIcon {
 				color: $main-color

@@ -44,6 +44,9 @@
 			}
 		},
 		onLoad() {
+			uni.showShareMenu({
+				
+			})
 			// this.test()
 		},
 		methods: {

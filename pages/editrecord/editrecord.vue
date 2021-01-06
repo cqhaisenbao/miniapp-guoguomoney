@@ -121,27 +121,27 @@
 			}
 
 			.text_ {
-				font-size: 16px;
+				font-size: 32rpx;
 				font-weight: 400;
 			}
 		}
 
 		.money {
 			@extend %df;
-			font-size: 30px;
+			font-size: 60rpx;
 			font-weight: 600;
-			margin-top: 10px;
+			margin-top: 20rpx;
 		}
 
 		.createdAt {
-			margin-top: 20px;
-			font-size: 14px;
+			margin-top: 20rpx;
+			font-size: 28rpx;
 			color: #666666;
 		}
 
 		.footer_ {
-			margin-top: 10px;
-			padding: 17px;
+			margin-top: 20rpx;
+			padding: 34rpx;
 			border-top: 1px solid #f2f2f2;
 			display: flex;
 			justify-content: space-between;
@@ -149,7 +149,7 @@
 			width: 100%;
 
 			span {
-				font-size: 18px;
+				font-size: 36rpx;
 
 				&.span-line {
 					border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -170,9 +170,9 @@
 				}
 
 				.icon {
-					width: 23px;
-					height: 23px;
-					padding-right: 8px;
+					width: 46rpx;
+					height: 46rpx;
+					padding-right: 16rpx;
 				}
 			}
 		}

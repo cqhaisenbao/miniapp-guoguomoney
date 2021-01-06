@@ -1,6 +1,7 @@
 <template>
 	<view class='page_' v-if="hasrecordList">
 		<tabs :data_source="recordTypeList" :value.sync="type"></tabs>
+		<scroll-view :style="{height: scrollHeight}" class="scroll_" scroll-y>
 		<ol v-if="groupedList.length>0">
 			<li class="li_" v-for="(group,index) in groupedList" :key="index">
 				<h3 class="title">{{ beautify(group.title) }} <span>￥{{ group.total }}</span></h3>
@@ -16,7 +17,9 @@
 		</ol>
 		<view v-else class="noResult">
 			<u-empty text="目前没有相关记录"></u-empty>
-		</view>
+		</view>	
+		<view style="height: 10px"></view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -29,6 +32,7 @@
 		data() {
 			return {
 				hasrecordList: true,
+				windowHeight:'',
 				type: "-",
 				networkType: true,
 				recordTypeList: [{ text: '支出', value: '-' }, { text: '收入', value: '+' }],
@@ -37,8 +41,16 @@
 		onShow() {
 			networkcheck.call(this)
 		},
+		created() {
+			const res = uni.getSystemInfoSync()
+			// console.log(res)
+			this.windowHeight=res.windowHeight
+		},
 		computed: {
 			...mapState(['recordList']),
+			scrollHeight(){
+				return this.windowHeight-60+'px'
+			},
 			groupedList() {
 				const { recordList } = this;
 				if (recordList.length === 0) { return []; }
@@ -91,28 +103,28 @@
 
 <style lang="scss" scoped>
 	%item {
-		padding: 8px 16px;
-		line-height: 24px;
+		padding: 16rpx 32rpx;
+		line-height: 48rpx;
 		display: flex;
 		justify-content: space-between;
 		align-content: center;
 	}
 
 	.noResult {
-		margin-top: 30px;
+		margin-top: 60rpx;
 		text-align: center;
 	}
 
 	.li_ {
-		margin: 10px 5px 0;
+		margin: 20rpx 10rpx 0;
 		background: #FBFBFB;
-		border-radius: 15px;
+		border-radius: 30rpx;
 		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-
+		
 		.title {
 			@extend %item;
 			font-weight: 600;
-			font-size: 16px;
+			font-size: 32rpx;
 		}
 
 		.record {
@@ -121,17 +133,17 @@
 			border-bottom: 1px solid #e6e6e6;
 			display: flex;
 			align-items: center;
-			line-height: 35px;
+			line-height: 60rpx;
 			justify-content: center;
 
 			.icon_ {
-				width: 25px;
+				width: 50rpx;
 				color: $uni-color-warning;
-				margin-right: 5px;
+				margin-right: 10rpx;
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				font-size: 20px;
+				font-size: 40rpx;
 				&.typePayIcon{
 					color:$main-color
 				}
@@ -139,7 +151,7 @@
 
 			.note {
 				margin-right: auto;
-				margin-left: 16px;
+				margin-left: 32rpx;
 				color: #999;
 			}
 		}
