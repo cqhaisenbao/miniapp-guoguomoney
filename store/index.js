@@ -20,8 +20,7 @@ const store = new Vuex.Store({
 		iconName: [],
 	},
 	mutations: {
-		fetchLocalIconName(state){
-			console.log('fetchLocalIconName')
+		fetchLocalIconName(state) {
 			uni.getStorage({
 				key: 'iconName',
 				success: (res) => {
@@ -30,20 +29,27 @@ const store = new Vuex.Store({
 			})
 		},
 		async fetchIconName(state, result) {
-			// state.iconName = result.data
 			await uni.setStorage({
 				key: 'iconName',
 				data: result.data,
 			});
+			this._mutations.fetchLocalIconName[0]()
+		},
+		fetchLocalRecordList(state) {
 			uni.getStorage({
-				key: 'iconName',
+				key: 'recordList',
 				success: (res) => {
-					state.iconName = res.data
+					state.recordList = res.data
 				}
 			})
 		},
-		fetchRecordList(state, result) {
-			state.recordList = result.data
+		async fetchRecordList(state, result) {
+			// state.recordList = result.data
+			await uni.setStorage({
+				key: 'recordList',
+				data: result.data,
+			});
+			this._mutations.fetchLocalRecordList[0]()
 		}
 	},
 	actions: {

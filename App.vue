@@ -4,14 +4,24 @@
 	export default {
 		onLaunch() {
 			this.$store.dispatch('fetchIconName')
+			this.$store.dispatch('fetchRecordList')
 		},
 		onShow() {
 			uni.checkSession({
 				success: (res) => {
 					console.log('success', res.errMsg)
-					this.$store.dispatch('fetchRecordList')
+					uni.getStorage({
+						key: 'recordList',
+						success:()=>{
+							this.$store.commit('fetchLocalRecordList')
+						},
+						fail: () => {
+							this.$store.dispatch('fetchRecordList')
+						}
+					})
 				},
 				fail: (res) => {
+					uni.hideLoading()
 					wxLogin.call(this)
 				},
 				complete: () => {
