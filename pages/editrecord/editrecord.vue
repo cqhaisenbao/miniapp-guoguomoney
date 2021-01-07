@@ -61,10 +61,14 @@
 				this.fetchCurrentRecord()
 			},
 			fetchCurrentRecord() {
+				uni.showLoading({
+					title:'加载中'
+				})
 				const db = uniCloud.database();
 				db.collection('recordList').where({
 					_id: this.recordid
 				}).get().then(res => {
+					uni.hideLoading()
 					this.currentRecord = res.result.data[0]
 					this.time = dayjs(this.currentRecord.time).format('YYYY年MM月DD日');
 					this.show = true
@@ -82,6 +86,7 @@
 					uni.showToast({
 						title: '删除成功',
 						icon: 'none',
+						duration:2000
 					});	
 					},0)
 				})

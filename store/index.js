@@ -7,20 +7,33 @@ Vue.use(Vuex);
 const asyncFetch = async (commit, mutationName, colName, rule, field) => {
 	const db = uniCloud.database();
 	uni.showLoading({ title: '加载中' });
-	let res = await db.collection(colName).where(rule).field(field).get()
-	uni.hideLoading()
-	const { result } = res
-	commit(mutationName, result)
-	return result
+	try {
+		let res = await db.collection(colName).where(rule).field(field).get()
+		uni.hideLoading()
+		const { result } = res
+		commit(mutationName, result)
+		return result
+	} catch (err) {
+		console.log(err)
+		// uni.showToast({
+		// 	title:err.message,
+		// 	icon:'none'
+		// })
+	}
 }
 
 const store = new Vuex.Store({
 	state: {
 		recordList: [],
 		iconName: [],
+		isLogin: false
 	},
 	mutations: {
+		changeIsLogin(state) {
+			state.isLogin = true
+		},
 		fetchLocalIconName(state) {
+			console.log('fetchLocalIconName')
 			uni.getStorage({
 				key: 'iconName',
 				success: (res) => {

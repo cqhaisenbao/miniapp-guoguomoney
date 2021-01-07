@@ -43,7 +43,6 @@
 		},
 		created() {
 			const res = uni.getSystemInfoSync()
-			// console.log(res)
 			this.windowHeight=res.windowHeight
 		},
 		computed: {

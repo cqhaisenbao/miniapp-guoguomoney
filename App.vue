@@ -2,17 +2,22 @@
 	import { mapState, mapMutations, mapActions } from 'vuex';
 	import wxLogin from '@/lib/weixinlogin';
 	export default {
+		computed: {
+			...mapState(['isLogin']),
+		},
 		onLaunch() {
-			this.$store.dispatch('fetchIconName')
-			this.$store.dispatch('fetchRecordList')
+			// this.$store.dispatch('fetchIconName')
+			if (this.isLogin) {
+				this.$store.dispatch('fetchRecordList')
+			}
 		},
 		onShow() {
 			uni.checkSession({
 				success: (res) => {
-					console.log('success', res.errMsg)
+					this.$store.commit('changeIsLogin')
 					uni.getStorage({
 						key: 'recordList',
-						success:()=>{
+						success: () => {
 							this.$store.commit('fetchLocalRecordList')
 						},
 						fail: () => {
@@ -21,18 +26,17 @@
 					})
 				},
 				fail: (res) => {
-					uni.hideLoading()
 					wxLogin.call(this)
 				},
 				complete: () => {
 					uni.getStorage({
 						key: 'iconName',
-						success:()=>{
+						success: () => {
 							this.$store.commit('fetchLocalIconName')
 						},
-						fail: () => {
-							this.$store.dispatch('fetchIconName')
-						}
+						// fail: () => {
+						// 		this.$store.dispatch('fetchIconName')
+						// }
 					})
 				}
 			})
