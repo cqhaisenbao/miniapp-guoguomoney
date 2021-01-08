@@ -6,7 +6,6 @@
 			...mapState(['isLogin']),
 		},
 		onLaunch() {
-			// this.$store.dispatch('fetchIconName')
 			if (this.isLogin) {
 				this.$store.dispatch('fetchRecordList')
 			}
